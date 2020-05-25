@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'language', 'username', 'telegram_id'
     ];
 
     /**
@@ -36,4 +36,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * User's resumes
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function resumes()
+    {
+        return $this->hasMany(Resume::class);
+    }
+
+    /**
+     * User's vacations
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function vacations()
+    {
+        return $this->hasMany(Vacation::class);
+    }
 }
