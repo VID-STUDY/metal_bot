@@ -2,11 +2,20 @@ from telegram import Update
 from telegram.ext import ConversationHandler, CommandHandler, MessageHandler, Filters
 from core.resources import strings, keyboards
 from core.services import users
+from .utils import Navigation
 
 LANGUAGES = 1
 
 
 def start(update: Update, context):
+
+    user = users.user_exists(update.message.from_user.id)
+    if user:
+        Navigation.to_main_menu(update, user.get('language'), user_name=user.get('name'))
+        help_message = strings.get_string('start.help', user.get('language'))
+        update.message.reply_text(help_message)
+        return ConversationHandler.END
+
     languages_message = strings.get_string('start.languages')
     keyboard = keyboards.get_keyboard('start.languages')
 
@@ -33,9 +42,7 @@ def languages(update: Update, context):
     user = update.message.from_user
     user_name = _get_user_name(user)
     users.create_user(user.id, user_name, user.username, language)
-    welcome_message = strings.get_string('start.welcome', language).format(username=user_name)
-    menu_keyboard = keyboards.get_keyboard('menu', language)
-    update.message.reply_text(welcome_message, reply_markup=menu_keyboard)
+    Navigation.to_main_menu(update, language, user_name=user_name)
     help_message = strings.get_string('start.help', language)
     update.message.reply_text(help_message)
     return ConversationHandler.END
