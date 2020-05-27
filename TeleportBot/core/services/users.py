@@ -1,7 +1,7 @@
 """
 Users API service
 """
-from . import make_post_request, make_get_request
+from . import make_post_request, make_get_request, make_put_request
 from typing import Optional
 
 ENTITY = 'users'
@@ -22,7 +22,8 @@ def create_user(telegram_id: int, name: str, username: str, language: str):
         'username': username,
         'language': language
     }
-    return make_post_request(ENTITY, '', payload).json()
+    response = make_post_request(ENTITY, '', payload).json()
+    return response
 
 
 def user_exists(telegram_id) -> Optional[dict]:
@@ -35,5 +36,13 @@ def user_exists(telegram_id) -> Optional[dict]:
     if response.status_code == 404 or response.status_code == 500:
         return None
     else:
-        json = response.json()
-        return json
+        data = response.json()
+        return data
+
+
+def set_user_role(telegram_id: int, user_role: str):
+    payload = {
+        'user_role': user_role
+    }
+    response = make_put_request(ENTITY, str(telegram_id), payload).json()
+    return response
