@@ -9,6 +9,11 @@ SELECT_ROLE = 1
 
 def select_role_choice(update: Update, context):
     query = update.callback_query
+    role = query.data.split(':')[1]
+    user = users.set_user_role(query.from_user.id, role)
+    account_info = strings.get_user_info(user)
+    account_keyboard = keyboards.get_account_keyboard(user)
+    query.edit_message_text(account_info, reply_markup=account_keyboard)
     query.answer(text=strings.get_string('account.select_role.selected', context.user_data.get('language')))
 
 
@@ -29,5 +34,14 @@ def start(update: Update, context):
         return SELECT_ROLE
 
 
+def change_role(update, context):
+    query = update.callback_query
+    query.answer()
+    select_role_message = strings.get_string('account.select_role', context.user_data.get('language'))
+    select_role_keyboard = keyboards.get_keyboard('account.select_role', context.user_data.get('language'))
+    query.edit_message_text(select_role_message, parse_mode=ParseMode.HTML, reply_markup=select_role_keyboard)
+
+
 account_handler = MessageHandler(Filters.AccountFilter(), start)
 select_role_choice_handler = CallbackQueryHandler(select_role_choice, pattern='^role:.*')
+change_role_handler = CallbackQueryHandler(change_role, pattern='account:role')
