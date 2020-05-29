@@ -1,6 +1,6 @@
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup
 from .strings import get_string
-from typing import Union
+from typing import Union, Optional
 
 
 def _create_keyboard(keyboard: list, one_time: bool = False) -> ReplyKeyboardMarkup:
@@ -34,5 +34,29 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
         return InlineKeyboardMarkup(keyboard)
 
 
-def get_account_keyboard(user):
-    pass
+def get_account_keyboard(user: dict) -> Optional[InlineKeyboardMarkup]:
+    if user.get('user_role') == 'employer':
+        keyboard = [
+            [InlineKeyboardButton(get_string('account.change_role', user.get('language')),
+                                  callback_data='account:role')],
+            [InlineKeyboardButton(get_string('account.up_balance', user.get('language')),
+                                  callback_data='account:balance')],
+            [InlineKeyboardButton(get_string('account.responses', user.get('language')),
+                                  callback_data='account:responses')],
+            [InlineKeyboardButton(get_string('account.my_vacancies', user.get('language')),
+                                  callback_data='account:my_vacancies')]
+        ]
+    elif user.get('user_role') == 'contractor':
+        keyboard = [
+            [InlineKeyboardButton(get_string('account.change_role', user.get('language')),
+                                  callback_data='account:role')],
+            [InlineKeyboardButton(get_string('account.up_balance', user.get('language')),
+                                  callback_data='account:balance')],
+            [InlineKeyboardButton(get_string('account.vacancies', user.get('language')),
+                                  callback_data='account:vacancies')],
+            [InlineKeyboardButton(get_string('account.resumes', user.get('language')),
+                                  callback_data='account:resumes')]
+        ]
+    else:
+        return None
+    return InlineKeyboardMarkup(keyboard)

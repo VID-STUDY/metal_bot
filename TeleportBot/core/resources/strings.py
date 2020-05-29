@@ -23,13 +23,21 @@ def get_string(key, language='ru') -> str:
 
 
 def get_user_info(user: dict) -> str:
-    user_info = get_string('account.id', user.get('language')) + user.get('id')
+    user_info = get_string('account.id', user.get('language')) + str(user.get('id'))
     user_info += '\n'
     days = utils.date_difference_now(user.get('created_at')).get('days')
-    user_info += get_string('account.days', user.get('language')) + days
+    user_info += get_string('account.days', user.get('language')) + str(days)
     user_info += '\n'
-    user_info += get_string('account.balance', user.get('language')) + user.get('balance')
+    if user.get('balance'):
+        balance = str(user.get('balance'))
+    else:
+        balance = str(0)
+    user_info += get_string('account.balance', user.get('language')) + balance
     user_info += '\n'
-    user_info += get_string('account.status', user.get('language')) + user.get('user_role')
+    if user.get('user_role') == 'employer':
+        user_role = get_string('account.select_role.employer', user.get('language'))
+    else:
+        user_role = get_string('account.select_role.contractor', user.get('language'))
+    user_info += get_string('account.status', user.get('language')) + user_role
 
     return user_info

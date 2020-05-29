@@ -8,6 +8,12 @@
     "account.select_role.contractor": "\uD83D\uDCB5 Соискатель",
     "account.select_role.employer": "⛏ Работодатель",
     "account.select_role.selected": "✅ Режим работы выбран",
+    "account.change_role": "\uD83D\uDD04 Выбрать режим",
+    "account.up_balance": "\uD83D\uDCB5 Пополнить",
+    "account.responses": "\uD83D\uDCD1 Отклики",
+    "account.my_vacancies": "\uD83D\uDCDC Мои вакансии",
+    "account.vacancies": "\uD83D\uDCD1 Вакансии",
+    "account.resumes": "\uD83D\uDCDC Мои резюме",
 
     "menu.cabinet": "Личный кабинет \uD83D\uDCDD",
     "menu.about": "О наc",
