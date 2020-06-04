@@ -13,6 +13,8 @@ _default_keyboard = _create_keyboard([['no_keyboard']])
 def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboardMarkup, InlineKeyboardMarkup]:
     if key == 'remove':
         return ReplyKeyboardRemove()
+    elif key == 'go_back':
+        return _create_keyboard([[get_string('go_back', language)]])
     elif key == 'start.languages':
         return _create_keyboard([[get_string('languages.ru', language), get_string('languages.uz')]], one_time=True)
     elif key == 'menu':
@@ -31,6 +33,12 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
                                                                                                         ':contractor')],
             [InlineKeyboardButton(get_string('account.select_role.employer', language), callback_data='role:employer')]
         ]
+        return InlineKeyboardMarkup(keyboard)
+    elif key == 'location.regions':
+        keyboard = [[InlineKeyboardButton(get_string('location.regions.all'), callback_data='region:all')]]
+        for i in range(13):
+            keyboard.append([InlineKeyboardButton(get_string('location.regions.' + str(i)),
+                                                  callback_data='region:' + str(i))])
         return InlineKeyboardMarkup(keyboard)
 
 
@@ -59,4 +67,14 @@ def get_account_keyboard(user: dict) -> Optional[InlineKeyboardMarkup]:
         ]
     else:
         return None
+    return InlineKeyboardMarkup(keyboard)
+
+
+def get_resumes_keyboard(resumes: list, language: str) -> InlineKeyboardMarkup:
+    keyboard = []
+    for resume in resumes:
+        keyboard.append([InlineKeyboardButton(get_string('resumes.item', language).format(resume.get('title')),
+                                              callback_data='my_resumes:' + str(resume.get('id')))])
+    keyboard.append([InlineKeyboardButton(get_string('resumes.create', language), callback_data='my_resumes:create')])
+    keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='my_resumes:back')])
     return InlineKeyboardMarkup(keyboard)

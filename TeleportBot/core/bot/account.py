@@ -42,6 +42,18 @@ def change_role(update, context):
     query.edit_message_text(select_role_message, parse_mode=ParseMode.HTML, reply_markup=select_role_keyboard)
 
 
+def user_resumes(update, context):
+    language = context.user_data['language']
+    query = update.callback_query
+    query.answer()
+    user_id = query.from_user.id
+    resumes = users.get_user_resumes(user_id)
+    keyboard = keyboards.get_resumes_keyboard(resumes, language)
+    message = strings.get_string('resumes.list', language)
+    query.edit_message_text(message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
+
+
 account_handler = MessageHandler(Filters.AccountFilter(), start)
 select_role_choice_handler = CallbackQueryHandler(select_role_choice, pattern='^role:.*')
 change_role_handler = CallbackQueryHandler(change_role, pattern='account:role')
+user_resumes_handler = CallbackQueryHandler(user_resumes, pattern='account:resumes')

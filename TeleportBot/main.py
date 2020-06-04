@@ -3,7 +3,7 @@ import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 from config import Config
-from core.bot import start, account
+from core.bot import start, account, resumes
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -35,6 +35,8 @@ def main():
     dp.add_handler(account.account_handler)
     dp.add_handler(account.select_role_choice_handler)
     dp.add_handler(account.change_role_handler)
+    dp.add_handler(account.user_resumes_handler)
+    dp.add_handler(resumes.create_resume_conversation)
 
     dp.add_handler(CommandHandler("help", help))
 

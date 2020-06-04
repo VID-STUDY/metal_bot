@@ -41,8 +41,24 @@ def user_exists(telegram_id) -> Optional[dict]:
 
 
 def set_user_role(telegram_id: int, user_role: str):
+    """
+    Change or set new user role
+    :param telegram_id: Telegram ID
+    :param user_role: user role value
+    :return: Updated user
+    """
     payload = {
         'user_role': user_role
     }
     response = make_put_request(ENTITY, str(telegram_id), payload).json()
+    return response
+
+
+def get_user_resumes(telegram_id):
+    """
+    Getting user resumes
+    :param telegram_id: Telegram ID
+    :return: List of resumes
+    """
+    response = make_get_request(ENTITY, str(telegram_id) + '/getResumes').json()
     return response
