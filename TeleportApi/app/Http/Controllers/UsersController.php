@@ -67,4 +67,14 @@ class UsersController extends Controller
 
         return response()->json(null, 204);
     }
+
+    /**
+     * Get user resumes
+     *
+     * @param User $user
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getResumes(User $user) {
+        return $user->resumes()->get();
+    }
 }
