@@ -78,3 +78,43 @@ def get_resumes_keyboard(resumes: list, language: str) -> InlineKeyboardMarkup:
     keyboard.append([InlineKeyboardButton(get_string('resumes.create', language), callback_data='my_resumes:create')])
     keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='my_resumes:back')])
     return InlineKeyboardMarkup(keyboard)
+
+
+def get_categories_keyboard(categories: list, language: str, selected_categories: list) -> InlineKeyboardMarkup:
+    keyboard = []
+    for category in categories:
+        if not any(d['id'] == category['id'] for d in selected_categories):
+            keyboard.append([InlineKeyboardButton(get_string('resumes.categories.item', language).format(category[language+'_title']), callback_data='categories:' + str(category['id']))])
+        else:
+            keyboard.append([InlineKeyboardButton(get_string('resumes.categories.item.selected', language).format(category[language+'_title']), callback_data='categories:' + str(category['id']))])
+    keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='categories:back')])
+    if selected_categories:
+        keyboard.append([InlineKeyboardButton(get_string('save', language), callback_data='categories:save')])
+    return InlineKeyboardMarkup(keyboard)
+
+
+def get_parent_categories_keyboard(categories: list, language: str) -> InlineKeyboardMarkup:
+    keyboard = [
+        [InlineKeyboardButton(categories[0][language + '_title'], callback_data='category:' + str(categories[0]['id'])),
+         InlineKeyboardButton(categories[1][language + '_title'], callback_data='category:' + str(categories[1]['id']))]
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+
+def get_cities_from_region(region_number: str, language: str) -> InlineKeyboardMarkup:
+    def divide_chunks(l: list, n: int):
+        for i in range(0, len(l), n):
+            yield l[i:i + n]
+
+    keyboard = []
+    cities = get_string('location.regions.{}.cities'.format(region_number), language)
+    i = 0
+    chunked_cities = divide_chunks(cities, 3)
+    for row in chunked_cities:
+        city_row = []
+        for city in row:
+            city_row.append(InlineKeyboardButton(city, callback_data='city:' + str(i)))
+            i += 1
+        keyboard.append(city_row)
+    keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='city:back')])
+    return InlineKeyboardMarkup(keyboard)

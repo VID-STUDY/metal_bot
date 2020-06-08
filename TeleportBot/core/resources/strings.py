@@ -41,3 +41,34 @@ def get_user_info(user: dict) -> str:
     user_info += get_string('account.status', user.get('language')) + user_role
 
     return user_info
+
+
+def get_city_from_region(region_number, city_number, language):
+    return get_string('location.regions.' + region_number + '.cities', language)[int(city_number)]
+
+
+def get_category_description(category: dict, language) -> str:
+    if category.get(language + '_description'):
+        return category.get(language + '_description')
+    else:
+        return get_string('resumes.create.categories.select', language)
+
+
+def from_categories(added_category: dict, categories: list, added: bool, language: str) -> str:
+    if added:
+        message = get_string('resumes.categories.selected.added', language).format(added_category.get(language + '_title'))
+    else:
+        message = get_string('resumes.categories.selected.removed', language).format(added_category.get(language + '_title'))
+    message += get_string('resumes.categories.selected', language).format(len(categories), 10)
+    for i in range(len(categories)):
+        item_str = get_string('resumes.categories.selected.item', language).format(i+1, categories[i].get(language + '_title'))
+        message += item_str
+    return message
+
+
+def from_categories_message(added_category: dict, categories: list, added: bool, language: str) -> str:
+    if added:
+        message = get_string('resumes.categories.selected.added.message', language).format(added_category.get(language + '_title'), len(categories), 10)
+    else:
+        message = get_string('resumes.categories.selected.removed.message', language).format(added_category.get(language + '_title'), len(categories), 10)
+    return message
