@@ -50,8 +50,9 @@ def main():
     if Config.ENVIRONMENT == 'production':
         updater.start_webhook(listen='0.0.0.0',
                               port=8443,
-                              url_path=Config.API_TOKEN,
-                              webhook_url=Config.APP_URL + ':8443/' + Config.API_TOKEN)
+                              url_path=Config.API_TOKEN)
+        updater.bot.remove_webhook()
+        updater.bot.set_webhook(webhook_url=Config.APP_URL + ':8443/' + Config.API_TOKEN)
     else:
         updater.start_polling()
 
