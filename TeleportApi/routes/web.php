@@ -22,4 +22,7 @@ Route::prefix('api')->group(function () {
     Route::get('/users/{user}/getResumes', "UsersController@getResumes");
 
     Route::apiResource('vacations', 'VacationController');
+
+    Route::apiResource('categories', 'CategoryController');
+    Route::get('/categories/{category}/siblings', 'CategoryController@siblings');
 });

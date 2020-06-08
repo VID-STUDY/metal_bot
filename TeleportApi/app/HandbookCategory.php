@@ -10,7 +10,7 @@ class HandbookCategory extends Model
     use NodeTrait;
 
     protected $fillable = [
-        'ru_title', 'uz_title', 'parent_id'
+        'ru_title', 'uz_title', 'parent_id', 'uz_description', 'ru_description'
     ];
 
     const UPLOAD_DIRECTORY = 'uploads/handbook_categories_images/';
