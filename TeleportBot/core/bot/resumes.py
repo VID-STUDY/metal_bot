@@ -62,7 +62,7 @@ def create(update, context):
 def resume_title(update, context):
     language = context.user_data['user'].get('language')
     if strings.get_string('go_back', language) in update.message.text:
-        Navigation.to_main_menu(update, language)
+        Navigation.to_account(update, context)
         return ConversationHandler.END
     context.user_data['resume']['title'] = update.message.text
     message = strings.get_string('resumes.create.description', language)
@@ -194,6 +194,7 @@ def resume_categories(update, context):
 
 
 resume_create_handler = CallbackQueryHandler(create, pattern='my_resumes:create')
+resume_back_handler = CallbackQueryHandler(Navigation.to_account, pattern='my_resumes:back')
 create_resume_conversation = ConversationHandler(
     entry_points=[resume_create_handler],
     states={

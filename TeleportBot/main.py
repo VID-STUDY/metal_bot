@@ -36,6 +36,7 @@ def main():
     dp.add_handler(account.select_role_choice_handler)
     dp.add_handler(account.change_role_handler)
     dp.add_handler(account.user_resumes_handler)
+    dp.add_handler(resumes.resume_back_handler)
     dp.add_handler(resumes.create_resume_conversation)
 
     dp.add_handler(CommandHandler("help", help))
