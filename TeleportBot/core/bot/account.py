@@ -22,11 +22,9 @@ def start(update: Update, context):
     user = users.user_exists(user.id)
     if not user:
         return
-    context.user_data['language'] = user.get('language')
+    context.user_data['user'] = user
     if user.get('user_role'):
-        account_message = strings.get_user_info(user)
-        account_keyboard = keyboards.get_account_keyboard(user)
-        update.message.reply_text(account_message, reply_markup=account_keyboard)
+        Navigation.to_account(update, context)
     else:
         select_role_message = strings.get_string('account.select_role', user.get('language'))
         select_role_keyboard = keyboards.get_keyboard('account.select_role', user.get('language'))
@@ -43,7 +41,7 @@ def change_role(update, context):
 
 
 def user_resumes(update, context):
-    language = context.user_data['language']
+    language = context.user_data['user'].get('language')
     query = update.callback_query
     query.answer()
     user_id = query.from_user.id
