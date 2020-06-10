@@ -1,7 +1,7 @@
-from telegram import Update, ParseMode
-from telegram.ext import Filters, ConversationHandler, CallbackQueryHandler, MessageHandler
+from telegram import ParseMode
+from telegram.ext import ConversationHandler
 from core.resources import strings, keyboards
-from .utils import Navigation
+from core.bot.utils import Navigation
 from core.services import categories, resumes
 
 TITLE, DESCRIPTION, CONTACTS, REGION, CITY, CATEGORIES = range(6)
@@ -191,19 +191,3 @@ def resume_categories(update, context):
         query.answer(text=answer_message)
         query.edit_message_text(message, reply_markup=keyboard)
         return CATEGORIES
-
-
-resume_create_handler = CallbackQueryHandler(create, pattern='my_resumes:create')
-resume_back_handler = CallbackQueryHandler(Navigation.to_account, pattern='my_resumes:back')
-create_resume_conversation = ConversationHandler(
-    entry_points=[resume_create_handler],
-    states={
-        TITLE: [MessageHandler(Filters.text, resume_title)],
-        DESCRIPTION: [MessageHandler(Filters.text, resume_description)],
-        CONTACTS: [MessageHandler(Filters.text, resume_contacts)],
-        REGION: [CallbackQueryHandler(resume_region), MessageHandler(Filters.text, from_location_to_contacts)],
-        CITY: [CallbackQueryHandler(resume_city), MessageHandler(Filters.text, from_location_to_contacts)],
-        CATEGORIES: [CallbackQueryHandler(resume_categories), MessageHandler(Filters.text, from_categories_to_location)]
-    },
-    fallbacks=[MessageHandler(Filters.text, '')]
-)
