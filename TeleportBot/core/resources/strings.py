@@ -72,3 +72,13 @@ def from_categories_message(added_category: dict, categories: list, added: bool,
     else:
         message = get_string('resumes.categories.selected.removed.message', language).format(added_category.get(language + '_title'), len(categories), 10)
     return message
+
+
+def from_resume(resume: dict, language: str) -> str:
+    template = get_string('resumes.template', language)
+    categories_string = ''
+    for category in resume['categories']:
+        categories_string += category.get(language + '_title') + '\n'
+    return template.format(date=resume.get('created_at'), title=resume.get('title'),
+                           description=resume.get('description'), contacts=resume.get('contacts'),
+                           location=resume.get('location'), categories=categories_string)

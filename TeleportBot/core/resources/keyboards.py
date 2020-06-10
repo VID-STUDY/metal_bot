@@ -40,6 +40,21 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
             keyboard.append([InlineKeyboardButton(get_string('location.regions.' + str(i)),
                                                   callback_data='region:' + str(i))])
         return InlineKeyboardMarkup(keyboard)
+    elif key == 'resume':
+        keyboard = [
+            [InlineKeyboardButton(get_string('edit', language), callback_data='edit')],
+            [InlineKeyboardButton(get_string('delete', language), callback_data='delete')],
+            [InlineKeyboardButton(get_string('go_back', language), callback_data='back')]
+        ]
+        return InlineKeyboardMarkup(keyboard)
+    elif key == 'resume.edit':
+        keyboard = [
+            [InlineKeyboardButton(get_string('title', language), callback_data='title')],
+            [InlineKeyboardButton(get_string('description', language), callback_data='description')],
+            [InlineKeyboardButton(get_string('contacts', language), callback_data='contacts')],
+            [InlineKeyboardButton(get_string('go_back', language), callback_data='back')]
+        ]
+        return InlineKeyboardMarkup(keyboard)
 
 
 def get_account_keyboard(user: dict) -> Optional[InlineKeyboardMarkup]:
