@@ -37,7 +37,7 @@ class VacationController extends Controller
      */
     public function show(Vacation $vacation)
     {
-        return $vacation;
+        return $vacation->load('categories');
     }
 
     /**
@@ -50,7 +50,7 @@ class VacationController extends Controller
     public function update(Request $request, Vacation $vacation)
     {
         $vacation->update($request->all());
-        return response()->json($vacation, 200);
+        return response()->json($vacation->load('categories'), 200);
     }
 
     /**
