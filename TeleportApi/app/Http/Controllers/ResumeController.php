@@ -41,7 +41,7 @@ class ResumeController extends Controller
      */
     public function show(Resume $resume)
     {
-        return $resume;
+        return $resume->load('categories');
     }
 
     /**
@@ -54,7 +54,7 @@ class ResumeController extends Controller
     public function update(Request $request, Resume $resume)
     {
         $resume->update($request->all());
-        return response()->json($resume, 200);
+        return response()->json($resume->load('categories'), 200);
     }
 
     /**
