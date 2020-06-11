@@ -5,7 +5,7 @@ from core.bot.utils import Navigation
 from telegram.ext import CallbackQueryHandler, MessageHandler, Filters, ConversationHandler
 
 create_resume_conversation = ConversationHandler(
-    entry_points=[CallbackQueryHandler(create.create, pattern='my_resumes:create')],
+    entry_points=[CallbackQueryHandler(create.create, pattern='resumes:create')],
     states={
         create.TITLE: [MessageHandler(Filters.text, create.resume_title)],
         create.DESCRIPTION: [MessageHandler(Filters.text, create.resume_description)],
@@ -17,7 +17,7 @@ create_resume_conversation = ConversationHandler(
     fallbacks=[MessageHandler(Filters.text, '')]
 )
 action_resume_conversation = ConversationHandler(
-    entry_points=[CallbackQueryHandler(edit.resume, pattern=r'^my_resumes:\d+$')],
+    entry_points=[CallbackQueryHandler(edit.resume, pattern=r'^resumes:\d+$')],
     states={
         edit.RESUME_ACTION: [CallbackQueryHandler(edit.resume_action)],
         edit.EDIT_ACTION: [CallbackQueryHandler(edit.edit_action)],
@@ -25,4 +25,4 @@ action_resume_conversation = ConversationHandler(
     },
     fallbacks=[MessageHandler(Filters.text, '')]
 )
-resume_back_handler = CallbackQueryHandler(Navigation.to_account, pattern='my_resumes:back')
+resume_back_handler = CallbackQueryHandler(Navigation.to_account, pattern='resumes:back')

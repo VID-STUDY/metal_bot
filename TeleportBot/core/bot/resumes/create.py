@@ -10,7 +10,7 @@ TITLE, DESCRIPTION, CONTACTS, REGION, CITY, CATEGORIES = range(6)
 def to_parent_categories(query, context):
     parent_categories = categories.get_parent_categories()
     language = context.user_data['user'].get('language')
-    message = strings.get_string('ч', language)
+    message = strings.get_string('resumes.create.categories', language)
     keyboard = keyboards.get_parent_categories_keyboard(parent_categories, language)
     query.answer()
     message = query.edit_message_text(message, reply_markup=keyboard)
@@ -85,7 +85,7 @@ def resume_description(update, context):
 def resume_contacts(update, context):
     language = context.user_data['user'].get('language')
     if strings.get_string('go_back', language) in update.message.text:
-        message = strings.get_string('resumes.create.description', language)
+        message = strings.get_string('vacation.create.description', language)
         update.message.reply_text(message)
         return DESCRIPTION
     context.user_data['resume']['contacts'] = update.message.text
