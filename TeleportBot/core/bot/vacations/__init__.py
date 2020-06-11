@@ -1,4 +1,7 @@
 from . import create
+from . import edit
+
+from core.bot.utils import Navigation
 
 from telegram.ext import CallbackQueryHandler, MessageHandler, Filters, ConversationHandler
 
@@ -17,3 +20,14 @@ create_vacation_conversation = ConversationHandler(
     },
     fallbacks=[MessageHandler(Filters.text, '')]
 )
+
+action_vacation_conversation = ConversationHandler(
+    entry_points=[CallbackQueryHandler(edit.vacation, pattern=r'^my_vacations:\d+$')],
+    states={
+        edit.VACATION_ACTION: [CallbackQueryHandler(edit.vacation_action)],
+        edit.EDIT_ACTION: [CallbackQueryHandler(edit.edit_action)],
+        edit.UPDATE_VACATION: [MessageHandler(Filters.text, edit.update_vacation)]
+    },
+    fallbacks=[MessageHandler(Filters.text, '')]
+)
+vacation_back_handler = CallbackQueryHandler(Navigation.to_account, pattern='my_vacations:back')

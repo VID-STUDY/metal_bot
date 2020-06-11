@@ -10,7 +10,7 @@ TITLE, SALARY, CATEGORY, DESCRIPTION, CONTACTS, REGION, CITY, CATEGORIES = range
 def to_parent_categories(query, context):
     parent_categories = categories.get_parent_categories()
     language = context.user_data['user'].get('language')
-    message = strings.get_string('resumes.create.categories', language)
+    message = strings.get_string('vacations.create.categories', language)
     keyboard = keyboards.get_parent_categories_keyboard(parent_categories, language)
     query.answer()
     message = query.edit_message_text(message, reply_markup=keyboard)

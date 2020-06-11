@@ -82,3 +82,14 @@ def from_resume(resume: dict, language: str) -> str:
     return template.format(date=resume.get('created_at'), title=resume.get('title'),
                            description=resume.get('description'), contacts=resume.get('contacts'),
                            location=resume.get('location'), categories=categories_string)
+
+
+def from_vacation(vacation: dict, language: str) -> str:
+    template = get_string('vacations.template', language)
+    categories_string = ''
+    for category in vacation['categories']:
+        categories_string += category.get(language + '_title') + '\n'
+    return template.format(date=vacation.get('created_at'), title=vacation.get('title'),
+                           salary=vacation.get('salary'), category=vacation.get('category'),
+                           description=vacation.get('description'), contacts=vacation.get('contacts'),
+                           location=vacation.get('location'), categories=categories_string)

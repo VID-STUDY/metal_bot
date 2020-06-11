@@ -41,6 +41,8 @@ def main():
     dp.add_handler(resumes.create_resume_conversation)
     dp.add_handler(resumes.action_resume_conversation)
     dp.add_handler(vacations.create_vacation_conversation)
+    dp.add_handler(vacations.action_vacation_conversation)
+    dp.add_handler(vacations.vacation_back_handler)
 
     dp.add_handler(CommandHandler("help", help))
 

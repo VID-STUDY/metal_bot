@@ -15,3 +15,17 @@ def create_vacation(data: dict):
     }
     response = make_post_request(ENTITY, '', payload).json()
     return response
+
+
+def get_vacation(vacation_id):
+    response = make_get_request(ENTITY, str(vacation_id)).json()
+    return response
+
+
+def update_vacation(vacation_id, data: dict) -> dict:
+    response = make_put_request(ENTITY, str(vacation_id), data).json()
+    return response
+
+
+def delete_vacation(vacation_id):
+    make_delete_request(ENTITY, str(vacation_id))
