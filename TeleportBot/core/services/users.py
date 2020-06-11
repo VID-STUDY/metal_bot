@@ -60,5 +60,10 @@ def get_user_resumes(telegram_id):
     :param telegram_id: Telegram ID
     :return: List of resumes
     """
-    response = make_get_request(ENTITY, str(telegram_id) + '/getResumes').json()
+    response = make_get_request(ENTITY, str(telegram_id) + '/resumes').json()
+    return response
+
+
+def get_user_vacations(telegram_id):
+    response = make_get_request(ENTITY, str(telegram_id) + '/vacations').json()
     return response
