@@ -77,4 +77,15 @@ class UsersController extends Controller
     public function getResumes(User $user) {
         return $user->resumes()->get();
     }
+
+
+    /**
+     * Get user vacations
+     * 
+     * @param User $user
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getVacations(User $user) {
+        return $user->vacations()->get();
+    }
 }
