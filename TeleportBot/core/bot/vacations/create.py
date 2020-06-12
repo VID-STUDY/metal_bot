@@ -204,6 +204,10 @@ def vacation_categories(update, context):
             context.user_data['vacation']['categories'][:] = [c for c in context.user_data['vacation']['categories'] if
                                                             c.get('id') != category.get('id')]
         else:
+            if len(context.user_daya['vacation']['categories']) == 10:
+                limit_message = strings.get_string('categories.limit', language)
+                query.answer(text=limit_message, show_alert=True)
+                return CATEGORIES
             added = True
             context.user_data['vacation']['categories'].append(category)
         category_siblings = categories.get_siblings(category_id)
