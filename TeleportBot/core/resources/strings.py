@@ -2,7 +2,6 @@ import os
 import json
 from . import utils
 
-
 _basedir = os.path.abspath(os.path.dirname(__file__))
 
 # Load strings from json
@@ -56,21 +55,26 @@ def get_category_description(category: dict, language) -> str:
 
 def from_categories(added_category: dict, categories: list, added: bool, language: str) -> str:
     if added:
-        message = get_string('resumes.categories.selected.added', language).format(added_category.get(language + '_title'))
+        message = get_string('resumes.categories.selected.added', language).format(
+            added_category.get(language + '_title'))
     else:
-        message = get_string('resumes.categories.selected.removed', language).format(added_category.get(language + '_title'))
+        message = get_string('resumes.categories.selected.removed', language).format(
+            added_category.get(language + '_title'))
     message += get_string('resumes.categories.selected', language).format(len(categories), 10)
     for i in range(len(categories)):
-        item_str = get_string('resumes.categories.selected.item', language).format(i+1, categories[i].get(language + '_title'))
+        item_str = get_string('resumes.categories.selected.item', language).format(i + 1, categories[i].get(
+            language + '_title'))
         message += item_str
     return message
 
 
 def from_categories_message(added_category: dict, categories: list, added: bool, language: str) -> str:
     if added:
-        message = get_string('resumes.categories.selected.added.message', language).format(added_category.get(language + '_title'), len(categories), 10)
+        message = get_string('resumes.categories.selected.added.message', language).format(
+            added_category.get(language + '_title'), len(categories), 10)
     else:
-        message = get_string('resumes.categories.selected.removed.message', language).format(added_category.get(language + '_title'), len(categories), 10)
+        message = get_string('resumes.categories.selected.removed.message', language).format(
+            added_category.get(language + '_title'), len(categories), 10)
     return message
 
 

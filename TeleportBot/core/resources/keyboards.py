@@ -102,12 +102,17 @@ def get_account_keyboard(user: dict) -> Optional[InlineKeyboardMarkup]:
     return InlineKeyboardMarkup(keyboard)
 
 
-def get_resumes_keyboard(resumes: list, language: str) -> InlineKeyboardMarkup:
+def get_resumes_keyboard(resumes: list, language: str, include_create_button: bool = True) -> InlineKeyboardMarkup:
     keyboard = []
     for resume in resumes:
+        if include_create_button:
+            data = 'resumes:' + str(resume.get('id'))
+        else:
+            data = 'vacations.resume:' + str(resume.get('id'))
         keyboard.append([InlineKeyboardButton(get_string('resumes.item', language).format(resume.get('title')),
-                                              callback_data='resumes:' + str(resume.get('id')))])
-    keyboard.append([InlineKeyboardButton(get_string('resumes.create', language), callback_data='resumes:create')])
+                                              callback_data=data)])
+    if include_create_button:
+        keyboard.append([InlineKeyboardButton(get_string('resumes.create', language), callback_data='resumes:create')])
     keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='resumes:back')])
     return InlineKeyboardMarkup(keyboard)
 
@@ -159,4 +164,18 @@ def get_cities_from_region(region_number: str, language: str) -> InlineKeyboardM
             i += 1
         keyboard.append(city_row)
     keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='city:back')])
+    return InlineKeyboardMarkup(keyboard)
+
+
+def get_list_paginated_keyboard(entities: list, language: str, user: dict, current_page=1) -> InlineKeyboardMarkup:
+    keyboard = [[InlineKeyboardButton(get_string('open_chat', language), url='tg://user?id=' + str(user.get('id')))]]
+    links = []
+    for i in range(len(entities)):
+        if i+1 == current_page:
+            text = '-'+str(i+1)+'-'
+        else:
+            text = str(i+1)
+        links.append(InlineKeyboardButton(text, callback_data='page:' + str(i + 1)))
+    keyboard.append(links)
+    keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='page:back')])
     return InlineKeyboardMarkup(keyboard)

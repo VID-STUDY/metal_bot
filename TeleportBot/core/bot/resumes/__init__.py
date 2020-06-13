@@ -1,5 +1,6 @@
 from . import create
 from . import edit
+from . import vacations
 from core.bot.utils import Navigation
 
 from telegram.ext import CallbackQueryHandler, MessageHandler, Filters, ConversationHandler
@@ -26,3 +27,12 @@ action_resume_conversation = ConversationHandler(
     fallbacks=[MessageHandler(Filters.text, '')]
 )
 resume_back_handler = CallbackQueryHandler(Navigation.to_account, pattern='resumes:back')
+
+resume_vacations_conversation = ConversationHandler(
+    entry_points=[CallbackQueryHandler(vacations.resumes_list, pattern='account:vacations')],
+    states={
+        vacations.LIST: [CallbackQueryHandler(vacations.vacations_for_resume)],
+        vacations.VACATIONS: [CallbackQueryHandler(vacations.paginated_vacations)]
+    },
+    fallbacks=[MessageHandler(Filters.text, '')]
+)
