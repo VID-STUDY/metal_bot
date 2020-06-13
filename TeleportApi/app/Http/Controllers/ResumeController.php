@@ -69,4 +69,26 @@ class ResumeController extends Controller
 
         return response()->json(null, 204);
     }
+
+    /**
+     * Get vacations that are suitable for resume
+     * 
+     * @param Resume $resume
+     * @return \Illuminate\Http\Response
+     */
+    public function getVacationsForResume(Resume $resume) 
+    {
+        $vacations = collect();
+        foreach($resume->categories as $category) {
+            $vacations = $vacations->merge($category->vacations);
+        }
+        $vacations = $vacations->unique(function ($item) {
+            return $item->id;
+        });
+        if ($resume->location !== 'all') 
+            $vacations = $vacations->filter(function ($vacation, $key) use ($resume) {
+                return $vacation->location == $resume->location || $vacation->location == 'all';
+            });
+        return $vacations;
+    }
 }

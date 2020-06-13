@@ -28,4 +28,5 @@ Route::prefix('api')->group(function () {
     Route::get('/categories/{category}/siblings', 'CategoryController@siblings');
 
     Route::apiResource('resumes', 'ResumeController');
+    Route::get('/resumes/{resume}/vacations', 'ResumeController@getVacationsForResume');
 });
