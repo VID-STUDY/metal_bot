@@ -25,7 +25,11 @@ class VacationController extends Controller
      */
     public function store(Request $request)
     {
-        $vacation = Vacation::create($request->all());
+        $data = $request->all();
+        $vacation = Vacation::create($data);
+        foreach ($data['categories'] as $category) {
+            $vacation->categories()->attach($category);
+        }
         return response()->json($vacation, 201);
     }
 
@@ -65,5 +69,26 @@ class VacationController extends Controller
         $vacation->delete();
 
         return response()->json(null, 204);
+    }
+
+    /**
+     * Get resumes that are suitable for vacation
+     *  
+     * @param Vacation $vacation
+     * @return \Illuminate\Http\Response
+     */
+    public function getResumesForVacation(Vacation $vacation) 
+    {
+        $resumes = collect();
+        foreach($vacation->categories as $category)
+            $resumes = $resumes->merge($category->resumes);
+        $resumes = $resumes->unique(function ($item) {
+            return $item->id;
+        });
+        if ($vacation->location !== 'all')
+            $resumes = $resumes->filter(function ($resume, $key) use ($vacation) {
+                return $resume->location == $vacation->location || $resume->location == 'all';
+            });
+        return $resumes;
     }
 }
