@@ -128,6 +128,7 @@ def vacation_region(update, context):
     if region == 'all':
         context.user_data['vacation']['location'] = {}
         context.user_data['vacation']['location']['full_name'] = strings.get_string("location.regions.all", language)
+        context.user_data['vacation']['location']['code'] = 'all'
         return to_parent_categories(query, context)
     region_name = strings.get_string('location.regions.' + region, language)
     context.user_data['vacation']['location'] = {}
@@ -154,6 +155,7 @@ def vacation_city(update, context):
     region_name = strings.get_string('location.regions.' + region, language)
     full_name = region_name + ', ' + city_name
     context.user_data['vacation']['location']['full_name'] = full_name
+    context.user_data['vacation']['location']['code'] = region + '.' + city
     query.answer(text=full_name)
     return to_parent_categories(query, context)
 
@@ -204,7 +206,7 @@ def vacation_categories(update, context):
             context.user_data['vacation']['categories'][:] = [c for c in context.user_data['vacation']['categories'] if
                                                             c.get('id') != category.get('id')]
         else:
-            if len(context.user_daya['vacation']['categories']) == 10:
+            if len(context.user_data['vacation']['categories']) == 10:
                 limit_message = strings.get_string('categories.limit', language)
                 query.answer(text=limit_message, show_alert=True)
                 return CATEGORIES

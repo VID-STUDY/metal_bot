@@ -10,7 +10,7 @@ ENTITY = 'vacations'
 def create_vacation(data: dict):
     payload = {
         'title': data['title'], 'salary': data['salary'], 'category': data['category'],
-        'description': data['description'], 'contacts': data['contacts'], 'location': data['location']['full_name'],
+        'description': data['description'], 'contacts': data['contacts'], 'location': data['location']['code'],
         'user_id': data['user_id'], 'categories': [category['id'] for category in data['categories']]
     }
     response = make_post_request(ENTITY, '', payload).json()
@@ -29,3 +29,8 @@ def update_vacation(vacation_id, data: dict) -> dict:
 
 def delete_vacation(vacation_id):
     make_delete_request(ENTITY, str(vacation_id))
+
+
+def get_resumes_for_vacation(vacation_id):
+    response = make_get_request(ENTITY, str(vacation_id) + '/resumes').json()
+    return response

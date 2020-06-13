@@ -9,7 +9,7 @@ ENTITY = 'resumes'
 
 def create_resume(data: dict) -> dict:
     payload = {'title': data['title'], 'description': data['description'], 'contacts': data['contacts'],
-               'location': data['location']['full_name'], 'user_id': data['user_id'],
+               'location': data['location']['code'], 'user_id': data['user_id'],
                'categories': [category['id'] for category in data['categories']]}
     response = make_post_request(ENTITY, '', payload).json()
     return response
@@ -27,3 +27,8 @@ def update_resume(resume_id, data: dict) -> dict:
 
 def delete_resume(resume_id):
     make_delete_request(ENTITY, str(resume_id))
+
+
+def get_vacations_for_resume(resume_id):
+    response = make_get_request(ENTITY, str(resume_id) + '/vacations').json()
+    return response

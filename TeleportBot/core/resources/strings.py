@@ -79,17 +79,40 @@ def from_resume(resume: dict, language: str) -> str:
     categories_string = ''
     for category in resume['categories']:
         categories_string += category.get(language + '_title') + '\n'
+    if resume.get('location') == 'all':
+        location = get_string('location.regions.all', language)
+    else:
+        region, city = resume.get('location').split('.')
+        region_name = get_string('location.regions.' + region, language)
+        city_name = get_city_from_region(region, city, language)
+        location = region_name + ', ' + city_name
     return template.format(date=resume.get('created_at'), title=resume.get('title'),
                            description=resume.get('description'), contacts=resume.get('contacts'),
-                           location=resume.get('location'), categories=categories_string)
+                           location=location, categories=categories_string)
 
 
-def from_vacation(vacation: dict, language: str) -> str:
-    template = get_string('vacations.template', language)
-    categories_string = ''
-    for category in vacation['categories']:
-        categories_string += category.get(language + '_title') + '\n'
-    return template.format(date=vacation.get('created_at'), title=vacation.get('title'),
-                           salary=vacation.get('salary'), category=vacation.get('category'),
-                           description=vacation.get('description'), contacts=vacation.get('contacts'),
-                           location=vacation.get('location'), categories=categories_string)
+def from_vacation(vacation: dict, language: str, for_resume=False) -> str:
+    if for_resume:
+        template = get_string('vacations.template.for_resume', language)
+    else:
+        template = get_string('vacations.template', language)
+    if vacation.get('location') == 'all':
+        location = get_string('location.regions.all', language)
+    else:
+        region, city = vacation.get('location').split('.')
+        region_name = get_string('location.regions.' + region, language)
+        city_name = get_city_from_region(region, city, language)
+        location = region_name + ', ' + city_name
+    if for_resume:
+        return template.format(date=vacation.get('created_at'), title=vacation.get('title'),
+                               salary=vacation.get('salary'), category=vacation.get('category'),
+                               description=vacation.get('description'), contacts=vacation.get('contacts'),
+                               location=location)
+    else:
+        categories_string = ''
+        for category in vacation['categories']:
+            categories_string += category.get(language + '_title') + '\n'
+        return template.format(date=vacation.get('created_at'), title=vacation.get('title'),
+                               salary=vacation.get('salary'), category=vacation.get('category'),
+                               description=vacation.get('description'), contacts=vacation.get('contacts'),
+                               location=location, categories=categories_string)
