@@ -13,8 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware('auth')->name('admin.')->namespace('Admin')->group(function () {
+    // Dashboard
+    Route::get('/', 'DashboardController@index')->name('index');
+    // Handbook Category Routes
+    Route::resource('/categories', 'HandbookCategoryController');
+
+    // Users routes
+    Route::resource('/users', 'UserController');
 });
 
 Route::prefix('api')->group(function () {
@@ -31,3 +37,7 @@ Route::prefix('api')->group(function () {
     Route::apiResource('resumes', 'ResumeController');
     Route::get('/resumes/{resume}/vacations', 'ResumeController@getVacationsForResume');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

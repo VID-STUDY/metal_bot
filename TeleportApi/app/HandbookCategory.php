@@ -62,7 +62,6 @@ class HandbookCategory extends Model
      */
     public function delete()
     {
-        $this->removeImage();
         parent::delete();
     }
 
