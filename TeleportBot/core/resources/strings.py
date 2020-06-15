@@ -78,11 +78,11 @@ def from_categories_message(added_category: dict, categories: list, added: bool,
     return message
 
 
-def from_resume(resume: dict, language: str) -> str:
-    template = get_string('resumes.template', language)
-    categories_string = ''
-    for category in resume['categories']:
-        categories_string += category.get(language + '_title') + '\n'
+def from_resume(resume: dict, language: str, for_vacation=False) -> str:
+    if for_vacation:
+        template = get_string('resumes.template.for_vacation', language)
+    else:
+        template = get_string('resumes.template', language)
     if resume.get('location') == 'all':
         location = get_string('location.regions.all', language)
     else:
@@ -90,9 +90,17 @@ def from_resume(resume: dict, language: str) -> str:
         region_name = get_string('location.regions.' + region, language)
         city_name = get_city_from_region(region, city, language)
         location = region_name + ', ' + city_name
-    return template.format(date=resume.get('created_at'), title=resume.get('title'),
-                           description=resume.get('description'), contacts=resume.get('contacts'),
-                           location=location, categories=categories_string)
+    if for_vacation:
+        return template.format(date=resume.get('created_at'), title=resume.get('title'),
+                               description=resume.get('description'), contacts=resume.get('contacts'),
+                               location=location)
+    else:
+        categories_string = ''
+        for category in resume['categories']:
+            categories_string += category.get(language + '_title') + '\n'
+        return template.format(date=resume.get('created_at'), title=resume.get('title'),
+                               description=resume.get('description'), contacts=resume.get('contacts'),
+                               location=location, categories=categories_string)
 
 
 def from_vacation(vacation: dict, language: str, for_resume=False) -> str:

@@ -117,12 +117,17 @@ def get_resumes_keyboard(resumes: list, language: str, include_create_button: bo
     return InlineKeyboardMarkup(keyboard)
 
 
-def get_vacations_keyboard(vacations: list, language: str) -> InlineKeyboardMarkup:
+def get_vacations_keyboard(vacations: list, language: str, include_create_button=True) -> InlineKeyboardMarkup:
     keyboard = []
     for vacation in vacations:
+        if include_create_button:
+            data = 'my_vacations:' + str(vacation.get('id'))
+        else:
+            data = "vacations:" + str(vacation.get('id'))
         keyboard.append([InlineKeyboardButton(get_string('vacations.item', language).format(vacation.get('title')),
-                                              callback_data='my_vacations:' + str(vacation.get('id')))])
-    keyboard.append([InlineKeyboardButton(get_string('vacations.create', language), callback_data='my_vacations:create')])
+                                              callback_data=data)])
+    if include_create_button:
+        keyboard.append([InlineKeyboardButton(get_string('vacations.create', language), callback_data='my_vacations:create')])
     keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='my_vacations:back')])
     return InlineKeyboardMarkup(keyboard)
 
