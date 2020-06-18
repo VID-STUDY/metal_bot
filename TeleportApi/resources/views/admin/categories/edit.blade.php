@@ -44,9 +44,9 @@
                             </div>
                             <div class="form-group @error('ru_description') is-invalid @enderror">
                                 <div class="form-material">
+                                    <label for="ruDescription">Описание</label>
                                     <textarea name="ru_description" id="ruDescription"
                                               class="form-control">{{ $category->ru_description }}</textarea>
-                                    <label for="ruDescription">Описание</label>
                                 </div>
                                 @error('ru_description') <div id="val-username-error" class="invalid-feedback animated fadeInDown">{{ $message }}</div> @enderror
                             </div>
@@ -65,9 +65,9 @@
                             </div>
                             <div class="form-group @error('uz_description') is-invalid @enderror">
                                 <div class="form-material">
+                                    <label for="ruDescription">Описание</label>
                                     <textarea name="uz_description" id="uzDescription"
                                               class="form-control">{{ $category->uz_description }}</textarea>
-                                    <label for="ruDescription">Описание</label>
                                 </div>
                                 @error('uz_description') <div id="val-username-error" class="invalid-feedback animated fadeInDown">{{ $message }}</div> @enderror
                             </div>
