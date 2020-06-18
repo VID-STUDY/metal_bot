@@ -21,6 +21,8 @@ Route::middleware('auth')->name('admin.')->namespace('Admin')->group(function ()
 
     // Users routes
     Route::resource('/users', 'UserController');
+
+    Route::resource('/referral', 'ReferralController');
 });
 
 Route::prefix('api')->group(function () {
@@ -36,6 +38,9 @@ Route::prefix('api')->group(function () {
 
     Route::apiResource('resumes', 'ResumeController');
     Route::get('/resumes/{resume}/vacations', 'ResumeController@getVacationsForResume');
+
+    Route::get('referral/current', 'ReferralController@current');
+    Route::apiResource('referral', 'ReferralController');
 });
 
 Auth::routes();

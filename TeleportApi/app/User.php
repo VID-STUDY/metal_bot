@@ -16,7 +16,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'language', 'username', 'telegram_id', 'id', 'user_role'
+        'name', 'email', 'password', 'language', 'username', 'telegram_id', 'id', 'user_role',
+        'referral_from_id', 'referral_tender_id', 'free_actions_count'
     ];
 
     /**
@@ -55,5 +56,15 @@ class User extends Authenticatable
     public function vacations()
     {
         return $this->hasMany(Vacation::class);
+    }
+
+    public function referrals()
+    {
+        return $this->hasMany(User::class, 'referral_from_id', 'id');
+    }
+
+    public function referralFrom()
+    {
+        return $this->hasOne(User::class, 'id', 'referral_from_id');
     }
 }

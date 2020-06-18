@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\ReferralTender;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -26,6 +27,23 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $user = User::create($request->all());
+        if ($user->referral_from_id) {
+            $tender = ReferralTender::where('date_from', '<=', $now)->where('date_to', '>=', $now)->first();
+            if ($tender) {
+                $user->referral_tender_id = $tender->id;
+                $user->save();
+                $referralUser = $user->referralFrom;
+                $referralsCount = $referralUser->referrals()->where('referral_tender_id', $tender->id)->count();
+                foreach($tender->levels as $level) 
+                {
+                    if ($referralsCount == $level->users_to) {
+                        $bonus = intval($level->ru_reward);
+                        $referralUser->free_actions_count += $bonus;
+                        $referralUser->save();
+                    }
+                }
+            }
+        }
         return response()->json($user, 201);
     }
 

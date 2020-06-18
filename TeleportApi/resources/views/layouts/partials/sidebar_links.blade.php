@@ -28,7 +28,7 @@
         </a>
     </li>
     <li>
-        <a href="#">
+        <a href="{{ route('admin.referral.index') }}">
             <i class="si si-users"></i>
             <span class="sidebar-mini-hide">Реферальная система</span>
         </a>
