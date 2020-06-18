@@ -24,6 +24,23 @@ def start(update: Update, context):
     return LANGUAGES
 
 
+def referral_start(update, context):
+    user = users.user_exists(update.message.from_user.id)
+    if user:
+        Navigation.to_main_menu(update, user.get('language'), user_name=user.get('name'))
+        help_message = strings.get_string('start.help', user.get('language'))
+        update.message.reply_text(help_message)
+        return ConversationHandler.END
+    referral_from_id = context.args[0]
+    context.user_data['referral_from_id'] = referral_from_id
+    languages_message = strings.get_string('start.languages')
+    keyboard = keyboards.get_keyboard('start.languages')
+
+    update.message.reply_text(languages_message, reply_markup=keyboard)
+
+    return LANGUAGES
+
+
 def languages(update: Update, context):
 
     def error():
@@ -41,7 +58,8 @@ def languages(update: Update, context):
         return LANGUAGES
     user = update.message.from_user
     user_name = _get_user_name(user)
-    users.create_user(user.id, user_name, user.username, language)
+    users.create_user(user.id, user_name, user.username, language,
+                      referral_from_id=context.user_data.get('referral_from_id', None))
     Navigation.to_main_menu(update, language, user_name=user_name)
     help_message = strings.get_string('start.help', language)
     update.message.reply_text(help_message)
@@ -60,7 +78,7 @@ def cancel():
 
 
 conversation_handler = ConversationHandler(
-    entry_points=[CommandHandler('start', start)],
+    entry_points=[CommandHandler('start', referral_start, pass_args=True), CommandHandler('start', start)],
     states={
         LANGUAGES: [MessageHandler(Filters.text, languages)]
     },

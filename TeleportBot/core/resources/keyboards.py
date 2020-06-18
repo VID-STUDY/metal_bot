@@ -1,6 +1,7 @@
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup
 from .strings import get_string
 from typing import Union, Optional
+from config import Config
 
 
 def _create_keyboard(keyboard: list, one_time: bool = False) -> ReplyKeyboardMarkup:
@@ -20,6 +21,7 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
     elif key == 'menu':
         keyboard = [
             [get_string('menu.cabinet', language)],
+            [get_string('menu.referral', language)],
             [get_string('menu.about', language)],
             [get_string('menu.faq', language)],
             [get_string('menu.news', language)],
@@ -70,6 +72,12 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
             [InlineKeyboardButton(get_string('description', language), callback_data='description')],
             [InlineKeyboardButton(get_string('contacts', language), callback_data='contacts')],
             [InlineKeyboardButton(get_string('go_back', language), callback_data='back')]
+        ]
+        return InlineKeyboardMarkup(keyboard)
+    elif key == 'referral':
+        keyboard = [
+            [InlineKeyboardButton(get_string('rules', language), callback_data='referral:rules'), InlineKeyboardButton(get_string('prize_place', language), callback_data='referral:prize')],
+            [InlineKeyboardButton(get_string('rating', language), callback_data='referral:rating')]
         ]
         return InlineKeyboardMarkup(keyboard)
 
@@ -183,4 +191,12 @@ def get_list_paginated_keyboard(entities: list, language: str, user: dict, curre
         links.append(InlineKeyboardButton(text, callback_data='page:' + str(i + 1)))
     keyboard.append(links)
     keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='page:back')])
+    return InlineKeyboardMarkup(keyboard)
+
+
+def get_channel_keyboard(invite_link: str, language: str) -> InlineKeyboardMarkup:
+    keyboard = [
+        [InlineKeyboardButton(get_string('referral.channel.subscribe', language=language), url=invite_link)],
+        [InlineKeyboardButton(get_string('referral.channel.check', language), callback_data='referral:check_channel')]
+    ]
     return InlineKeyboardMarkup(keyboard)

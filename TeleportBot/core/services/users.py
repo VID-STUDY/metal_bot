@@ -1,15 +1,16 @@
 """
 Users API service
 """
-from . import make_post_request, make_get_request, make_put_request
+from . import make_post_request, make_get_request, make_put_request, referral
 from typing import Optional
 
 ENTITY = 'users'
 
 
-def create_user(telegram_id: int, name: str, username: str, language: str):
+def create_user(telegram_id: int, name: str, username: str, language: str, referral_from_id=None):
     """
     Create new user
+    :param referral_from_id:
     :param telegram_id: Telegram ID
     :param name: User name
     :param username: Username in Telegram
@@ -20,7 +21,8 @@ def create_user(telegram_id: int, name: str, username: str, language: str):
         'id': telegram_id,
         'name': name,
         'username': username,
-        'language': language
+        'language': language,
+        'referral_from_id': referral_from_id
     }
     response = make_post_request(ENTITY, '', payload).json()
     return response

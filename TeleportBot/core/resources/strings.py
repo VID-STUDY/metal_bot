@@ -128,3 +128,23 @@ def from_vacation(vacation: dict, language: str, for_resume=False) -> str:
                                salary=vacation.get('salary'), category=vacation.get('category'),
                                description=vacation.get('description'), contacts=vacation.get('contacts'),
                                location=location, categories=categories_string)
+
+
+def from_referral_tender(referral_tender: dict, language: str, invited_users_count, referral_link: str) -> str:
+    tender = referral_tender
+    template = get_string('referral.template', language)
+    levels = tender.get('levels')
+    levels_string = ''
+    for i in range(len(levels)):
+        level = levels[i]
+        level_string = get_string('referral.level.item', language).format(i+1, get_string('referral.level.users', language)
+                                                                          .format(level.get('users_from'),
+                                                                                  level.get('users_to')))
+        levels_string += (level_string + '\n')
+    level_rewards_string = ''
+    for i in range(len(levels)):
+        level = levels[i]
+        level_string = get_string('referral.level.item', language).format(i+1, level.get(language + '_reward'))
+        levels_string += (level_string + '\n')
+    return template.format(referral_levels=levels_string, invited_count=invited_users_count, referral_link=referral_link, level_rewards=level_rewards_string)
+
