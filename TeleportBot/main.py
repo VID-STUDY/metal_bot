@@ -4,6 +4,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 from config import Config
 from core.bot import start, account, resumes, vacations
+from core.resources import strings
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -19,6 +20,11 @@ def echo(update, context):
 def error(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
+    error_message = strings.get_string('error', language=context.user_data['user'].get('language'))
+    if context.callback_query:
+        context.callback_query.answer(text=error_message, show_alert=True)
+    else:
+        update.message.reply_text(text=error_message)
 
 
 def main():
