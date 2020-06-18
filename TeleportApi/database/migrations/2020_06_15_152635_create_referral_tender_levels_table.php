@@ -18,7 +18,8 @@ class CreateReferralTenderLevelsTable extends Migration
 
             $table->integer('users_from');
             $table->integer('users_to');
-            $table->string('reward')->nullable();
+            $table->string('ru_reward')->nullable();
+            $table->string('uz_reward')->nullable();
 
             $table->integer('referral_tender_id')->unsigned();
 
