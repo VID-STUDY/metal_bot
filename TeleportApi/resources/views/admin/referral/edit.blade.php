@@ -7,7 +7,7 @@
         @method('put')
         <div class="block">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Создать реферальный конкурс</h3>
+                <h3 class="block-title">Редактировать реферальный конкурс {{ $referral->date_from. '-'. $referral->date_to }}</h3>
                 <div class="block-options">
                     <button type="submit" class="btn btn-alt-success"><i class="fa fa-check"></i> Сохранить</button>
                 </div>
