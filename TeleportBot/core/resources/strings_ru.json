@@ -22,6 +22,24 @@
     "referral.level.users": "от {} до {} приглашённых пользователей",
     "referral.level.invited_users": "{} партнёров",
 
+    "payments.contractor.template": "\uD83D\uDCB3 Выберите тариф:\n\n\uD83C\uDFC3\uD83C\uDFFC\u200D♂ Тарифные планы для Соискателей:",
+    "payments.employer.template": "\uD83D\uDCB3 Выберите тариф:\n\n\uD83C\uDFC3\uD83C\uDFFC\u200D♂ Тарифные планы для Работодателей:",
+    "payments.contractor.1item.template": "✨ Размещение 1-ого резюме: - {} сум",
+    "payments.contractor.2item.template": "✨Размещение 2-х резюме - {} сум",
+    "payments.contractor.3item.template": "✨Размещение 3-х резюме - {} сум",
+    "payments.employer.1item.template": "✨Размещение 1-ой вакансии - {} сум",
+    "payments.employer.2item.template": "✨Размещение 2-х вакансий - {} сум",
+    "payments.employer.3item.template": "✨Размещение 3-х вакансий - {} сум",
+    "payments.providers": "\uD83D\uDCB3 Выберите способ оплаты:",
+    "payments.description.contractor": "Оплата тарифа для Соискателя",
+    "payments.description.employer": "Оплата тарифа для Работодателя",
+    "payments.tariff.contractor_tariff_1": "✨ Размещение 1-ого резюме",
+    "payments.tariff.contractor_tariff_2": "✨ Размещение 2-ух резюме",
+    "payments.tariff.contractor_tariff_3": "✨ Размещение 3-ёх резюме",
+    "payments.tariff.employer_tariff_1": "✨ Размещение 1-й вакансии",
+    "payments.tariff.employer_tariff_2": "✨Размещение 2-х вакансий",
+    "payments.tariff.employer_tariff_3": "✨Размещение 3-х вакансий",
+
     "resumes.create": "\uD83D\uDCDD Создать",
     "resumes.list": "ℹ Ваши резюме:\n<i>Для редактирования/просмотра нажмите на резюме</i>",
     "resumes.item": "\uD83D\uDCA1 {}",
@@ -269,5 +287,9 @@
     "contacts": "\uD83D\uDCDD Контакты",
     "success": "✅ Успешно!",
     "open_chat": "\uD83D\uDE0E Открыть чат в Telegram",
-    "error": "☹ Что-то пошло не так..."
+    "error": "☹ Что-то пошло не так...",
+    "payments.click": "Click",
+    "payments.payme": "PayMe",
+    "payments.yandex": "Яндекс.Деньги",
+    "empty_balance": "На вашем балансе недостаточно денег ☹. Вы можете пополнить его прямо сейчас \uD83D\uDE09"
 }

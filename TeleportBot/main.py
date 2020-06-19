@@ -3,7 +3,7 @@ import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 from config import Config
-from core.bot import start, account, resumes, vacations
+from core.bot import start, account, resumes, vacations, payments
 from core.resources import strings
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -20,9 +20,9 @@ def echo(update, context):
 def error(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
-    error_message = strings.get_string('error', language=context.user_data['user'].get('language'))
-    if context.callback_query:
-        context.callback_query.answer(text=error_message, show_alert=True)
+    error_message = strings.get_string('error', language='ru')
+    if update.callback_query:
+        update.callback_query.answer(text=error_message, show_alert=True)
     else:
         update.message.reply_text(text=error_message)
 
@@ -50,6 +50,9 @@ def main():
     dp.add_handler(vacations.action_vacation_conversation)
     dp.add_handler(vacations.vacation_back_handler)
     dp.add_handler(resumes.resume_vacations_conversation)
+    dp.add_handler(payments.payments_conversation)
+    dp.add_handler(payments.pre_checkout_handler)
+    dp.add_handler(payments.successful_payment_handler)
 
     dp.add_handler(CommandHandler("help", help))
 

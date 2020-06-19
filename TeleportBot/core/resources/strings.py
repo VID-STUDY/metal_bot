@@ -27,8 +27,8 @@ def get_user_info(user: dict) -> str:
     days = utils.date_difference_now(user.get('created_at')).get('days')
     user_info += get_string('account.days', user.get('language')) + str(days)
     user_info += '\n'
-    if user.get('balance'):
-        balance = str(user.get('balance'))
+    if user.get('balance_' + user.get('user_role')):
+        balance = str(user.get('balance_' + user.get('user_role')))
     else:
         balance = str(0)
     user_info += get_string('account.balance', user.get('language')) + balance
@@ -148,3 +148,16 @@ def from_referral_tender(referral_tender: dict, language: str, invited_users_cou
         levels_string += (level_string + '\n')
     return template.format(referral_levels=levels_string, invited_count=invited_users_count, referral_link=referral_link, level_rewards=level_rewards_string)
 
+
+def payments_string(settings: dict, user_role: str, language: str):
+    template = get_string('payments.{}.template'.format(user_role), language)
+    template += '\n\n'
+    template += get_string('payments.{}.1item.template'.format(user_role), language)\
+        .format(settings.get('{}_tariff_1'.format(user_role)))
+    template += '\n'
+    template += get_string('payments.{}.2item.template'.format(user_role), language) \
+        .format(settings.get('{}_tariff_2'.format(user_role)))
+    template += '\n'
+    template += get_string('payments.{}.3item.template'.format(user_role), language) \
+        .format(settings.get('{}_tariff_3'.format(user_role)))
+    return template

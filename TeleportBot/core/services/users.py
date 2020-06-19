@@ -3,6 +3,7 @@ Users API service
 """
 from . import make_post_request, make_get_request, make_put_request, referral
 from typing import Optional
+import re
 
 ENTITY = 'users'
 
@@ -68,4 +69,16 @@ def get_user_resumes(telegram_id):
 
 def get_user_vacations(telegram_id):
     response = make_get_request(ENTITY, str(telegram_id) + '/vacations').json()
+    return response
+
+
+def set_user_tariff(user: dict, price: int, tariff):
+    balance = user.get('balance_' + user.get('user_role'))
+    if not balance:
+        balance = 0
+    payload = {
+        user.get('user_role') + '_tariff': tariff,
+        'balance_' + user.get('user_role'): balance + price
+    }
+    response = make_put_request(ENTITY, str(user.get('id')), payload).json()
     return response

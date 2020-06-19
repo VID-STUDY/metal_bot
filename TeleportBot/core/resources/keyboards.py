@@ -80,6 +80,36 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
             [InlineKeyboardButton(get_string('rating', language), callback_data='referral:rating')]
         ]
         return InlineKeyboardMarkup(keyboard)
+    elif key == 'payments.contractor':
+        keyboard = [
+            [InlineKeyboardButton(get_string('payments.tariff.contractor_tariff_1', language),
+                                  callback_data='payments:contractor_tariff_1')],
+            [InlineKeyboardButton(get_string('payments.tariff.contractor_tariff_2', language),
+                                  callback_data='payments:contractor_tariff_2')],
+            [InlineKeyboardButton(get_string('payments.tariff.contractor_tariff_3', language),
+                                  callback_data='payments:contractor_tariff_3')],
+            [InlineKeyboardButton(get_string('go_back', language), callback_data='payments:back')]
+        ]
+        return InlineKeyboardMarkup(keyboard)
+    elif key == 'payments.employer':
+        keyboard = [
+            [InlineKeyboardButton(get_string('payments.tariff.employer_tariff_1', language),
+                                  callback_data='payments:employer_tariff_1')],
+            [InlineKeyboardButton(get_string('payments.tariff.employer_tariff_2', language),
+                                  callback_data='payments:employer_tariff_2')],
+            [InlineKeyboardButton(get_string('payments.tariff.employer_tariff_3', language),
+                                  callback_data='payments:employer_tariff_3')],
+            [InlineKeyboardButton(get_string('go_back', language), callback_data='payments:back')]
+        ]
+        return InlineKeyboardMarkup(keyboard)
+    elif key == 'payments.providers':
+        keyboard = [
+            [InlineKeyboardButton(get_string('payments.click', language), callback_data='payments:click')],
+            [InlineKeyboardButton(get_string('payments.payme', language), callback_data='payments:payme')],
+            [InlineKeyboardButton(get_string('payments.yandex', language), callback_data='payments:yandex')],
+            [InlineKeyboardButton(get_string('go_back', language), callback_data='payments:back')]
+        ]
+        return InlineKeyboardMarkup(keyboard)
 
 
 def get_account_keyboard(user: dict) -> Optional[InlineKeyboardMarkup]:
