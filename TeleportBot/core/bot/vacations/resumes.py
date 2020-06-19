@@ -24,7 +24,7 @@ def vacations_list(update, context):
     return LIST
 
 
-def vacations_for_resume(update, context):
+def resumes_for_vacation(update, context):
     query = update.callback_query
     language = context.user_data['user'].get('language')
     vacation_id = query.data.split(':')[1]
@@ -46,7 +46,7 @@ def vacations_for_resume(update, context):
     return RESUMES
 
 
-def paginated_vacations(update, context):
+def paginated_resumes(update, context):
     query = update.callback_query
     language = context.user_data['user'].get('language')
     page = query.data.split(':')[1]

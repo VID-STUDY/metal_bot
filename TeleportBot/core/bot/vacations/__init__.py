@@ -1,5 +1,6 @@
 from . import create
 from . import edit
+from . import resumes
 
 from core.bot.utils import Navigation
 
@@ -33,3 +34,12 @@ action_vacation_conversation = ConversationHandler(
     fallbacks=[MessageHandler(Filters.text, '')]
 )
 vacation_back_handler = CallbackQueryHandler(Navigation.to_account, pattern='my_vacations:back')
+
+vacation_resumes_handler = ConversationHandler(
+    entry_points=[CallbackQueryHandler(resumes.vacations_list, pattern='account:responses')],
+    states={
+        resumes.LIST: [CallbackQueryHandler(resumes.resumes_for_vacation)],
+        resumes.RESUMES: [CallbackQueryHandler(resumes.paginated_resumes)]
+    },
+    fallbacks=[MessageHandler(Filters.text, '')]
+)
