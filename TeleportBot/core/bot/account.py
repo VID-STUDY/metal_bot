@@ -14,7 +14,7 @@ def select_role_choice(update: Update, context):
     account_info = strings.get_user_info(user)
     account_keyboard = keyboards.get_account_keyboard(user)
     query.edit_message_text(account_info, reply_markup=account_keyboard)
-    query.answer(text=strings.get_string('account.select_role.selected', context.user_data.get('language')))
+    query.answer(text=strings.get_string('account.select_role.selected', context.user_data['user'].get('language')))
 
 
 def start(update: Update, context):
