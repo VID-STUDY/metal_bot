@@ -13,7 +13,9 @@ create_resume_conversation = ConversationHandler(
         create.CONTACTS: [MessageHandler(Filters.text, create.resume_contacts)],
         create.REGION: [CallbackQueryHandler(create.resume_region), MessageHandler(Filters.text, create.from_location_to_contacts)],
         create.CITY: [CallbackQueryHandler(create.resume_city), MessageHandler(Filters.text, create.from_location_to_contacts)],
-        create.CATEGORIES: [CallbackQueryHandler(create.resume_categories), MessageHandler(Filters.text, create.from_categories_to_location)]
+        create.CATEGORIES: [CallbackQueryHandler(create.resume_categories), MessageHandler(Filters.text, create.from_categories_to_location)],
+        create.TARIFFS: [CallbackQueryHandler(create.payments.tariffs)],
+        create.PROVIDER: [CallbackQueryHandler(create.payments.providers)]
     },
     fallbacks=[MessageHandler(Filters.text, '')]
 )

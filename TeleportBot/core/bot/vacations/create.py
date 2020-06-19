@@ -2,9 +2,10 @@ from telegram import ParseMode
 from telegram.ext import ConversationHandler
 from core.resources import strings, keyboards
 from core.bot.utils import Navigation
-from core.services import categories, vacations
+from core.services import categories, vacations, settings
+from core.bot import payments
 
-TITLE, SALARY, CATEGORY, DESCRIPTION, CONTACTS, REGION, CITY, CATEGORIES = range(8)
+TARIFFS, PROVIDER, TITLE, SALARY, CATEGORY, DESCRIPTION, CONTACTS, REGION, CITY, CATEGORIES = range(10)
 
 
 def to_parent_categories(query, context):
@@ -161,7 +162,8 @@ def vacation_city(update, context):
 
 
 def vacation_categories(update, context):
-    language = context.user_data['user'].get('language')
+    user = context.user_data['user']
+    language = user.get('language')
     query = update.callback_query
     category_id = query.data.split(':')[1]
     if category_id == 'back':
@@ -178,16 +180,25 @@ def vacation_categories(update, context):
         else:
             return to_parent_categories(query, context)
     if category_id == 'save':
-        vacations.create_vacation(context.user_data['vacation'])
-        success_message = strings.get_string('vacations.create.success', language)
-        help_message = strings.get_string('vacations.create.success.help', language)
-        context.bot.delete_message(chat_id=query.message.chat.id, message_id=query.message.message_id)
-        context.bot.send_message(chat_id=query.message.chat.id, text=success_message)
-        menu_keyboard = keyboards.get_keyboard('menu', language)
-        context.bot.send_message(chat_id=query.message.chat.id, text=help_message, parse_mode=ParseMode.HTML,
-                                 reply_markup=menu_keyboard)
-        Navigation.to_account(update, context)
-        return ConversationHandler.END
+        if user.get(user.get('user_role') + '_tariff'):
+            payment_settings = settings.get_settings()
+            item_cost = payment_settings.get(user.get(user.get('user_role') + '_tariff'))
+            if user.get('balance_' + user.get('user_role')) >= item_cost:
+                vacation = vacations.create_vacation(context.user_data['vacation'])
+                context.user_data['user'] = vacation.get('user')
+                success_message = strings.get_string('vacations.create.success', language)
+                help_message = strings.get_string('vacations.create.success.help', language)
+                context.bot.delete_message(chat_id=query.message.chat.id, message_id=query.message.message_id)
+                context.bot.send_message(chat_id=query.message.chat.id, text=success_message)
+                menu_keyboard = keyboards.get_keyboard('menu', language)
+                context.bot.send_message(chat_id=query.message.chat.id, text=help_message, parse_mode=ParseMode.HTML,
+                                         reply_markup=menu_keyboard)
+                Navigation.to_account(update, context, new_message=True)
+                del context.user_data['vacation']
+                return ConversationHandler.END
+        empty_balance = strings.get_string('empty_balance', language)
+        query.answer(text=empty_balance, show_alert=True)
+        return payments.start(update, context)
 
     category = categories.get_category(category_id)
     children_categories = category.get('categories')
