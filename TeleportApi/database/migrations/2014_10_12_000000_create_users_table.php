@@ -22,9 +22,10 @@ class CreateUsersTable extends Migration
             $table->string('email')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
-            $table->integer('telegram_id')->nullable();
-            $table->decimal('balance')->nullable();
-            $table->string('status')->nullable();
+            $table->decimal('balance_contractor')->nullable();
+            $table->decimal('balance_employer')->nullable();
+            $table->string('employer_tariff')->nullable();
+            $table->string('contractor_tariff')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
