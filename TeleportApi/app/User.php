@@ -17,7 +17,8 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'email', 'password', 'language', 'username', 'telegram_id', 'id', 'user_role',
-        'referral_from_id', 'referral_tender_id', 'free_actions_count'
+        'referral_from_id', 'referral_tender_id', 'free_actions_count', 'balance_contractor', 'balance_employer',
+        'employer_tariff', 'contractor_tariff'
     ];
 
     /**
