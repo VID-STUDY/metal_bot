@@ -14,7 +14,7 @@ class Navigation:
         update.message.reply_text(menu_message, reply_markup=menu_keyboard)
 
     @staticmethod
-    def to_account(update, context):
+    def to_account(update, context, new_message=False):
         if 'user' not in context.user_data:
             if update.message:
                 user_id = update.message.from_user.id
@@ -27,7 +27,10 @@ class Navigation:
         if update.message:
             update.message.reply_text(text=account_message, reply_markup=account_keyboard)
         elif update.callback_query:
-            context.bot.send_message(chat_id=update.callback_query.message.chat.id, text=account_message, reply_markup=account_keyboard)
+            if new_message:
+                context.bot.send_message(chat_id=user_id, text=account_message, reply_markup=account_keyboard)
+            else:
+                update.callback_query.edit_message_text(text=account_message, reply_markup=account_keyboard)
 
 
 class Filters:
