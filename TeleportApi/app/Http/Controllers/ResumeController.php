@@ -30,7 +30,11 @@ class ResumeController extends Controller
         foreach ($data['categories'] as $category) {
             $resume->categories()->attach($category);
         }
-        return response()->json($resume->load('categories'), 201);
+        $user = $resume->user;
+        $tariff = $user->contractor_tariff;
+        $resumeCost = Settings::get()->$tariff;
+        $user->balance_contractor -= $resumeCost;
+        return response()->json($resume, 201);
     }
 
     /**

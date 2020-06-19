@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Vacation;
+use App\Settings;
 use Illuminate\Http\Request;
 
 class VacationController extends Controller
@@ -30,6 +31,11 @@ class VacationController extends Controller
         foreach ($data['categories'] as $category) {
             $vacation->categories()->attach($category);
         }
+        $user = $vacation->user;
+        $tariff = $user->employer_tariff;
+        $vacationCost = Settings::get()->$tariff;
+        $user->balance_employer -= $vacationCost;
+        $user->save();
         return response()->json($vacation, 201);
     }
 
