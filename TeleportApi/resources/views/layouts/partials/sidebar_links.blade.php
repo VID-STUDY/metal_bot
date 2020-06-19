@@ -39,4 +39,10 @@
             <span class="sidebar-mini-hide">Пользователи</span>
         </a>
     </li>
+    <li>
+        <a href="{{ route('admin.settings.index') }}">
+            <i class="si si-settings"></i>
+            <span class="sidebar-mini-hide">Настройки</span>
+        </a>
+    </li>
 </ul>

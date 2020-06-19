@@ -23,6 +23,8 @@ Route::middleware('auth')->name('admin.')->namespace('Admin')->group(function ()
     Route::resource('/users', 'UserController');
 
     Route::resource('/referral', 'ReferralController');
+
+    Route::resource('/settings', 'SettingsController');
 });
 
 Route::prefix('api')->group(function () {
@@ -41,6 +43,8 @@ Route::prefix('api')->group(function () {
 
     Route::get('referral/current', 'ReferralController@current');
     Route::apiResource('referral', 'ReferralController');
+
+    Route::get('/settings', 'SettingsController@index');
 });
 
 Auth::routes();
