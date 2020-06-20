@@ -3,7 +3,7 @@ import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 from config import Config
-from core.bot import start, account, resumes, vacations, payments
+from core.bot import start, account, resumes, vacations, payments, referral
 from core.resources import strings
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -59,11 +59,12 @@ def main():
     dp.add_handler(payments.pre_checkout_handler)
     dp.add_handler(payments.successful_payment_handler)
 
+    dp.add_handler(referral.referral_handler)
+
     dp.add_handler(CommandHandler("help", help))
 
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, echo))
-
     # log all errors
     dp.add_error_handler(error)
 

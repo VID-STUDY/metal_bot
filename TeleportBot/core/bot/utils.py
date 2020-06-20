@@ -38,3 +38,8 @@ class Filters:
         def filter(self, message):
             return message.text and (strings.get_string('menu.cabinet', 'ru') in message.text or
                                      strings.get_string('menu.cabinet', 'uz') in message.text)
+
+    class ReferralFilter(BaseFilter):
+        def filter(self, message):
+            return message.text and (strings.get_string('menu.referral', 'ru') in message.text or
+                                     strings.get_string('menu.referral', 'uz') in message.text)
