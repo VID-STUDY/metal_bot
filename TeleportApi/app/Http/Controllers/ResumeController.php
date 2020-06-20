@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Resume;
+use App\Settings;
 use Illuminate\Http\Request;
 
 class ResumeController extends Controller
