@@ -15,7 +15,7 @@ class UserTableReferral extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->integer('referral_from_id')->nullable();
-            $table->date('referral_tender_id')->nullable();
+            $table->integer('referral_tender_id')->nullable();
         });
     }
 
