@@ -34,6 +34,7 @@ class ResumeController extends Controller
         $tariff = $user->contractor_tariff;
         $resumeCost = Settings::get()->$tariff;
         $user->balance_contractor -= $resumeCost;
+        $user->save();
         return response()->json($resume, 201);
     }
 
