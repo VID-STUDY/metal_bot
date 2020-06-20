@@ -43,3 +43,23 @@ class Filters:
         def filter(self, message):
             return message.text and (strings.get_string('menu.referral', 'ru') in message.text or
                                      strings.get_string('menu.referral', 'uz') in message.text)
+
+    class FaqFilter(BaseFilter):
+        def filter(self, message):
+            return message.text and (strings.get_string('menu.faq', 'ru') in message.text or
+                                     strings.get_string('menu.faq', 'uz') in message.text)
+
+    class AboutFilter(BaseFilter):
+        def filter(self, message):
+            return message.text and (strings.get_string('menu.about', 'ru') in message.text or
+                                     strings.get_string('menu.about', 'uz') in message.text)
+
+    class PartnersFilter(BaseFilter):
+        def filter(self, message):
+            return message.text and (strings.get_string('menu.partners', 'ru') in message.text or
+                                     strings.get_string('menu.partners', 'uz') in message.text)
+
+    class NewsFilter(BaseFilter):
+        def filter(self, message):
+            return message.text and (strings.get_string('menu.news', 'ru') in message.text or
+                                     strings.get_string('menu.news', 'uz') in message.text)
