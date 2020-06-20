@@ -162,3 +162,23 @@ def payments_string(settings: dict, user_role: str, language: str):
     template += get_string('payments.{}.3item.template'.format(user_role), language) \
         .format(settings.get('{}_tariff_3'.format(user_role)))
     return template
+
+
+def from_referral_rules(referral_tender: dict, language):
+    template = get_string('referral.rules.template', language)
+    return template.format(total_pot=referral_tender.get('total_pot'), date_from=referral_tender.get('date_from'),
+                           date_to=referral_tender.get('date_to'))
+
+
+def from_referral_prize_places(referral_tender: dict, language):
+    template = get_string('referral.prize.template', language)
+    return template.format(utils.replace_new_line(referral_tender.get(language + '_description')))
+
+
+def from_referral_rating(referral_rating: dict, language: str) -> str:
+    template = get_string('referral.rating.template', language)
+    rating_string = ''
+    i = 1
+    for name in referral_rating:
+        rating_string += (get_string('referral.rating.item.template', language).format(i, name, referral_rating[name]) + '\n')
+    return template.format(rating_string)

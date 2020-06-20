@@ -4,9 +4,25 @@ from core.services import users, referral
 
 from telegram.error import BadRequest
 from telegram import ParseMode
-from telegram.ext import MessageHandler
+from telegram.ext import MessageHandler, ConversationHandler, CallbackQueryHandler
 from telegram.utils import helpers
 from .utils import Filters
+
+
+RULES, PRIZE_PLACES, RATING = range(3)
+
+
+def to_referral_tender(update, context):
+    user_id = update.callback_query.from_user.id
+    query = update.callback_query
+    language = context.user_data['user'].get('language')
+    invited_users = referral.get_invited_users(user_id, context.user_data['referral_tender'].get('id'))
+    link = helpers.create_deep_linked_url(context.bot.get_me().username, str(user_id))
+    referral_message = strings.from_referral_tender(context.user_data['referral_tender'], language, len(invited_users),
+                                                    link)
+    referral_keyboard = keyboards.get_keyboard('referral', language)
+    query.edit_message_text(text=referral_message, reply_markup=referral_keyboard, parse_mode=ParseMode.HTML)
+    return ConversationHandler.END
 
 
 def start(update, context):
@@ -48,6 +64,7 @@ def check_channel(update, context):
                 context.bot.delete_message(chat_id=update.callback_query.message.chat.id,
                                            message_id=update.callback_query.message.message_id)
             return
+        context.user_data['referral_tender'] = referral_tender
         invited_users = referral.get_invited_users(user_id, referral_tender.get('id'))
         link = helpers.create_deep_linked_url(context.bot.get_me().username, str(user_id))
         referral_message = strings.from_referral_tender(referral_tender, language, len(invited_users), link)
@@ -59,4 +76,33 @@ def check_channel(update, context):
                                                     parse_mode=ParseMode.HTML)
 
 
+def referral_rules(update, context):
+    query = update.callback_query
+    language = context.user_data['user'].get('language')
+    rules_message = strings.from_referral_rules(context.user_data['referral_tender'], language)
+    keyboard = keyboards.get_keyboard('referral.rules', language)
+    query.edit_message_text(text=rules_message, reply_markup=keyboard, parse_mode=ParseMode.HTML)
+
+
+def prize_places(update, context):
+    query = update.callback_query
+    language = context.user_data['user'].get('language')
+    prize_message = strings.from_referral_prize_places(context.user_data['referral_tender'], language)
+    keyboard = keyboards.get_keyboard('referral.prize', language)
+    query.edit_message_text(text=prize_message, reply_markup=keyboard, parse_mode=ParseMode.HTML)
+
+
+def rating(update, context):
+    query = update.callback_query
+    language = context.user_data['user'].get('language')
+    referral_rating = referral.get_top_referrals(context.user_data['referral_tender'].get('id'))
+    rating_message = strings.from_referral_rating(referral_rating, language)
+    keyboard = keyboards.get_keyboard('referral.rating', language)
+    query.edit_message_text(text=rating_message, reply_markup=keyboard)
+
+
 referral_handler = MessageHandler(Filters.ReferralFilter(), start)
+rules_handler = CallbackQueryHandler(referral_rules, pattern='referral:rules')
+prize_handler = CallbackQueryHandler(prize_places, pattern='referral:prize')
+rating_handler = CallbackQueryHandler(rating, pattern='referral:rating')
+back_handler = CallbackQueryHandler(to_referral_tender, pattern='referral:back')

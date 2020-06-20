@@ -21,6 +21,10 @@
     "referral.level.item": "<b>{}. Уровень</b>: {}",
     "referral.level.users": "от {} до {} приглашённых пользователей",
     "referral.level.invited_users": "{} партнёров",
+    "referral.rules.template": "<b>Общий банк</b>: {total_pot} сум\n\n<b>Дата проведения конкурса:</b>\n\nНачало: {date_from}\nКонец: {date_to}",
+    "referral.prize.template": "Призовые места \uD83C\uDFC6:\n\n{}",
+    "referral.rating.template": "\uD83C\uDFC6 Список лидеров:\n\n{}",
+    "referral.rating.item.template": "{}. {} - {} рефералов",
 
     "payments.contractor.template": "\uD83D\uDCB3 Выберите тариф:\n\n\uD83C\uDFC3\uD83C\uDFFC\u200D♂ Тарифные планы для Соискателей:",
     "payments.employer.template": "\uD83D\uDCB3 Выберите тариф:\n\n\uD83C\uDFC3\uD83C\uDFFC\u200D♂ Тарифные планы для Работодателей:",

@@ -21,3 +21,8 @@ def get_invited_users(user_id, tender_id):
 def get_referral_tender_by_id(referral_tender_id):
     response = make_get_request(ENTITY, str(referral_tender_id)).json()
     return response
+
+
+def get_top_referrals(referral_tender_id):
+    response = make_get_request(ENTITY, str(referral_tender_id) + '/top').json()
+    return response

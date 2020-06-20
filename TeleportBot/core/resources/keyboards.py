@@ -110,6 +110,8 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
             [InlineKeyboardButton(get_string('go_back', language), callback_data='payments:back')]
         ]
         return InlineKeyboardMarkup(keyboard)
+    elif key == 'referral.rules' or key == 'referral.prize' or key == 'referral.rating':
+        return InlineKeyboardMarkup([[InlineKeyboardButton(get_string('go_back', language), callback_data='referral:back')]])
 
 
 def get_account_keyboard(user: dict) -> Optional[InlineKeyboardMarkup]:
