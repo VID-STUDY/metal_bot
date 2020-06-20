@@ -1,4 +1,5 @@
 from datetime import datetime
+import re
 
 
 def date_difference(older: datetime, newer: datetime):
@@ -27,3 +28,7 @@ def date_difference_now(date_string: str):
     older = datetime.strptime(date_string, '%Y-%m-%dT%H:%M:%S.%fZ')
 
     return date_difference(older, newer)
+
+
+def replace_new_line(string: str):
+    return re.sub(r'<br\s*?/>', '\n', string)
