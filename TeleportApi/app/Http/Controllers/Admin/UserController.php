@@ -137,35 +137,14 @@ class UserController extends Controller
         return redirect()->back()->with('change_password_success', 'Пароль успешно изменён');
     }
 
-    /**
-     * Show user's statics
-     *
-     * @param Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-    */
-    public function userStatistics(Request $request, int $id)
-    {
-        $user = $this->usersRepository->get($id);
-        $paginate = true;
-        if ($request->has(['start_date', 'end_date']))
-        {
-            $query = $user->history()->where('type','=', 'company.create');
-            $startDate = $request->get('start_date');
-            $endDate = $request->get('end_date');
-            if (!empty($startDate))
-                $query->whereDate('created_at', '>=', $startDate.' 00:00:00');
-            if (!empty($endDate))
-                $query->whereDate('created_at', '<=', $endDate.' 23:59:59');
-            $paginate = false;
-            $history = $query->get();
-            $companiesCount = $query->count();
-            $allCompaniesCount = $user->history()->where('type', '=', 'company.create')->count();
-            return view('admin.pages.users.statistics', compact('user', 'paginate', 'history', 'companiesCount', 'allCompaniesCount', 'startDate', 'endDate'));
-        } else {
-            $history = $user->history()->orderByDesc('created_at')->paginate(20);
-            $allCompaniesCount = $user->history()->where('type', '=', 'company.create')->count();
-            return view('admin.pages.users.statistics', compact('user', 'paginate', 'history', 'allCompaniesCount'));
-        }
+    public function sendMessage(Request $request, $userId) {
+        $text = $request->get('text');
+        $text = str_replace('<br />', "", $text);
+        $text = urlencode($text);
+        $text = str_replace('&nbsp;', ' ', $text);
+        $client = new \GuzzleHttp\Client();
+        $telegramToken = env('TELEGRAM_BOT_TOKEN');
+        $client->request('GET', 'https://api.telegram.org/bot'.$telegramToken.'/sendMessage?chat_id='.$userId.'&text='.$text.'&parse_mode=HTML');
+        return redirect()->route('admin.users.edit', $userId);
     }
 }
