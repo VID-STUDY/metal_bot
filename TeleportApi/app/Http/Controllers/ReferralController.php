@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ReferralTender;
+use App\User;
 use Illuminate\Http\Request;
 
 class ReferralController extends Controller
@@ -79,6 +80,15 @@ class ReferralController extends Controller
     {
         $now = now()->format('Y-m-d');
         $tender = ReferralTender::where('date_from', '<=', $now)->where('date_to', '>=', $now)->first();
-        return response()->json($tender, 200);
+        return response()->json($tender->load('levels'), 200);
+    }
+
+    public function invited(Request $request)
+    {
+        $userId = $request->get('user_id');
+        $tenderId = $request->get('referral_tender_id');
+        $user = User::find($userId);
+        $invited = $user->referrals()->where('referral_tender_id', $tenderId);
+        return response()->json($invited, 200);
     }
 }
