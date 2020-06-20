@@ -3,7 +3,7 @@ import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 from config import Config
-from core.bot import start, account, resumes, vacations, payments, referral, about, faq, partners, news
+from core.bot import start, account, resumes, vacations, payments, referral, about, faq, partners, news, support
 from core.resources import strings
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -69,6 +69,8 @@ def main():
     dp.add_handler(faq.faq_handler)
     dp.add_handler(news.news_handler)
     dp.add_handler(partners.partners_handler)
+
+    dp.add_handler(support.support_conversation)
 
     dp.add_handler(CommandHandler("help", help))
 

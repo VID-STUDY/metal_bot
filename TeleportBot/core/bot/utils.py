@@ -63,3 +63,8 @@ class Filters:
         def filter(self, message):
             return message.text and (strings.get_string('menu.news', 'ru') in message.text or
                                      strings.get_string('menu.news', 'uz') in message.text)
+
+    class SupportFilter(BaseFilter):
+        def filter(self, message):
+            return message.text and (strings.get_string('menu.support', 'ru') in message.text or
+                                     strings.get_string('menu.support', 'uz') in message.text)

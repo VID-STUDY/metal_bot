@@ -112,6 +112,8 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
         return InlineKeyboardMarkup(keyboard)
     elif key == 'referral.rules' or key == 'referral.prize' or key == 'referral.rating':
         return InlineKeyboardMarkup([[InlineKeyboardButton(get_string('go_back', language), callback_data='referral:back')]])
+    elif key == 'support.cancel':
+        return InlineKeyboardMarkup([[InlineKeyboardButton(get_string('cancel', language), callback_data='support:cancel')]])
 
 
 def get_account_keyboard(user: dict) -> Optional[InlineKeyboardMarkup]:
@@ -231,4 +233,9 @@ def get_channel_keyboard(invite_link: str, language: str) -> InlineKeyboardMarku
         [InlineKeyboardButton(get_string('referral.channel.subscribe', language=language), url=invite_link)],
         [InlineKeyboardButton(get_string('referral.channel.check', language), callback_data='referral:check_channel')]
     ]
+    return InlineKeyboardMarkup(keyboard)
+
+
+def get_support_keyboard(link) -> InlineKeyboardMarkup:
+    keyboard = [[InlineKeyboardButton("Перейти на страницу пользователя", url=link)]]
     return InlineKeyboardMarkup(keyboard)

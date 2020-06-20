@@ -44,6 +44,11 @@
     "payments.tariff.employer_tariff_2": "✨Размещение 2-х вакансий",
     "payments.tariff.employer_tariff_3": "✨Размещение 3-х вакансий",
 
+    "support.welcome": "<b>{name}</b>, напишете интересующий вас вопрос и мы постараемся ответить Вам в самое ближайшее время!",
+    "support.canceled": "❎ Ваша заявка отменена!",
+    "support.question.template": "Новый вопрос в разделе <b>Поддержка</b> бота <a href=\"tg://user?id={bot_id}\">{bot_name}</a>\uD83D\uDCE5\n\n<a href=\"tg://user?id={user_id}\">{user_name}</a> в {date}:\n\n{question}\n\n#Поддержка",
+    "support.success": "✅ Спасибо за ваш вопрос! Мы постараемся ответить Вам в ближайшее время!",
+
     "resumes.create": "\uD83D\uDCDD Создать",
     "resumes.list": "ℹ Ваши резюме:\n<i>Для редактирования/просмотра нажмите на резюме</i>",
     "resumes.item": "\uD83D\uDCA1 {}",
@@ -298,5 +303,6 @@
     "empty_balance": "На вашем балансе недостаточно денег ☹. Вы можете пополнить его прямо сейчас \uD83D\uDE09",
     "rules": "\uD83D\uDCC3 Правила",
     "prize_place": "\uD83C\uDFC6 Призовые места",
-    "rating": "\uD83D\uDD1D Топ рефводов"
+    "rating": "\uD83D\uDD1D Топ рефводов",
+    "cancel": "❎ Отмена"
 }
