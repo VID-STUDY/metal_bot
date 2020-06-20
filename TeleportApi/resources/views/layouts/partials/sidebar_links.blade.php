@@ -40,6 +40,12 @@
         </a>
     </li>
     <li>
+        <a href="{{ route('admin.telegram.index') }}">
+            <i class="fa fa-send-o"></i>
+            <span class="sidebar-mini-hide">Telegram</span>
+        </a>
+    </li>
+    <li>
         <a href="{{ route('admin.settings.index') }}">
             <i class="si si-settings"></i>
             <span class="sidebar-mini-hide">Настройки</span>
