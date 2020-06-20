@@ -159,7 +159,7 @@ def resume_categories(update, context):
         if user.get(user.get('user_role')+'_tariff'):
             payment_settings = settings.get_settings()
             item_cost = payment_settings.get(user.get(user.get('user_role')+'_tariff'))
-            if user.get('balance_' + user.get('user_role')) >= item_cost:
+            if int(user.get('balance_' + user.get('user_role'))) >= int(item_cost):
                 resume = resumes.create_resume(context.user_data['resume'])
                 context.user_data['user'] = resume.get('user')
                 success_message = strings.get_string('resumes.create.success', language)

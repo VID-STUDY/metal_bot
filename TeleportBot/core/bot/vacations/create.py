@@ -183,7 +183,7 @@ def vacation_categories(update, context):
         if user.get(user.get('user_role') + '_tariff'):
             payment_settings = settings.get_settings()
             item_cost = payment_settings.get(user.get(user.get('user_role') + '_tariff'))
-            if user.get('balance_' + user.get('user_role')) >= item_cost:
+            if int(user.get('balance_' + user.get('user_role'))) >= int(item_cost):
                 vacation = vacations.create_vacation(context.user_data['vacation'])
                 context.user_data['user'] = vacation.get('user')
                 success_message = strings.get_string('vacations.create.success', language)
