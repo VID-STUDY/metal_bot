@@ -88,7 +88,20 @@ class ReferralController extends Controller
         $userId = $request->get('user_id');
         $tenderId = $request->get('referral_tender_id');
         $user = User::find($userId);
-        $invited = $user->referrals()->where('referral_tender_id', $tenderId);
+        $invited = $user->referrals()->where('referral_tender_id', $tenderId)->get();
         return response()->json($invited, 200);
+    }
+
+    public function topReferrals(int $referralTenderId) 
+    {
+        $users = User::all();
+        $result = [];
+        foreach($users as $user) {
+            $invitedCount = $user->referrals()->where('referral_tender_id', $referralTenderId)->count();
+            if ($invitedCount > 0)
+                $result[$user->name] = $invitedCount;
+        }
+        asort($result);
+        return \response()->json($result, 200);
     }
 }
