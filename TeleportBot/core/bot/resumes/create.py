@@ -5,7 +5,7 @@ from core.bot.utils import Navigation
 from core.services import categories, resumes, settings
 from core.bot import payments
 
-TITLE, DESCRIPTION, CONTACTS, REGION, CITY, CATEGORIES, TARIFFS, PROVIDER = range(8)
+TARIFFS, PROVIDER, TITLE, DESCRIPTION, CONTACTS, REGION, CITY, CATEGORIES = range(8)
 
 
 def to_parent_categories(query, context):
