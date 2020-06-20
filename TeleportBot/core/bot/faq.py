@@ -12,4 +12,4 @@ def faq(update, context):
     update.message.reply_text(text=faq_message, parse_mode=ParseMode.HTML)
 
 
-faq_handler = MessageHandler(Filters.FaqFilter, faq)
+faq_handler = MessageHandler(Filters.FaqFilter(), faq)

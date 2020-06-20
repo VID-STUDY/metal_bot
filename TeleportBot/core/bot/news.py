@@ -12,4 +12,4 @@ def news(update, context):
     update.message.reply_text(text=news_message, parse_mode=ParseMode.HTML)
 
 
-news_handler = MessageHandler(Filters.NewsFilter, news)
+news_handler = MessageHandler(Filters.NewsFilter(), news)

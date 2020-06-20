@@ -12,4 +12,4 @@ def partners(update, context):
     update.message.reply_text(text=partners_message, parse_mode=ParseMode.HTML)
 
 
-partners_handler = MessageHandler(Filters.PartnersFilter, partners)
+partners_handler = MessageHandler(Filters.PartnersFilter(), partners)

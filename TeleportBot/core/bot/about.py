@@ -12,4 +12,4 @@ def about(update, context):
     update.message.reply_text(text=about_message, parse_mode=ParseMode.HTML)
 
 
-about_handler = MessageHandler(Filters.AboutFilter, about)
+about_handler = MessageHandler(Filters.AboutFilter(), about)
