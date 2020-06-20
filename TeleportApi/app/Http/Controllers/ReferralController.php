@@ -80,7 +80,10 @@ class ReferralController extends Controller
     {
         $now = now()->format('Y-m-d');
         $tender = ReferralTender::where('date_from', '<=', $now)->where('date_to', '>=', $now)->first();
-        return response()->json($tender->load('levels'), 200);
+        if ($tender)
+            return response()->json($tender->load('levels'), 200);
+        else 
+            return \response()->json(null, 200);
     }
 
     public function invited(Request $request)
