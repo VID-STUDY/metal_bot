@@ -15,11 +15,11 @@ class Navigation:
 
     @staticmethod
     def to_account(update, context, new_message=False):
+        if update.message:
+            user_id = update.message.from_user.id
+        elif update.callback_query:
+            user_id = update.callback_query.from_user.id
         if 'user' not in context.user_data:
-            if update.message:
-                user_id = update.message.from_user.id
-            elif update.callback_query:
-                user_id = update.callback_query.from_user.id
             context.user_data['user'] = users.user_exists(user_id)
         user = context.user_data['user']
         account_message = strings.get_user_info(user)
