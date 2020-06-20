@@ -34,23 +34,30 @@ def start(update, context):
 
 
 def check_channel(update, context):
+
+    def no_user_in_channel():
+        if update.message:
+            channel = context.bot.get_chat(chat_id=Config.TELEGRAM_CHANNEL_USERNAME)
+            channel_message = strings.get_string('referral.channel', language).format(channelName=channel.title)
+            channel_keyboard = keyboards.get_channel_keyboard(Config.TELEGRAM_CHANNEL_LINK, language)
+            update.message.reply_text(text=channel_message, reply_markup=channel_keyboard, parse_mode=ParseMode.HTML)
+        else:
+            error_message = strings.get_string('referral.channel.empty', language)
+            update.callback_query.answer(text=error_message, show_alert=True)
+
     if update.message:
         user_id = update.message.from_user.id
     else:
         user_id = update.callback_query.from_user.id
     language = context.user_data['user'].get('language')
     try:
-        context.bot.get_chat_member(chat_id=Config.TELEGRAM_CHANNEL_USERNAME, user_id=user_id)
+        user = context.bot.get_chat_member(chat_id=Config.TELEGRAM_CHANNEL_USERNAME, user_id=user_id)
+        if user.status == 'left':
+            no_user_in_channel()
+            return
     except BadRequest as error:
         if error.message == 'User not found':
-            if update.message:
-                channel = context.bot.get_chat(chat_id=Config.TELEGRAM_CHANNEL_USERNAME)
-                channel_message = strings.get_string('referral.channel', language).format(channelName=channel.title)
-                channel_keyboard = keyboards.get_channel_keyboard(Config.TELEGRAM_CHANNEL_LINK, language)
-                update.message.reply_text(text=channel_message, reply_markup=channel_keyboard, parse_mode=ParseMode.HTML)
-            else:
-                error_message = strings.get_string('referral.channel.empty', language)
-                update.callback_query.answer(text=error_message, show_alert=True)
+            no_user_in_channel()
         else:
             raise error
     else:
@@ -102,6 +109,7 @@ def rating(update, context):
 
 
 referral_handler = MessageHandler(Filters.ReferralFilter(), start)
+check_channel_handler = CallbackQueryHandler(check_channel, pattern='referral:check_channel')
 rules_handler = CallbackQueryHandler(referral_rules, pattern='referral:rules')
 prize_handler = CallbackQueryHandler(prize_places, pattern='referral:prize')
 rating_handler = CallbackQueryHandler(rating, pattern='referral:rating')

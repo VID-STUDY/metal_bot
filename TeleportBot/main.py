@@ -55,6 +55,7 @@ def main():
     dp.add_handler(payments.successful_payment_handler)
 
     dp.add_handler(referral.referral_handler)
+    dp.add_handler(referral.check_channel_handler)
     dp.add_handler(referral.rules_handler)
     dp.add_handler(referral.prize_handler)
     dp.add_handler(referral.rating_handler)
