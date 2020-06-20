@@ -42,6 +42,7 @@ Route::prefix('api')->group(function () {
     Route::get('/resumes/{resume}/vacations', 'ResumeController@getVacationsForResume');
 
     Route::get('referral/current', 'ReferralController@current');
+    Route::get('referral/invited', 'ReferralController@invited');
     Route::apiResource('referral', 'ReferralController');
 
     Route::get('/settings', 'SettingsController@index');
