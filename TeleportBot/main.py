@@ -3,7 +3,7 @@ import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 from config import Config
-from core.bot import start, account, resumes, vacations, payments, referral
+from core.bot import start, account, resumes, vacations, payments, referral, about, faq, partners, news
 from core.resources import strings
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -64,6 +64,11 @@ def main():
     dp.add_handler(referral.prize_handler)
     dp.add_handler(referral.rating_handler)
     dp.add_handler(referral.back_handler)
+
+    dp.add_handler(about.about_handler)
+    dp.add_handler(faq.faq_handler)
+    dp.add_handler(news.news_handler)
+    dp.add_handler(partners.partners_handler)
 
     dp.add_handler(CommandHandler("help", help))
 
