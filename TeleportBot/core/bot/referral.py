@@ -4,7 +4,9 @@ from core.services import users, referral
 
 from telegram.error import BadRequest
 from telegram import ParseMode
+from telegram.ext import MessageHandler
 from telegram.utils import helpers
+from .utils import Filters
 
 
 def start(update, context):
@@ -55,3 +57,6 @@ def check_channel(update, context):
         else:
             update.callback_query.edit_message_text(text=referral_message, reply_markup=referral_keyboard,
                                                     parse_mode=ParseMode.HTML)
+
+
+referral_handler = MessageHandler(Filters.ReferralFilter(), start)

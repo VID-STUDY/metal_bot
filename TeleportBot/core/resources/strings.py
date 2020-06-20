@@ -145,8 +145,9 @@ def from_referral_tender(referral_tender: dict, language: str, invited_users_cou
     for i in range(len(levels)):
         level = levels[i]
         level_string = get_string('referral.level.item', language).format(i+1, level.get(language + '_reward'))
-        levels_string += (level_string + '\n')
-    return template.format(referral_levels=levels_string, invited_count=invited_users_count, referral_link=referral_link, level_rewards=level_rewards_string)
+        level_rewards_string += (level_string + '\n')
+    return template.format(referral_levels=levels_string, invited_count=invited_users_count,
+                           referral_link=referral_link, levels_rewards=level_rewards_string)
 
 
 def payments_string(settings: dict, user_role: str, language: str):
