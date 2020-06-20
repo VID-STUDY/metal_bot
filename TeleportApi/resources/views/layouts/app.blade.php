@@ -61,7 +61,9 @@
 <script src="{{ asset('plugins/ckfinder/ckfinder.js') }}"></script>
 <script>
     $(function(){
-        var editor = CKEDITOR.replaceAll();
+        var editor = CKEDITOR.replaceAll(function (textarea, config) {
+            config.enterMode = CKEDITOR.ENTER_BR;
+        });
         CKFinder.setupCKEditor( editor );
     });
 
