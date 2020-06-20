@@ -28,6 +28,7 @@ class UsersController extends Controller
     {
         $user = User::create($request->all());
         if ($user->referral_from_id) {
+            $now = now()->format('Y-m-d');
             $tender = ReferralTender::where('date_from', '<=', $now)->where('date_to', '>=', $now)->first();
             if ($tender) {
                 $user->referral_tender_id = $tender->id;
