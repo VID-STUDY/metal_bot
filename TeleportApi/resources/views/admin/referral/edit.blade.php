@@ -101,7 +101,7 @@
                                 <div class="col-sm-12 col-md-6">
                                     <div class="form-group">
                                         <div class="form-material floating">
-                                            <input type="text" name="levels[{{ $key }}][uz_reward]" value="{{ $level->reward }}" id="uz_reward{{ $key }}" class="form-control">
+                                            <input type="text" name="levels[{{ $key }}][uz_reward]" value="{{ $level->uz_reward }}" id="uz_reward{{ $key }}" class="form-control">
                                             <label for="uz_reward{{ $key }}">Награда UZ</label>
                                         </div>
                                     </div>
