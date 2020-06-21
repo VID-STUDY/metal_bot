@@ -114,7 +114,7 @@ def vacation_contacts(update, context):
     language = context.user_data['user'].get('language')
     if strings.get_string('go_back', language) in update.message.text:
         message = strings.get_string('vacations.create.description', language)
-        update.message.reply_text(message)
+        update.message.reply_text(message, parse_mode=ParseMode.HTML)
         return DESCRIPTION
     context.user_data['vacation']['contacts'] = update.message.text
     message = strings.get_string('location.regions', language)
