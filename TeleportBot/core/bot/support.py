@@ -13,6 +13,9 @@ SUPPORT = range(1)
 
 
 def start(update, context):
+    if 'has_action' in context.user_data:
+        return
+    context.user_data['has_action'] = True
     user_id = update.message.from_user.id
     if 'user' not in context.user_data:
         context.user_data['user'] = users.user_exists(user_id)
@@ -52,6 +55,7 @@ def support(update, context):
         context.bot.delete_message(chat_id=message.chat_id, message_id=message.message_id)
         success_message = strings.get_string('support.success', language)
         update.message.reply_text(text=success_message)
+        del context.user_data['has_action']
         return ConversationHandler.END
     else:
         return SUPPORT

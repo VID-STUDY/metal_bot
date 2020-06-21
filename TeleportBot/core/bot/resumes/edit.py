@@ -9,6 +9,7 @@ UPDATE_RESUME, RESUME_ACTION, EDIT_ACTION = range(3)
 
 
 def resume(update, context):
+    context.user_data['has_action'] = True
     language = context.user_data['user'].get('language')
     query = update.callback_query
     resume_id = query.data.split(':')[1]
@@ -34,6 +35,7 @@ def resume_action(update, context):
         keyboard = keyboards.get_resumes_keyboard(user_resumes, language)
         message = strings.get_string('resumes.list', language)
         query.edit_message_text(message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
+        del context.user_data['has_action']
         return ConversationHandler.END
     else:
         return RESUME_ACTION
@@ -105,4 +107,5 @@ def delete(update, context):
     keyboard = keyboards.get_resumes_keyboard(user_resumes, language)
     message = strings.get_string('resumes.list', language)
     query.edit_message_text(message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
+    del context.user_data['has_action']
     return ConversationHandler.END

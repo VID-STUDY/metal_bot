@@ -26,6 +26,8 @@ def to_referral_tender(update, context):
 
 
 def start(update, context):
+    if 'has_action' in context.user_data:
+        return
     message = update.message
     user_id = message.from_user.id
     if 'user' not in context.user_data:

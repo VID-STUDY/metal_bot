@@ -10,6 +10,7 @@ LIST, RESUMES = range(2)
 
 
 def vacations_list(update, context):
+    context.user_data['has_action'] = True
     query = update.callback_query
     language = context.user_data['user'].get('language')
     user_id = context.user_data['user'].get('id')
@@ -17,6 +18,7 @@ def vacations_list(update, context):
     if len(user_vacations) == 0:
         empty_message = strings.get_string('vacations.empty_list', language)
         query.answer(text=empty_message, show_alert=True)
+        del context.user_data['has_action']
         return ConversationHandler.END
     list_message = strings.get_string('vacations.resumes.select', language)
     list_keyboard = keyboards.get_vacations_keyboard(user_vacations, language, include_create_button=False)

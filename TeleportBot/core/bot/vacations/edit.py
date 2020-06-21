@@ -9,6 +9,7 @@ UPDATE_VACATION, VACATION_ACTION, EDIT_ACTION = range(3)
 
 
 def vacation(update, context):
+    context.user_data['has_action'] = True
     language = context.user_data['user'].get('language')
     query = update.callback_query
     vacation_id = query.data.split(':')[1]
@@ -34,6 +35,7 @@ def vacation_action(update, context):
         keyboard = keyboards.get_vacations_keyboard(user_vacations, language)
         message = strings.get_string('vacations.list', language)
         query.edit_message_text(message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
+        del context.user_data['has_action']
         return ConversationHandler.END
     else:
         return VACATION_ACTION
@@ -109,4 +111,5 @@ def delete(update, context):
     keyboard = keyboards.get_vacations_keyboard(user_vacations, language)
     message = strings.get_string('vacations.list', language)
     query.edit_message_text(message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
+    del context.user_data['has_action']
     return ConversationHandler.END

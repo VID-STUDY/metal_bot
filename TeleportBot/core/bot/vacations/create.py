@@ -49,6 +49,7 @@ def from_categories_to_location(update, context):
 
 
 def create(update, context):
+    context.user_data['has_action'] = True
     query = update.callback_query
     context.user_data['vacation'] = {}
     context.user_data['vacation']['user_id'] = query.from_user.id
@@ -65,6 +66,7 @@ def vacation_title(update, context):
     language = context.user_data['user'].get('language')
     if strings.get_string('go_back', language) in update.message.text:
         Navigation.to_account(update, context)
+        del context.user_data['has_action']
         return ConversationHandler.END
     context.user_data['vacation']['title'] = update.message.text
     message = strings.get_string('vacations.create.salary', language)
@@ -196,6 +198,7 @@ def vacation_categories(update, context):
                                          reply_markup=menu_keyboard)
                 Navigation.to_account(update, context, new_message=True)
                 del context.user_data['vacation']
+                del context.user_data['has_action']
                 return ConversationHandler.END
         empty_balance = strings.get_string('empty_balance', language)
         query.answer(text=empty_balance, show_alert=True)

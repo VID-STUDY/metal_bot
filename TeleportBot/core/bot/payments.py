@@ -14,6 +14,7 @@ TARIFFS, PROVIDER = range(2)
 
 
 def start(update, context):
+    context.user_data['has_action'] = True
     query = update.callback_query
     language = context.user_data['user'].get('language')
     config = settings.get_settings()
@@ -31,6 +32,7 @@ def tariffs(update, context):
     tariff = query.data.split(':')[1]
     if tariff == 'back':
         Navigation.to_account(update, context)
+        del context.user_data['has_action']
         return ConversationHandler.END
     context.user_data['payments.tariff'] = tariff
     provider_message = strings.get_string('payments.providers', language)
@@ -71,7 +73,6 @@ def providers(update, context):
     query.answer()
     context.bot.delete_message(chat_id=chat_id, message_id=query.message.message_id)
     context.bot.send_invoice(chat_id, title, description, payload, provider_token, start_parameter, currency, prices)
-
     return ConversationHandler.END
 
 
@@ -98,6 +99,7 @@ def successful_payment_callback(update, context):
         vacations.create_vacation(context.user_data['vacation'])
         help_message = strings.get_string('vacations.create.success.help', language)
         update.message.reply_text(help_message, parse_mode=ParseMode.HTML)
+    del context.user_data['has_action']
     Navigation.to_account(update, context)
 
 
