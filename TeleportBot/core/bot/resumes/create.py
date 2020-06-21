@@ -40,7 +40,8 @@ def from_categories_to_location(update, context):
         context.bot.delete_message(chat_id=update.message.chat.id, message_id=context.user_data['categories_message_id'])
         message = strings.get_string('location.regions', language)
         keyboard = keyboards.get_keyboard('location.regions', language)
-        update.message.reply_text(text=message, reply_markup=keyboard)
+        message = update.message.reply_text(text=message, reply_markup=keyboard)
+        context.user_data['location_message_id'] = message.message_id
         return REGION
     else:
         context.bot.delete_message(chat_id=update.message.chat.id, message_id=update.message.message_id)
