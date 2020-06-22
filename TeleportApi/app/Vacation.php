@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Vacation extends Model
 {
@@ -28,5 +29,15 @@ class Vacation extends Model
     public function categories()
     {
         return $this->belongsToMany(HandbookCategory::class, 'category_vacation', 'vacation_id', 'category_id');
+    }
+
+    public function getLocation()
+    {
+        $locations = json_decode(file_get_contents(Storage::path('locations.json')), true);
+        $regionCode = explode('.', $this->location)[0];
+        $cityCode = intval(explode('.', $this->location)[1]);
+        $regionName = $locations["location.regions.$regionCode"];
+        $cityName = $locations["location.regions.$regionCode.cities"][$cityCode];
+        return "$regionName, $cityName";
     }
 }

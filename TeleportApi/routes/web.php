@@ -29,6 +29,10 @@ Route::middleware('auth')->name('admin.')->namespace('Admin')->group(function ()
 
     Route::get('/telegram', 'TelegramController@index')->name('telegram.index');
     Route::post('/telegram/distribution', 'TelegramController@distribution')->name('telegram.distribution');
+
+    Route::resource('resumes', 'ResumeController');
+
+    Route::resource('vacations', 'VacationController');
 });
 
 Route::prefix('api')->group(function () {
