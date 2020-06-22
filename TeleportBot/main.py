@@ -51,7 +51,7 @@ def main():
     dp.add_handler(vacations.vacation_resumes_handler)
 
     dp.add_handler(payments.payments_conversation)
-    dp.add_handler(payments.pre_checkout_handler)
+    # dp.add_handler(payments.pre_checkout_handler)
     dp.add_handler(payments.successful_payment_handler)
 
     dp.add_handler(referral.referral_handler)

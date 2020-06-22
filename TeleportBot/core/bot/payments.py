@@ -10,7 +10,7 @@ import secrets
 import re
 
 
-TARIFFS, PROVIDER = range(2)
+TARIFFS, PROVIDER, PRE_CHECKOUT = range(3)
 
 
 def start(update, context):
@@ -73,14 +73,21 @@ def providers(update, context):
     query.answer()
     context.bot.delete_message(chat_id=chat_id, message_id=query.message.message_id)
     context.bot.send_invoice(chat_id, title, description, payload, provider_token, start_parameter, currency, prices)
-    return ConversationHandler.END
+    return PRE_CHECKOUT
 
 
 def pre_checkout_callback(update, context):
-    query = update.pre_checkout_query
     language = context.user_data['user'].get('language')
+    if update.message:
+        if strings.get_string('go_back', language) in update.message.text:
+            Navigation.to_account(update, context, new_message=True)
+            return ConversationHandler.END
+        context.bot.delete_message(chat_id=update.message.chat_id, message_id=update.message.message_id)
+        return PRE_CHECKOUT
+    query = update.pre_checkout_query
     if query.invoice_payload == context.user_data['payments.payload']:
         query.answer(ok=True)
+        return ConversationHandler.END
     else:
         query.answer(ok=False, error_message=strings.get_string('error', language))
 
@@ -107,7 +114,9 @@ payments_conversation = ConversationHandler(
     entry_points=[CallbackQueryHandler(start, pattern='account:balance')],
     states={
         TARIFFS: [CallbackQueryHandler(tariffs)],
-        PROVIDER: [CallbackQueryHandler(providers)]
+        PROVIDER: [CallbackQueryHandler(providers)],
+        PRE_CHECKOUT: [PreCheckoutQueryHandler(pre_checkout_callback),
+                       MessageHandler(Filters.text, pre_checkout_callback)]
     },
     fallbacks=[MessageHandler(Filters.text, '')]
 )

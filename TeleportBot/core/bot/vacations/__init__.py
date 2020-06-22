@@ -4,7 +4,7 @@ from . import resumes
 
 from core.bot.utils import Navigation
 
-from telegram.ext import CallbackQueryHandler, MessageHandler, Filters, ConversationHandler
+from telegram.ext import CallbackQueryHandler, MessageHandler, Filters, ConversationHandler, PreCheckoutQueryHandler
 
 
 create_vacation_conversation = ConversationHandler(
@@ -19,7 +19,9 @@ create_vacation_conversation = ConversationHandler(
         create.CITY: [CallbackQueryHandler(create.vacation_city), MessageHandler(Filters.text, create.from_location_to_contacts)],
         create.CATEGORIES: [CallbackQueryHandler(create.vacation_categories), MessageHandler(Filters.text, create.from_categories_to_location)],
         create.TARIFFS: [CallbackQueryHandler(create.payments.tariffs)],
-        create.PROVIDER: [CallbackQueryHandler(create.payments.providers)]
+        create.PROVIDER: [CallbackQueryHandler(create.payments.providers)],
+        create.PRE_CHECKOUT: [PreCheckoutQueryHandler(create.payments.pre_checkout_callback),
+                              MessageHandler(Filters.text, create.payments.pre_checkout_callback)]
     },
     fallbacks=[MessageHandler(Filters.text, '')]
 )
