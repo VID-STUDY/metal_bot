@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\ReferralTender;
+use App\User;
 use Illuminate\Http\Request;
 
 class ReferralController extends Controller
@@ -59,7 +60,15 @@ class ReferralController extends Controller
      */
     public function edit(ReferralTender $referral)
     {
-        return view('admin.referral.edit', compact('referral'));
+        $users = User::all();
+        $topReferrals = [];
+        foreach($users as $user) {
+            $invitedCount = $user->referrals()->where('referral_tender_id', $referral->id)->count();
+            if ($invitedCount > 0)
+                $topReferrals[$user->name] = $invitedCount;
+        }
+        asort($topReferrals);
+        return view('admin.referral.edit', compact('referral', 'topReferrals'));
     }
 
     /**

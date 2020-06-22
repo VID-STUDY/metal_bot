@@ -113,6 +113,18 @@
             </div>
         </div>
     </form>
+    <div class="block">
+        <div class="block-header block-header-default">
+            <h3 class="block-title">Топ рефоводов</h3>
+        </div>
+        <div class="block-content">
+            <ul class="list-group list-group-flush">
+                @foreach($topReferrals as $name => $count)
+                    <li class="list-group-item">{{ $loop->index + 1 }}. {{ $name }} - {{ $count }}</li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
     <template id="level-template">
         <div class="referral-level mt-20" style="border-bottom: 1px solid #eaecee;" id="referralLevel{0}">
             <div class="d-flex align-items-center justify-content-between">
