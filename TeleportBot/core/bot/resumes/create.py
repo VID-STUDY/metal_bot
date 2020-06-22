@@ -159,10 +159,10 @@ def resume_categories(update, context):
         else:
             return to_parent_categories(query, context)
     if category_id == 'save':
-        if user.get(user.get('user_role')+'_tariff'):
+        if user.get(user.get('user_role')+'_tariff') or user.get('free_actions_count') > 0:
             payment_settings = settings.get_settings()
             item_cost = payment_settings.get(user.get(user.get('user_role')+'_tariff'))
-            if int(user.get('balance_' + user.get('user_role'))) >= int(item_cost):
+            if int(user.get('balance_' + user.get('user_role'))) >= int(item_cost) or user.get('free_actions_count') > 0:
                 resume = resumes.create_resume(context.user_data['resume'])
                 context.user_data['user'] = resume.get('user')
                 success_message = strings.get_string('resumes.create.success', language)

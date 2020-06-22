@@ -32,9 +32,13 @@ class ResumeController extends Controller
             $resume->categories()->attach($category);
         }
         $user = $resume->user;
-        $tariff = $user->contractor_tariff;
-        $resumeCost = Settings::get()->$tariff;
-        $user->balance_contractor -= $resumeCost;
+        if ($user->free_actions_count > 0) {
+            $user->free_actions_count -= 1;
+        } else {
+            $tariff = $user->contractor_tariff;
+            $resumeCost = Settings::get()->$tariff;
+            $user->balance_contractor -= $resumeCost;
+        }
         $user->save();
         return response()->json($resume, 201);
     }
@@ -78,11 +82,11 @@ class ResumeController extends Controller
 
     /**
      * Get vacations that are suitable for resume
-     * 
+     *
      * @param Resume $resume
      * @return \Illuminate\Http\Response
      */
-    public function getVacationsForResume(Resume $resume) 
+    public function getVacationsForResume(Resume $resume)
     {
         $vacations = collect();
         foreach($resume->categories as $category) {
@@ -91,7 +95,7 @@ class ResumeController extends Controller
         $vacations = $vacations->unique(function ($item) {
             return $item->id;
         });
-        if ($resume->location !== 'all') 
+        if ($resume->location !== 'all')
             $vacations = $vacations->filter(function ($vacation, $key) use ($resume) {
                 return $vacation->location == $resume->location || $vacation->location == 'all';
             });

@@ -32,9 +32,13 @@ class VacationController extends Controller
             $vacation->categories()->attach($category);
         }
         $user = $vacation->user;
-        $tariff = $user->employer_tariff;
-        $vacationCost = Settings::get()->$tariff;
-        $user->balance_employer -= $vacationCost;
+        if ($user->free_actions_count > 0) {
+            $user->free_actions_count -= 1;
+        } else {
+            $tariff = $user->contractor_tariff;
+            $resumeCost = Settings::get()->$tariff;
+            $user->balance_contractor -= $resumeCost;
+        }
         $user->save();
         return response()->json($vacation, 201);
     }
@@ -79,11 +83,11 @@ class VacationController extends Controller
 
     /**
      * Get resumes that are suitable for vacation
-     *  
+     *
      * @param Vacation $vacation
      * @return \Illuminate\Http\Response
      */
-    public function getResumesForVacation(Vacation $vacation) 
+    public function getResumesForVacation(Vacation $vacation)
     {
         $resumes = collect();
         foreach($vacation->categories as $category)
