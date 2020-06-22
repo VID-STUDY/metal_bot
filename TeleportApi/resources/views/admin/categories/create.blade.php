@@ -45,12 +45,10 @@
                                 @error('ru_title') <div id="val-username-error" class="invalid-feedback animated fadeInDown">{{ $message }}</div> @enderror
                             </div>
                             <div class="form-group @error('ru_description') is-invalid @enderror">
-                                <div class="form-material floating">
-                                    <label for="ruDescription">Описание</label>
-                                    <textarea name="ru_description" id="ruDescription"
-                                              class="form-control">{{ old('ru_description') }}</textarea>
-                                    @error('ru_description') <div id="val-username-error" class="invalid-feedback animated fadeInDown">{{ $message }}</div> @enderror
-                                </div>
+                                <label for="ruDescription">Описание</label>
+                                <textarea name="ru_description" id="ruDescription"
+                                          class="form-control">{{ old('ru_description') }}</textarea>
+                                @error('ru_description') <div id="val-username-error" class="invalid-feedback animated fadeInDown">{{ $message }}</div> @enderror
                             </div>
                         </div>
                         <!-- END Step 1 -->
