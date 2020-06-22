@@ -1,7 +1,7 @@
 from telegram import ParseMode
 from telegram.ext import MessageHandler
 
-from core.resources import utils
+from core.resources import utils, images
 from core.services import settings
 from .utils import Filters
 
@@ -11,7 +11,12 @@ def news(update, context):
         return
     news_message = settings.get_settings().get('news')
     news_message = utils.replace_new_line(news_message)
-    update.message.reply_text(text=news_message, parse_mode=ParseMode.HTML)
+    image = images.get_news_image()
+    if image:
+        chat_id = update.message.chat_id
+        context.bot.send_photo(chat_id=chat_id, photo=image, caption=news_message, parse_mode=ParseMode.HTML)
+    else:
+        update.message.reply_text(text=news_message, parse_mode=ParseMode.HTML)
 
 
 news_handler = MessageHandler(Filters.NewsFilter(), news)

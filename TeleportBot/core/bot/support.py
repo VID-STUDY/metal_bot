@@ -2,7 +2,7 @@ from telegram.ext import ConversationHandler, MessageHandler, CallbackQueryHandl
 from telegram import ParseMode
 
 from core.services import users
-from core.resources import strings, keyboards
+from core.resources import strings, keyboards, images
 from .utils import Filters
 from config import Config
 
@@ -22,7 +22,13 @@ def start(update, context):
     language = context.user_data['user'].get('language')
     support_message = strings.get_string('support.welcome', language).format(name=context.user_data['user'].get('name'))
     support_keyboard = keyboards.get_keyboard('support.cancel', language)
-    message = update.message.reply_text(text=support_message, reply_markup=support_keyboard, parse_mode=ParseMode.HTML)
+    image = images.get_support_image()
+    if image:
+        chat_id = update.message.chat_id
+        message = context.bot.send_photo(chat_id=chat_id, photo=image, caption=support_message,
+                                         reply_markup=support_keyboard, parse_mode=ParseMode.HTML)
+    else:
+        message = update.message.reply_text(text=support_message, reply_markup=support_keyboard, parse_mode=ParseMode.HTML)
     context.user_data['support_message'] = message
     return SUPPORT
 

@@ -22,7 +22,9 @@ def start(update, context):
     payment_message = strings.payments_string(config, context.user_data['user'].get('user_role'), language)
     payment_keyboard = keyboards.get_keyboard('payments.' + context.user_data['user'].get('user_role'), language)
     query.answer()
-    query.edit_message_text(text=payment_message, reply_markup=payment_keyboard)
+    context.bot.delete_message(chat_id=query.message.chat_id, message_id=query.message.message_id)
+    context.bot.send_message(chat_id=query.message.chat_id, text=payment_message,
+                             reply_markup=payment_keyboard, parse_mode=ParseMode.HTML)
     return TARIFFS
 
 

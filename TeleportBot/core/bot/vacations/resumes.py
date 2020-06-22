@@ -22,7 +22,8 @@ def vacations_list(update, context):
         return ConversationHandler.END
     list_message = strings.get_string('vacations.resumes.select', language)
     list_keyboard = keyboards.get_vacations_keyboard(user_vacations, language, include_create_button=False)
-    query.edit_message_text(text=list_message, reply_markup=list_keyboard)
+    context.bot.delete_message(chat_id=user_id, message_id=query.message.message_id)
+    context.bot.send_message(chat_id=user_id, text=list_message, reply_markup=list_keyboard, parse_mode=ParseMode.HTML)
     return LIST
 
 

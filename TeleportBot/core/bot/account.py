@@ -11,9 +11,8 @@ def select_role_choice(update: Update, context):
     query = update.callback_query
     role = query.data.split(':')[1]
     user = users.set_user_role(query.from_user.id, role)
-    account_info = strings.get_user_info(user)
-    account_keyboard = keyboards.get_account_keyboard(user)
-    query.edit_message_text(account_info, reply_markup=account_keyboard)
+    context.user_data['user'] = user
+    Navigation.to_account(update, context)
     query.answer(text=strings.get_string('account.select_role.selected', context.user_data['user'].get('language')))
 
 
@@ -40,7 +39,7 @@ def change_role(update, context):
     language = context.user_data['user'].get('language')
     select_role_message = strings.get_string('account.select_role', language)
     select_role_keyboard = keyboards.get_keyboard('account.select_role', language)
-    query.edit_message_text(select_role_message, parse_mode=ParseMode.HTML, reply_markup=select_role_keyboard)
+    query.edit_message_caption(select_role_message, parse_mode=ParseMode.HTML, reply_markup=select_role_keyboard)
 
 
 def user_resumes(update, context):
@@ -51,7 +50,8 @@ def user_resumes(update, context):
     resumes = users.get_user_resumes(user_id)
     keyboard = keyboards.get_resumes_keyboard(resumes, language)
     message = strings.get_string('resumes.list', language)
-    query.edit_message_text(message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
+    context.bot.delete_message(chat_id=user_id, message_id=query.message.message_id)
+    context.bot.send_message(chat_id=user_id, text=message, reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
 
 def user_vacations(update, context):
@@ -61,7 +61,8 @@ def user_vacations(update, context):
     vacations = users.get_user_vacations(user_id)
     keyboard = keyboards.get_vacations_keyboard(vacations, language)
     message = strings.get_string('vacations.list', language)
-    query.edit_message_text(message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
+    context.bot.delete_message(chat_id=user_id, message_id=query.message.message_id)
+    context.bot.send_message(chat_id=user_id, text=message, reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
 
 account_handler = MessageHandler(Filters.AccountFilter(), start)

@@ -1,4 +1,4 @@
-from core.resources import strings, keyboards
+from core.resources import strings, keyboards, images
 from telegram.ext import BaseFilter
 from core.services import users
 
@@ -24,13 +24,27 @@ class Navigation:
         user = context.user_data['user']
         account_message = strings.get_user_info(user)
         account_keyboard = keyboards.get_account_keyboard(user)
+        image = images.get_account_image(context.user_data['user'].get('user_role'))
         if update.message:
-            update.message.reply_text(text=account_message, reply_markup=account_keyboard)
+            if image:
+                context.bot.send_photo(chat_id=user_id, photo=image, caption=account_message,
+                                       reply_markup=account_keyboard)
+            else:
+                update.message.reply_text(text=account_message, reply_markup=account_keyboard)
         elif update.callback_query:
             if new_message:
-                context.bot.send_message(chat_id=user_id, text=account_message, reply_markup=account_keyboard)
+                if image:
+                    context.bot.send_photo(chat_id=user_id, photo=image, caption=account_message,
+                                           reply_markup=account_keyboard)
+                else:
+                    context.bot.send_message(chat_id=user_id, text=account_message, reply_markup=account_keyboard)
             else:
-                update.callback_query.edit_message_text(text=account_message, reply_markup=account_keyboard)
+                if image:
+                    context.bot.delete_message(chat_id=user_id, message_id=update.callback_query.message.message_id)
+                    context.bot.send_photo(chat_id=user_id, photo=image, caption=account_message,
+                                           reply_markup=account_keyboard)
+                else:
+                    update.callback_query.edit_message_text(text=account_message, reply_markup=account_keyboard)
 
 
 class Filters:
