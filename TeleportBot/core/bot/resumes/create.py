@@ -65,7 +65,7 @@ def create(update, context):
 def resume_title(update, context):
     language = context.user_data['user'].get('language')
     if strings.get_string('go_back', language) in update.message.text:
-        Navigation.to_main_menu(update, language)
+        Navigation.to_main_menu(update, language, user_name=context.user_data['user'].get('name'))
         Navigation.to_account(update, context)
         del context.user_data['has_action']
         return ConversationHandler.END
