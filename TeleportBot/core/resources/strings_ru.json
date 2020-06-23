@@ -24,7 +24,7 @@
     "referral.level.item": "<b>{}. Уровень</b>: {}",
     "referral.level.users": "от {} до {} приглашённых пользователей",
     "referral.level.invited_users": "{} партнёров",
-    "referral.rules.template": "<b>Общий банк</b>: {total_pot} сум\n\n<b>Дата проведения конкурса:</b>\n\nНачало: {date_from}\nКонец: {date_to}",
+    "referral.rules.template": "<b>Общий банк</b>: {total_pot} сум\n\n<b>Условия:</b> Привести по своей реферальной ссылке как можно больше людей\n\n<b>Дата проведения конкурса:</b>\n\nНачало: {date_from}\nКонец: {date_to}",
     "referral.prize.template": "Призовые места \uD83C\uDFC6:\n\n{}",
     "referral.rating.template": "\uD83C\uDFC6 Список лидеров:\n\n{}",
     "referral.rating.item.template": "{}. {} - {} рефералов",
@@ -47,7 +47,7 @@
     "payments.tariff.employer_tariff_2": "✨Размещение 2-х вакансий",
     "payments.tariff.employer_tariff_3": "✨Размещение 3-х вакансий",
 
-    "support.welcome": "<b>{name}</b>, напишете интересующий вас вопрос и мы постараемся ответить Вам в самое ближайшее время!",
+    "support.welcome": "<b>Раздел \"Поддержки\"\n\n<b>Что не желательно писать?</b>\n- Не ознакомившись с разделами \"Вопрос - ответ\" и \"О нас\"\n- Задавать вопрос специально для того, чтобы проверить, насколько сильны наши телепатические способности :)\n\n<b>Что запрещено писать?</b>\n- Нецензурную лексику\n- Вопросы не по назначения\n\n<b>Подробнее об ответах:</b>\n- Ответ на Ваш вопрос может занять от 5 минут до 24-х часов\n\n<b>* Если вы так и не смогли найти ответа на свой вопрос, то пишите его прямо сюда, наши операторы Вам обязательно помогут!</b>",
     "support.canceled": "❎ Ваша заявка отменена!",
     "support.question.template": "Новый вопрос в разделе <b>Поддержка</b> бота <a href=\"tg://user?id={bot_id}\">{bot_name}</a>\uD83D\uDCE5\n\n<a href=\"tg://user?id={user_id}\">{user_name}</a> в {date}:\n\n{question}\n\n#Поддержка",
     "support.success": "✅ Спасибо за ваш вопрос! Мы постараемся ответить Вам в ближайшее время!",
@@ -113,7 +113,7 @@
     "location.regions": "\uD83D\uDDFA Выберите область по Республики Узбекистан из ниже перечисленного",
     "location.select.city": "\uD83D\uDDFA В списке ниже указана {}, сделайте свой выбор.»",
     "location.selected": "✅ Локация выбрана: {}",
-    "location.regions.all": "\uD83C\uDDFA\uD83C\uDDFF Весь Узбекистан",
+    "location.regions.all": "\uD83C\uDDFA\uD83C\uDDFF Вся Республика Узбекистан",
     "location.regions.0": "\uD83D\uDDFA Андижанская область",
     "location.regions.0.cities": [
         "\uD83D\uDDFA Андижан",
@@ -247,7 +247,6 @@
         "\uD83D\uDDFA Кувасай",
         "\uD83D\uDDFA Маргилан",
         "\uD83D\uDDFA Риштан",
-        "\uD83D\uDDFA Ташкент",
         "\uD83D\uDDFA Тинчилик",
         "\uD83D\uDDFA Фергана",
         "\uD83D\uDDFA Яйпан"
