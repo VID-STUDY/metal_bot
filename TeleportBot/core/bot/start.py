@@ -45,7 +45,7 @@ def languages(update: Update, context):
     user_name = _get_user_name(user)
     users.create_user(user.id, user_name, user.username, language,
                       referral_from_id=context.user_data.get('referral_from_id', None))
-    Navigation.to_main_menu(update, language, user_name=user_name))
+    Navigation.to_main_menu(update, language, user_name=user_name)
     help_message = strings.get_string('start.help', language)
     update.message.reply_text(help_message)
     return ConversationHandler.END
