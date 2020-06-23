@@ -27,16 +27,17 @@ class TelegramController extends Controller
         if ($request->has('image'))
         {
             $image = $request->file('image');
-            $image = fopen($image->getPath() . '/' . $image->getFilename(), 'r');
-            foreach ($users as $user)
+            foreach ($users as $user) {
+                $imageFile = fopen($image->getPath() . '/' . $image->getFilename(), 'r');
                 $client->post('sendPhoto', [
                     'multipart' => [
-                        [ 'name' => 'photo', 'contents' => $image ],
-                        [ 'name' => 'chat_id', 'contents' => $user->id ],
-                        [ 'name' => 'caption', 'contents' => $text ],
-                        [ 'name' => 'parse_mode', 'contents' => 'HTML' ]
+                        ['name' => 'photo', 'contents' => $imageFile],
+                        ['name' => 'chat_id', 'contents' => $user->id],
+                        ['name' => 'caption', 'contents' => $text],
+                        ['name' => 'parse_mode', 'contents' => 'HTML']
                     ]
                 ]);
+            }
         }
         else
             foreach ($users as $user)
