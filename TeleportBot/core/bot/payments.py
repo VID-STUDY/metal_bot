@@ -84,6 +84,8 @@ def pre_checkout_callback(update, context):
         if strings.get_string('go_back', language) in update.message.text:
             Navigation.to_main_menu(update, language, user_name=context.user_data['user'].get('name'))
             Navigation.to_account(update, context, new_message=True)
+            if 'has_action' in context.user_data:
+                del context.user_data['has_action']
             return ConversationHandler.END
         context.bot.delete_message(chat_id=update.message.chat_id, message_id=update.message.message_id)
         return PRE_CHECKOUT
