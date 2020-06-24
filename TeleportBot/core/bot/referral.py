@@ -79,10 +79,17 @@ def check_channel(update, context):
         referral_message = strings.from_referral_tender(referral_tender, language, len(invited_users), link)
         referral_keyboard = keyboards.get_keyboard('referral', language)
         if update.message:
-            update.message.reply_text(text=referral_message, reply_markup=referral_keyboard, parse_mode=ParseMode.HTML)
+            message = update.message.reply_text(text=referral_message, reply_markup=referral_keyboard, parse_mode=ParseMode.HTML)
         else:
-            update.callback_query.edit_message_text(text=referral_message, reply_markup=referral_keyboard,
-                                                    parse_mode=ParseMode.HTML)
+            message = update.callback_query.edit_message_text(text=referral_message, reply_markup=referral_keyboard,
+                                                              parse_mode=ParseMode.HTML)
+        if 'referral_message_id' in context.user_data:
+            try:
+                context.bot.delete_message(chat_id=user_id,
+                                           message_id=context.user_data['referral_message_id'])
+            except BadRequest:
+                pass
+        context.user_data['referral_message_id'] = message.message_id
 
 
 def referral_rules(update, context):
