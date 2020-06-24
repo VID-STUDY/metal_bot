@@ -1,6 +1,7 @@
 from core.resources import strings, keyboards, images
 from telegram.ext import BaseFilter
 from core.services import users
+from telegram.error import BadRequest
 
 
 class Navigation:
@@ -49,7 +50,10 @@ class Navigation:
         else:
             return
         if 'account_message_id' in context.user_data:
-            context.bot.delete_message(chat_id=user_id, message_id=context.user_data['account_message_id'])
+            try:
+                context.bot.delete_message(chat_id=user_id, message_id=context.user_data['account_message_id'])
+            except BadRequest:
+                pass
         context.user_data['account_message_id'] = message.message_id
 
 
