@@ -40,6 +40,7 @@ def support(update, context):
         context.bot.delete_message(chat_id=update.callback_query.message.chat_id,
                                    message_id=update.callback_query.message.message_id)
         update.callback_query.answer(text=canceled_message, show_alert=True)
+        del context.user_data['has_action']
         return ConversationHandler.END
     elif update.message:
         user_id = update.message.from_user.id
