@@ -275,12 +275,12 @@
 
 
     "menu.cabinet": "Шаҳсий кабинет \uD83D\uDCDD",
-    "menu.referral": "Реферал тизим",
-    "menu.about": "Биз ҳақимизда",
-    "menu.faq": "Савол-жавоб",
-    "menu.news": "Янгиликлар",
-    "menu.support": "Ёрдам бериш",
-    "menu.partners": "Бизнинг ҳамқорларимиз",
+    "menu.referral": "Реферал тизим \uD83E\uDD1D",
+    "menu.about": "\uD83D\uDDC2 Биз ҳақимизда",
+    "menu.faq": "\uD83D\uDCA1 Савол-жавоб",
+    "menu.news": "\uD83D\uDCEC Янгиликлар",
+    "menu.support": "Ёрдам бериш ☎",
+    "menu.partners": "Бизнинг ҳамқорларимиз \uD83D\uDCBC",
 
     "account.id": "\uD83C\uDD94 - ",
     "account.days": "\uD83D\uDD54 Қачондан бери ботда сиз: ",

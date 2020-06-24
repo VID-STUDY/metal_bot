@@ -21,12 +21,9 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
     elif key == 'menu':
         keyboard = [
             [get_string('menu.cabinet', language)],
-            [get_string('menu.referral', language)],
-            [get_string('menu.about', language)],
-            [get_string('menu.faq', language)],
-            [get_string('menu.news', language)],
-            [get_string('menu.support', language)],
-            [get_string('menu.partners', language)]
+            [get_string('menu.about', language), get_string('menu.support', language)],
+            [get_string('menu.faq', language), get_string('menu.partners', language)],
+            [get_string('menu.news', language), get_string('menu.referral', language)]
         ]
         return _create_keyboard(keyboard)
     elif key == 'account.select_role':

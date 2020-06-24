@@ -275,12 +275,12 @@
 
 
     "menu.cabinet": "Личный кабинет \uD83D\uDCDD",
-    "menu.referral": "Реферальная система",
-    "menu.about": "О наc",
-    "menu.faq": "Вопрос ответ",
-    "menu.news": "Новости",
-    "menu.support": "Поддержка",
-    "menu.partners": "Наши партнёры",
+    "menu.referral": "Реферальная система \uD83E\uDD1D",
+    "menu.about": "\uD83D\uDDC2 О наc",
+    "menu.faq": "\uD83D\uDCA1 Вопрос ответ",
+    "menu.news": "\uD83D\uDCEC Новости",
+    "menu.support": "Поддержка ☎",
+    "menu.partners": "Наши партнёры \uD83D\uDCBC",
 
     "account.id": "\uD83C\uDD94 - ",
     "account.days": "\uD83D\uDD54 Кол-во дней в боте: ",
