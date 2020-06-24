@@ -27,24 +27,30 @@ class Navigation:
         image = images.get_account_image(context.user_data['user'].get('user_role'))
         if update.message:
             if image:
-                context.bot.send_photo(chat_id=user_id, photo=image, caption=account_message,
-                                       reply_markup=account_keyboard)
+                message = context.bot.send_photo(chat_id=user_id, photo=image, caption=account_message,
+                                                 reply_markup=account_keyboard)
             else:
-                update.message.reply_text(text=account_message, reply_markup=account_keyboard)
+                message = update.message.reply_text(text=account_message, reply_markup=account_keyboard)
         elif update.callback_query:
             if new_message:
                 if image:
-                    context.bot.send_photo(chat_id=user_id, photo=image, caption=account_message,
-                                           reply_markup=account_keyboard)
+                    message = context.bot.send_photo(chat_id=user_id, photo=image, caption=account_message,
+                                                     reply_markup=account_keyboard)
                 else:
-                    context.bot.send_message(chat_id=user_id, text=account_message, reply_markup=account_keyboard)
+                    message = context.bot.send_message(chat_id=user_id, text=account_message, reply_markup=account_keyboard)
             else:
                 if image:
                     context.bot.delete_message(chat_id=user_id, message_id=update.callback_query.message.message_id)
-                    context.bot.send_photo(chat_id=user_id, photo=image, caption=account_message,
-                                           reply_markup=account_keyboard)
+                    message = context.bot.send_photo(chat_id=user_id, photo=image, caption=account_message,
+                                                     reply_markup=account_keyboard)
                 else:
                     update.callback_query.edit_message_text(text=account_message, reply_markup=account_keyboard)
+                    return
+        else:
+            return
+        if 'account_message_id' in context.user_data:
+            context.bot.delete_message(chat_id=user_id, message_id=context.user_data['account_message_id'])
+        context.user_data['account_message_id'] = message.message_id
 
 
 class Filters:
