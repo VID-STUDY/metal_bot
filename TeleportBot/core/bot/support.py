@@ -3,7 +3,7 @@ from telegram import ParseMode
 
 from core.services import users
 from core.resources import strings, keyboards, images
-from .utils import Filters
+from .utils import Filters, Navigation
 from config import Config
 
 from datetime import datetime
@@ -14,6 +14,7 @@ SUPPORT = range(1)
 
 def start(update, context):
     if 'has_action' in context.user_data:
+        context.bot.delete_message(chat_id=update.message.chat_id, message_id=update.message.message_id)
         return
     context.user_data['has_action'] = True
     user_id = update.message.from_user.id
@@ -35,11 +36,10 @@ def start(update, context):
 
 def support(update, context):
     language = context.user_data['user'].get('language')
-    if update.callback_query and update.callback_query.data.split(':')[1] == 'cancel':
+    if strings.get_string('cancel', language) in update.message.text:
         canceled_message = strings.get_string('support.canceled', language)
-        context.bot.delete_message(chat_id=update.callback_query.message.chat_id,
-                                   message_id=update.callback_query.message.message_id)
-        update.callback_query.answer(text=canceled_message, show_alert=True)
+        update.message.reply_text(canceled_message)
+        Navigation.to_main_menu(update, language, user_name=context.user_data['user'].get('name'))
         del context.user_data['has_action']
         return ConversationHandler.END
     elif update.message:
@@ -71,7 +71,7 @@ def support(update, context):
 support_conversation = ConversationHandler(
     entry_points=[MessageHandler(Filters.SupportFilter(), start)],
     states={
-        SUPPORT: [MessageHandler(TelegramFilters.text, support), CallbackQueryHandler(support)]
+        SUPPORT: [MessageHandler(TelegramFilters.text, support)]
     },
     fallbacks=[MessageHandler(TelegramFilters.text, '')]
 )

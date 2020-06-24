@@ -74,6 +74,9 @@ def providers(update, context):
     prices = [LabeledPrice(strings.get_string('payments.tariff.' + context.user_data['payments.tariff']), price * 100)]
     query.answer()
     context.bot.delete_message(chat_id=chat_id, message_id=query.message.message_id)
+    go_back_keyboard = keyboards.get_keyboard('go_back', language)
+    payment_message = strings.get_string('payments.message', language)
+    context.bot.send_message(chat_id=chat_id, text=payment_message, reply_markup=go_back_keyboard)
     context.bot.send_invoice(chat_id, title, description, payload, provider_token, start_parameter, currency, prices)
     return PRE_CHECKOUT
 
