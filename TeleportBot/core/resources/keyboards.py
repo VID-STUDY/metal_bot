@@ -103,7 +103,7 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
         keyboard = [
             [InlineKeyboardButton(get_string('payments.click', language), callback_data='payments:click')],
             [InlineKeyboardButton(get_string('payments.payme', language), callback_data='payments:payme')],
-            [InlineKeyboardButton(get_string('payments.yandex', language), callback_data='payments:yandex')],
+            # [InlineKeyboardButton(get_string('payments.yandex', language), callback_data='payments:yandex')],
             [InlineKeyboardButton(get_string('go_back', language), callback_data='payments:back')]
         ]
         return InlineKeyboardMarkup(keyboard)
