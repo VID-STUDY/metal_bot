@@ -20,6 +20,12 @@ def error(update, context):
         update.callback_query.answer(text=error_message, show_alert=True)
     else:
         update.message.reply_text(text=error_message)
+    raise context.error
+
+
+def empty_message_handler(update, context):
+    empty_handler_message = strings.get_string('message.welcome', 'ru')
+    update.message.reply_text(empty_handler_message)
 
 
 def main():
