@@ -42,6 +42,28 @@ def change_role(update, context):
     query.edit_message_caption(select_role_message, parse_mode=ParseMode.HTML, reply_markup=select_role_keyboard)
 
 
+def change_language(update, context):
+    query = update.callback_query
+    query.answer()
+    language = context.user_data['user'].get('language')
+    change_language_message = strings.get_string('account.select_language', language)
+    keyboard = keyboards.get_keyboard('account.language', language)
+    query.edit_message_caption(change_language_message, reply_markup=keyboard)
+
+
+def select_language(update, context):
+    query = update.callback_query
+    language = query.data.split(':')[1]
+    if language == 'back':
+        Navigation.to_account(update, context)
+        return
+    user = users.change_language(context.user_data['user'].get('id'), language)
+    context.user_data['user'] = user
+    success_message = strings.get_string('account.select_language.success', language)
+    query.answer(text=success_message)
+    Navigation.to_account(update, context)
+
+
 def user_resumes(update, context):
     language = context.user_data['user'].get('language')
     query = update.callback_query
@@ -70,3 +92,5 @@ select_role_choice_handler = CallbackQueryHandler(select_role_choice, pattern='^
 change_role_handler = CallbackQueryHandler(change_role, pattern='account:role')
 user_resumes_handler = CallbackQueryHandler(user_resumes, pattern='account:resumes')
 user_vacations_handler = CallbackQueryHandler(user_vacations, pattern='account:my_vacations')
+language_handler = CallbackQueryHandler(change_language, pattern='account:language')
+select_language_handler = CallbackQueryHandler(select_language, pattern=r'^languages:.*')

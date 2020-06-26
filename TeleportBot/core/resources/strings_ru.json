@@ -14,6 +14,9 @@
     "account.my_vacancies": "\uD83D\uDCDC Мои вакансии",
     "account.vacancies": "\uD83D\uDCD1 Вакансии",
     "account.resumes": "\uD83D\uDCDC Мои резюме",
+    "account.change_language": "\uD83C\uDF0E Язык",
+    "account.select_language": "\uD83C\uDF0E Выберите язык",
+    "account.select_language.success": "✅ Язык выбран",
 
     "referral.channel": "\uD83D\uDE42 Чтобы учавствовать в реферальной системе, подпишитесь на наш канал <b>{channelName}</b>!",
     "referral.channel.subscribe": "Подписаться",

@@ -14,6 +14,9 @@
     "account.my_vacancies": "\uD83D\uDCDC Бўш иш уринлар",
     "account.vacancies": "\uD83D\uDCD1 Бўш иш уринлар",
     "account.resumes": "\uD83D\uDCDC Менинг резюме",
+    "account.change_language": "\uD83C\uDF0E Тил",
+    "account.select_language": "\uD83C\uDF0E Тилни танланг",
+    "account.select_language.success": "✅ Тил танланган",
 
     "referral.channel": "\uD83D\uDE42 Реферал тизимда иштирок етиш учун бизнинг <b>{channelName}</b> каналимизга обуна бўлинг!",
     "referral.channel.subscribe": "Обуна бўлиш",

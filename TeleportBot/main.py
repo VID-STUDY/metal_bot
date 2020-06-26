@@ -44,6 +44,8 @@ def main():
     dp.add_handler(account.change_role_handler)
     dp.add_handler(account.user_resumes_handler)
     dp.add_handler(account.user_vacations_handler)
+    dp.add_handler(account.language_handler)
+    dp.add_handler(account.select_language_handler)
 
     dp.add_handler(resumes.resume_back_handler)
     dp.add_handler(resumes.create_resume_conversation)

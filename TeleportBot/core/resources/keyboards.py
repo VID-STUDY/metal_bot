@@ -111,7 +111,16 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
         return InlineKeyboardMarkup([[InlineKeyboardButton(get_string('go_back', language),
                                                            callback_data='referral:back')]])
     elif key == 'support.cancel':
-        return _create_keyboard([[get_string('cancel', language)]])
+        return _create_keyboard([[get_string('cancel', language)]]),
+    elif key == 'account.language':
+        if language == 'uz':
+            keyboard = [[InlineKeyboardButton(get_string('languages.ru'), callback_data='languages:ru')]]
+        elif language == 'ru':
+            keyboard = [[InlineKeyboardButton(get_string('languages.uz'), callback_data='languages:uz')]]
+        else:
+            return None
+        keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='languages:back')])
+        return InlineKeyboardMarkup(keyboard)
 
 
 def get_account_keyboard(user: dict) -> Optional[InlineKeyboardMarkup]:
@@ -124,7 +133,9 @@ def get_account_keyboard(user: dict) -> Optional[InlineKeyboardMarkup]:
             [InlineKeyboardButton(get_string('account.responses', user.get('language')),
                                   callback_data='account:responses')],
             [InlineKeyboardButton(get_string('account.my_vacancies', user.get('language')),
-                                  callback_data='account:my_vacations')]
+                                  callback_data='account:my_vacations')],
+            [InlineKeyboardButton(get_string('account.change_language', user.get('language')),
+                                  callback_data='account:language')]
         ]
     elif user.get('user_role') == 'contractor':
         keyboard = [
@@ -135,7 +146,9 @@ def get_account_keyboard(user: dict) -> Optional[InlineKeyboardMarkup]:
             [InlineKeyboardButton(get_string('account.vacancies', user.get('language')),
                                   callback_data='account:vacations')],
             [InlineKeyboardButton(get_string('account.resumes', user.get('language')),
-                                  callback_data='account:resumes')]
+                                  callback_data='account:resumes')],
+            [InlineKeyboardButton(get_string('account.change_language', user.get('language')),
+                                  callback_data='account:language')]
         ]
     else:
         return None

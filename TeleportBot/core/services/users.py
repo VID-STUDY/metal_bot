@@ -82,3 +82,11 @@ def set_user_tariff(user: dict, price: int, tariff):
     }
     response = make_put_request(ENTITY, str(user.get('id')), payload).json()
     return response
+
+
+def change_language(user_id, language):
+    payload = {
+        'language': language
+    }
+    response = make_put_request(ENTITY, str(user_id), payload).json()
+    return response
