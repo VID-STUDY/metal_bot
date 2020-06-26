@@ -17,7 +17,7 @@ class Settings extends Model
         $settings = self::first();
         if (!$settings) {
             $settings = Settings::create(['employer_tariff_1' => 7000,
-                'employer_tariff_2' => 13000, 'employer_tariff_3' => 18000, 'contractor_tariff_1' => 1200,
+                'employer_tariff_2' => 6500, 'employer_tariff_3' => 6000, 'contractor_tariff_1' => 1200,
                 'contractor_tariff_2' => 1100, 'contractor_tariff_3' => 1000]);
         }
         return $settings;
