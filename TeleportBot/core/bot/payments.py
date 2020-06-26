@@ -77,7 +77,9 @@ def providers(update, context):
     go_back_keyboard = keyboards.get_keyboard('go_back', language)
     payment_message = strings.get_string('payments.message', language)
     context.bot.send_message(chat_id=chat_id, text=payment_message, reply_markup=go_back_keyboard)
-    context.bot.send_invoice(chat_id, title, description, payload, provider_token, start_parameter, currency, prices)
+    invoice_message = context.bot.send_invoice(chat_id, title, description, payload, provider_token, start_parameter,
+                                               currency, prices)
+    context.user_data['invoice_message_id'] = invoice_message.message_id
     return PRE_CHECKOUT
 
 
@@ -85,11 +87,12 @@ def pre_checkout_callback(update, context):
     language = context.user_data['user'].get('language')
     if update.message:
         if strings.get_string('go_back', language) in update.message.text:
-            Navigation.to_main_menu(update, language, user_name=context.user_data['user'].get('name'))
-            Navigation.to_account(update, context, new_message=True)
-            if 'has_action' in context.user_data:
-                del context.user_data['has_action']
-            return ConversationHandler.END
+            context.bot.delete_message(chat_id=update.message.chat_id, message_id=context.user_data['invoice_message_id'])
+            provider_message = strings.get_string('payments.providers', language)
+            providers_keyboard = keyboards.get_keyboard('payments.providers', language)
+            context.bot.send_message(chat_id=update.message.chat_id, text=provider_message,
+                                     reply_markup=providers_keyboard)
+            return PROVIDER
         context.bot.delete_message(chat_id=update.message.chat_id, message_id=update.message.message_id)
         return PRE_CHECKOUT
     query = update.pre_checkout_query
