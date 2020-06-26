@@ -14,7 +14,6 @@ logger = logging.getLogger(__name__)
 
 def error(update, context):
     """Log Errors caused by Updates."""
-    logger.warning('Update "%s" caused error "%s"', update, context.error)
     error_message = strings.get_string('error', language='ru')
     if update.callback_query:
         update.callback_query.answer(text=error_message, show_alert=True)
@@ -76,7 +75,8 @@ def main():
 
     dp.add_handler(CommandHandler("help", help))
     # log all errors
-    # dp.add_error_handler(error)
+    dp.add_error_handler(error)
+    dp.add_handler(MessageHandler(Filters.all, empty_message_handler))
 
     # Start the Bot
     if Config.ENVIRONMENT == 'production':
