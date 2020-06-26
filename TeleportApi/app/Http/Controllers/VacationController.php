@@ -35,9 +35,9 @@ class VacationController extends Controller
         if ($user->free_actions_count > 0) {
             $user->free_actions_count -= 1;
         } else {
-            $tariff = $user->contractor_tariff;
-            $resumeCost = Settings::get()->$tariff;
-            $user->balance_contractor -= $resumeCost;
+            $tariff = $user->employer_tariff;
+            $vacationCost = Settings::get()->$tariff;
+            $user->balance_employer -= $vacationCost;
         }
         $user->save();
         return response()->json($vacation, 201);
