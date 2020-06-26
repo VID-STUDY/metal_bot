@@ -108,15 +108,17 @@ def successful_payment_callback(update, context):
     context.user_data['user'] = users.set_user_tariff(context.user_data['user'], context.user_data['payments.price'],
                                                       context.user_data['payments.tariff'])
     menu_keyboard = keyboards.get_keyboard('menu', language)
-    update.message.reply_text(strings.get_string('success', language), reply_markup=menu_keyboard)
+    update.message.reply_text(strings.get_string('vacations.create.success', language), reply_markup=menu_keyboard)
     if 'resume' in context.user_data:
         resumes.create_resume(context.user_data['resume'])
         help_message = strings.get_string('resumes.create.success.help', language)
         update.message.reply_text(help_message, parse_mode=ParseMode.HTML)
+        del context.user_data['resume']
     if 'vacation' in context.user_data:
         vacations.create_vacation(context.user_data['vacation'])
         help_message = strings.get_string('vacations.create.success.help', language)
         update.message.reply_text(help_message, parse_mode=ParseMode.HTML)
+        del context.user_data['vacation']
     del context.user_data['has_action']
     Navigation.to_account(update, context)
 
