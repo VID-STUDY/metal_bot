@@ -34,6 +34,8 @@ class Vacation extends Model
     public function getLocation()
     {
         $locations = json_decode(file_get_contents(Storage::path('locations.json')), true);
+        if ($this->location == 'all')
+            return '🗺 Вся Республика Узбекистан';
         $regionCode = explode('.', $this->location)[0];
         $cityCode = intval(explode('.', $this->location)[1]);
         $regionName = $locations["location.regions.$regionCode"];
