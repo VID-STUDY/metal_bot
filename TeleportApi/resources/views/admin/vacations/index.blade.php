@@ -6,6 +6,10 @@
     <div class="block">
         <div class="block-header block-header-default">
             <h3 class="block-title">Вакансии</h3>
+            <div class="block-options">
+                <a href="{{ route('admin.vacations.create') }}" class="btn btn-alt-primary"><i
+                        class="fa fa-plus mr-5"></i>Добавить вакансию</a>
+            </div>
         </div>
         <div class="block-content block-content-full">
             <div class="table-responsive">

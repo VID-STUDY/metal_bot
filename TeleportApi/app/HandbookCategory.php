@@ -30,7 +30,7 @@ class HandbookCategory extends Model
      */
     public function hasCategories()
     {
-        return isset($this->categories[0]);
+        return $this->categories()->count() > 0;
     }
 
     /**
