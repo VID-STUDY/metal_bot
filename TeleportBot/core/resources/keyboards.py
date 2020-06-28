@@ -122,7 +122,7 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
         keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='languages:back')])
         return InlineKeyboardMarkup(keyboard)
     elif key == 'notifications.close':
-        keyboard = [[InlineKeyboardButton(get_string('notifications.close', language), callback_data='notify:close')]]
+        keyboard = [[InlineKeyboardButton(get_string('close', language), callback_data='notify:close')]]
         return InlineKeyboardMarkup(keyboard)
 
 
