@@ -47,7 +47,8 @@ class VacationController extends Controller
             $resumes = $resumes->merge($category->resumes);
         $resumes = $resumes->unique(function ($resume) {
             return $resume->id;
-        })->filter(function ($resume, $key) use ($user) {
+        });
+        $resumes = $resumes->filter(function ($resume, $key) use ($user) {
             return $resume->user->id != $user->id;
         });
         if ($vacation->location !== 'all')
