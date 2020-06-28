@@ -40,7 +40,28 @@ class VacationController extends Controller
             $user->balance_employer -= $vacationCost;
         }
         $user->save();
-        return response()->json($vacation, 201);
+
+        // Notify users about new vacation
+        $resumes = collect();
+        foreach ($vacation->categories as $category)
+            $resumes = $resumes->merge($category->resumes);
+        $resumes = $resumes->unique(function ($resume) {
+            return $resume->id;
+        })->filter(function ($resume, $key) use ($user) {
+            return $resume->user->id != $user->id;
+        });
+        if ($vacation->location !== 'all')
+            $resumes = $resumes->filter(function ($resume, $key) use ($vacation) {
+                return $resume->location == $vacation->location || $resume->location == 'all';
+            });
+        $users = $resumes->pluck('user');
+        $result = [
+            'vacation' => $vacation,
+            'notifyUsers' => $users
+        ];
+
+
+        return response()->json($result, 201);
     }
 
     /**

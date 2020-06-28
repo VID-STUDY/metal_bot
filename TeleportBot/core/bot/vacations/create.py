@@ -1,7 +1,7 @@
 from telegram import ParseMode
 from telegram.ext import ConversationHandler
 from core.resources import strings, keyboards
-from core.bot.utils import Navigation
+from core.bot.utils import Navigation, Notifications
 from core.services import categories, vacations, settings
 from core.bot import payments
 
@@ -188,7 +188,8 @@ def vacation_categories(update, context):
             payment_settings = settings.get_settings()
             item_cost = payment_settings.get(user.get(user.get('user_role') + '_tariff'))
             if int(user.get('balance_' + user.get('user_role'))) >= int(item_cost) or user.get('free_actions_count') > 0:
-                vacation = vacations.create_vacation(context.user_data['vacation'])
+                result = vacations.create_vacation(context.user_data['vacation'])
+                vacation = result.get('vacation')
                 context.user_data['user'] = vacation.get('user')
                 success_message = strings.get_string('vacations.create.success', language)
                 help_message = strings.get_string('vacations.create.success.help', language)
@@ -200,6 +201,7 @@ def vacation_categories(update, context):
                 Navigation.to_account(update, context, new_message=True)
                 del context.user_data['vacation']
                 del context.user_data['has_action']
+                Notifications.notify_users_new_item(context.bot, result.get('notifyUsers'), 'vacations.notify.new')
                 return ConversationHandler.END
         empty_balance = strings.get_string('empty_balance', language)
         query.answer(text=empty_balance, show_alert=True)

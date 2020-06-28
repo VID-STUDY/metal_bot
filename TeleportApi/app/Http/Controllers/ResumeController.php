@@ -40,7 +40,25 @@ class ResumeController extends Controller
             $user->balance_contractor -= $resumeCost;
         }
         $user->save();
-        return response()->json($resume, 201);
+        $vacations = collect();
+        foreach($resume->categories as $category) {
+            $vacations = $vacations->merge($category->vacations);
+        }
+        $vacations = $vacations->unique(function ($item) {
+            return $item->id;
+        })->filter(function ($vacation, $key) use ($user) {
+            return $vacation->user->id != $user->id;
+        });
+        if ($resume->location !== 'all')
+            $vacations = $vacations->filter(function ($vacation, $key) use ($resume) {
+                return $vacation->location == $resume->location || $vacation->location == 'all';
+            });
+        $users = $vacations->pluck('user');
+        $result = [
+            'resume' => $resume,
+            'notifyUsers' => $users
+        ];
+        return response()->json($result, 201);
     }
 
     /**

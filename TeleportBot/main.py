@@ -3,7 +3,8 @@ import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 from config import Config
-from core.bot import start, account, resumes, vacations, payments, referral, about, faq, partners, news, support
+from core.bot import start, account, resumes, vacations, payments, referral, about, faq, partners, news, support, \
+    notifications
 from core.resources import strings
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -38,6 +39,8 @@ def main():
     dp = updater.dispatcher
 
     dp.add_handler(start.conversation_handler)
+
+    dp.add_handler(notifications.close_handler)
 
     dp.add_handler(account.account_handler)
     dp.add_handler(account.select_role_choice_handler)

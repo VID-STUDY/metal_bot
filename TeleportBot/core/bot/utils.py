@@ -2,6 +2,7 @@ from core.resources import strings, keyboards, images
 from telegram.ext import BaseFilter
 from core.services import users
 from telegram.error import BadRequest
+import threading
 
 
 class Navigation:
@@ -92,3 +93,30 @@ class Filters:
         def filter(self, message):
             return message.text and (strings.get_string('menu.support', 'ru') in message.text or
                                      strings.get_string('menu.support', 'uz') in message.text)
+
+
+class Notifications:
+
+    class NotificationThread:
+
+        def __init__(self, bot, notifiable_users, string_resource):
+            thread = threading.Thread(target=self.run, kwargs={'bot': bot, 'notifiable_users': notifiable_users,
+                                                               'string_resource': string_resource})
+            thread.daemon = True
+            thread.start()
+
+        def run(self, **kwargs):
+            bot = kwargs.get('bot')
+            notifiable_users = kwargs.get('notifiable_users')
+            string_resource = kwargs.get('string_resource')
+            for user in notifiable_users:
+                message = strings.get_string(string_resource, user.get('language'))
+                keyboard = keyboards.get_keyboard('notifications.close', user.get('language'))
+                try:
+                    bot.send_message(chat_id=user.get('id'), text=message, reply_markup=keyboard)
+                except BadRequest:
+                    continue
+
+    @staticmethod
+    def notify_users_new_item(bot, notifiable_users, string_resource):
+        Notifications.NotificationThread(bot, notifiable_users, string_resource)
