@@ -9,7 +9,7 @@
 @section('content')
     <div class="block">
         <div class="block-header block-header-default">
-            <h3 class="block-title">Справочник <small>Категории</small></h3>
+            <h3 class="block-title">Категории</h3>
             <div class="block-options">
                 <a href="{{ route('admin.categories.create') }}" class="btn btn-alt-primary"><i
                         class="fa fa-plus mr-5"></i>Добавить категорию</a>
