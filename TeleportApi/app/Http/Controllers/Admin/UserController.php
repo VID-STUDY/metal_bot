@@ -96,10 +96,6 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255'
-        ]);
         $roleId = $request->get('roleId');
         $this->usersRepository->update($id, $request, $roleId);
         return redirect()->route('admin.users.index');
