@@ -113,8 +113,10 @@ class VacationController extends Controller
         $resumes = collect();
         foreach($vacation->categories as $category)
             $resumes = $resumes->merge($category->resumes);
-        $resumes = $resumes->unique(function ($item) {
-            return $item->id;
+        $resumes = $resumes->unique(function ($resume) {
+            return $resume->id;
+        })->filter(function ($resume, $key) use ($vacation) {
+            return $resume->user->id != $vacation->user_id;
         });
         if ($vacation->location !== 'all')
             $resumes = $resumes->filter(function ($resume, $key) use ($vacation) {

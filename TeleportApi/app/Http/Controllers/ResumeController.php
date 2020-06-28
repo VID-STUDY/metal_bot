@@ -112,6 +112,8 @@ class ResumeController extends Controller
         }
         $vacations = $vacations->unique(function ($item) {
             return $item->id;
+        })->filter(function ($vacation, $key) use ($resume) {
+            return $vacation->user->id != $resume->user_id;
         });
         if ($resume->location !== 'all')
             $vacations = $vacations->filter(function ($vacation, $key) use ($resume) {
