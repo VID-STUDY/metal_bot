@@ -39,6 +39,8 @@ def resumes_for_vacation(update, context):
         empty_message = strings.get_string('vacations.resumes.empty', language)
         query.answer(text=empty_message, show_alert=True)
         return LIST
+    if type(resumes) is dict:
+        resumes = list(resumes.values())
     context.user_data['found_resumes'] = resumes
     context.user_data['current_page'] = 1
     first_resume = resumes[0]
