@@ -91,14 +91,14 @@ def from_resume(resume: dict, language: str, for_vacation=False) -> str:
         city_name = get_city_from_region(region, city, language)
         location = region_name + ', ' + city_name
     if for_vacation:
-        return template.format(date=resume.get('created_at'), title=resume.get('title'),
+        return template.format(date=utils.reformat_datetime(resume.get('created_at')), title=resume.get('title'),
                                description=resume.get('description'), contacts=resume.get('contacts'),
                                location=location)
     else:
         categories_string = ''
         for category in resume['categories']:
             categories_string += category.get(language + '_title') + '\n'
-        return template.format(date=resume.get('created_at'), title=resume.get('title'),
+        return template.format(date=utils.reformat_datetime(resume.get('created_at')), title=resume.get('title'),
                                description=resume.get('description'), contacts=resume.get('contacts'),
                                location=location, categories=categories_string)
 
@@ -116,7 +116,7 @@ def from_vacation(vacation: dict, language: str, for_resume=False) -> str:
         city_name = get_city_from_region(region, city, language)
         location = region_name + ', ' + city_name
     if for_resume:
-        return template.format(date=vacation.get('created_at'), title=vacation.get('title'),
+        return template.format(date=utils.reformat_datetime(vacation.get('created_at')), title=vacation.get('title'),
                                salary=vacation.get('salary'), category=vacation.get('category'),
                                description=vacation.get('description'), contacts=vacation.get('contacts'),
                                location=location)
@@ -124,7 +124,7 @@ def from_vacation(vacation: dict, language: str, for_resume=False) -> str:
         categories_string = ''
         for category in vacation['categories']:
             categories_string += category.get(language + '_title') + '\n'
-        return template.format(date=vacation.get('created_at'), title=vacation.get('title'),
+        return template.format(date=utils.reformat_datetime(vacation.get('created_at')), title=vacation.get('title'),
                                salary=vacation.get('salary'), category=vacation.get('category'),
                                description=vacation.get('description'), contacts=vacation.get('contacts'),
                                location=location, categories=categories_string)
