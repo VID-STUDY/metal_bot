@@ -40,6 +40,8 @@ def vacations_for_resume(update, context):
         empty_message = strings.get_string('resumes.vacations.empty', language)
         query.answer(text=empty_message, show_alert=True)
         return LIST
+    if type(vacations) is dict:
+        vacations = list(vacations.values())
     context.user_data['found_vacations'] = vacations
     context.user_data['current_page'] = 1
     first_vacation = vacations[0]
