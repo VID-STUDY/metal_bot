@@ -79,7 +79,7 @@
                 <!-- END Simple Wizard -->
                 <div class="form-group">
                     <label for="select2">Родительская категория</label>
-                    <select name="parent_id" id="select2" class="form-control">
+                    <select name="parent_id" id="select2" class="form-control js-select2">
                         <option value="0">-- нет --</option>
                         @foreach($categories as $category_list)
                             @include('admin.categories.components.category', ['delimiter' => ''])
@@ -122,8 +122,6 @@
                     }
                 }
             });
-
-            $('#select2').select2();
         })
     </script>
     <script>

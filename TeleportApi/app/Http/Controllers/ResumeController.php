@@ -55,7 +55,7 @@ class ResumeController extends Controller
             });
         $users = $vacations->pluck('user');
         $result = [
-            'resume' => $resume,
+            'resume' => $resume->load('user'),
             'notifyUsers' => $users
         ];
         return response()->json($result, 201);

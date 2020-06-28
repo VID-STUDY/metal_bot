@@ -56,7 +56,7 @@ class VacationController extends Controller
             });
         $users = $resumes->pluck('user');
         $result = [
-            'vacation' => $vacation,
+            'vacation' => $vacation->load('user'),
             'notifyUsers' => $users
         ];
 
