@@ -73,7 +73,8 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
         return InlineKeyboardMarkup(keyboard)
     elif key == 'referral':
         keyboard = [
-            [InlineKeyboardButton(get_string('rules', language), callback_data='referral:rules'), InlineKeyboardButton(get_string('prize_place', language), callback_data='referral:prize')],
+            [InlineKeyboardButton(get_string('rules', language), callback_data='referral:rules'),
+             InlineKeyboardButton(get_string('prize_place', language), callback_data='referral:prize')],
             [InlineKeyboardButton(get_string('rating', language), callback_data='referral:rating')]
         ]
         return InlineKeyboardMarkup(keyboard)
@@ -209,9 +210,13 @@ def get_categories_keyboard(categories: list, language: str, selected_categories
     keyboard = []
     for category in categories:
         if not any(d['id'] == category['id'] for d in selected_categories):
-            keyboard.append([InlineKeyboardButton(get_string('resumes.categories.item', language).format(category[language+'_title']), callback_data='categories:' + str(category['id']))])
+            keyboard.append([InlineKeyboardButton(
+                get_string('resumes.categories.item', language).format(category[language + '_title']),
+                callback_data='categories:' + str(category['id']))])
         else:
-            keyboard.append([InlineKeyboardButton(get_string('resumes.categories.item.selected', language).format(category[language+'_title']), callback_data='categories:' + str(category['id']))])
+            keyboard.append([InlineKeyboardButton(
+                get_string('resumes.categories.item.selected', language).format(category[language + '_title']),
+                callback_data='categories:' + str(category['id']))])
     keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='categories:back')])
     if selected_categories:
         keyboard.append([InlineKeyboardButton(get_string('save', language), callback_data='categories:save')])
@@ -249,10 +254,10 @@ def get_list_paginated_keyboard(entities: list, language: str, user: dict, curre
     keyboard = [[InlineKeyboardButton(get_string('open_chat', language), url='tg://user?id=' + str(user.get('id')))]]
     links = []
     for i in range(len(entities)):
-        if i+1 == current_page:
-            text = '-'+str(i+1)+'-'
+        if i + 1 == current_page:
+            text = '-' + str(i + 1) + '-'
         else:
-            text = str(i+1)
+            text = str(i + 1)
         links.append(InlineKeyboardButton(text, callback_data='page:' + str(i + 1)))
     keyboard.append(links)
     keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='page:back')])
