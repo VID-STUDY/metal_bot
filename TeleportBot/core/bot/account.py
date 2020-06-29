@@ -59,6 +59,7 @@ def select_language(update, context):
     context.user_data['user'] = user
     success_message = strings.get_string('account.select_language.success', language)
     query.answer(text=success_message)
+    Navigation.to_main_menu(update, language, user_name=context.user_data['user'].get('name'), context=context)
     Navigation.to_account(update, context)
 
 
