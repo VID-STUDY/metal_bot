@@ -112,7 +112,7 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
         return InlineKeyboardMarkup([[InlineKeyboardButton(get_string('go_back', language),
                                                            callback_data='referral:back')]])
     elif key == 'support.cancel':
-        return _create_keyboard([[get_string('cancel', language)]]),
+        return ReplyKeyboardMarkup([[get_string('cancel', language)]], resize_keyboard=True, one_time_keyboard=True)
     elif key == 'account.language':
         if language == 'uz':
             keyboard = [[InlineKeyboardButton(get_string('languages.ru'), callback_data='languages:ru')]]
