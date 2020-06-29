@@ -142,6 +142,8 @@ def main_menu_handler(update, context):
         account.start(update, context)
         return ConversationHandler.END
     elif CustomFilters.SupportFilter().filter(update.message):
+        support.support_conversation.handle_update(update, context.dispatcher,
+                                                   support.support_conversation.check_update(update), context)
         support.start(update, context)
         return ConversationHandler.END
     elif CustomFilters.NewsFilter().filter(update.message):
