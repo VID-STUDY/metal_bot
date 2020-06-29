@@ -1,5 +1,5 @@
 from core.resources import strings, keyboards, images
-from telegram.ext import BaseFilter
+from telegram.ext import BaseFilter, MessageHandler
 from core.services import users
 from telegram.error import BadRequest
 import threading
@@ -59,6 +59,7 @@ class Navigation:
 
 
 class Filters:
+
     class AccountFilter(BaseFilter):
         def filter(self, message):
             return message.text and (strings.get_string('menu.cabinet', 'ru') in message.text or

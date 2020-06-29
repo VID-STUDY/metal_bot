@@ -129,29 +129,41 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
 def get_account_keyboard(user: dict) -> Optional[InlineKeyboardMarkup]:
     if user.get('user_role') == 'employer':
         keyboard = [
-            [InlineKeyboardButton(get_string('account.change_role', user.get('language')),
-                                  callback_data='account:role')],
-            [InlineKeyboardButton(get_string('account.up_balance', user.get('language')),
-                                  callback_data='account:balance')],
-            [InlineKeyboardButton(get_string('account.responses', user.get('language')),
-                                  callback_data='account:responses')],
-            [InlineKeyboardButton(get_string('account.my_vacancies', user.get('language')),
-                                  callback_data='account:my_vacations')],
-            [InlineKeyboardButton(get_string('account.change_language', user.get('language')),
-                                  callback_data='account:language')]
+            [
+                InlineKeyboardButton(get_string('account.change_role', user.get('language')),
+                                     callback_data='account:role'),
+                InlineKeyboardButton(get_string('account.up_balance', user.get('language')),
+                                     callback_data='account:balance')
+            ],
+            [
+                InlineKeyboardButton(get_string('account.responses', user.get('language')),
+                                     callback_data='account:responses'),
+                InlineKeyboardButton(get_string('account.my_vacancies', user.get('language')),
+                                     callback_data='account:my_vacations')
+            ],
+            [
+                InlineKeyboardButton(get_string('account.change_language', user.get('language')),
+                                     callback_data='account:language')
+            ]
         ]
     elif user.get('user_role') == 'contractor':
         keyboard = [
-            [InlineKeyboardButton(get_string('account.change_role', user.get('language')),
-                                  callback_data='account:role')],
-            [InlineKeyboardButton(get_string('account.up_balance', user.get('language')),
-                                  callback_data='account:balance')],
-            [InlineKeyboardButton(get_string('account.vacancies', user.get('language')),
-                                  callback_data='account:vacations')],
-            [InlineKeyboardButton(get_string('account.resumes', user.get('language')),
-                                  callback_data='account:resumes')],
-            [InlineKeyboardButton(get_string('account.change_language', user.get('language')),
-                                  callback_data='account:language')]
+            [
+                InlineKeyboardButton(get_string('account.change_role', user.get('language')),
+                                     callback_data='account:role'),
+                InlineKeyboardButton(get_string('account.up_balance', user.get('language')),
+                                     callback_data='account:balance')
+            ],
+            [
+                InlineKeyboardButton(get_string('account.vacancies', user.get('language')),
+                                     callback_data='account:vacations'),
+                InlineKeyboardButton(get_string('account.resumes', user.get('language')),
+                                     callback_data='account:resumes')
+            ],
+            [
+                InlineKeyboardButton(get_string('account.change_language', user.get('language')),
+                                     callback_data='account:language')
+            ]
         ]
     else:
         return None
@@ -169,7 +181,9 @@ def get_resumes_keyboard(resumes: list, language: str, include_create_button: bo
                                               callback_data=data)])
     if include_create_button:
         keyboard.append([InlineKeyboardButton(get_string('resumes.create', language), callback_data='resumes:create')])
-    keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='resumes:back')])
+        keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='resumes:back')])
+    else:
+        keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='vacations.resume:back')])
     return InlineKeyboardMarkup(keyboard)
 
 
@@ -183,8 +197,11 @@ def get_vacations_keyboard(vacations: list, language: str, include_create_button
         keyboard.append([InlineKeyboardButton(get_string('vacations.item', language).format(vacation.get('title')),
                                               callback_data=data)])
     if include_create_button:
-        keyboard.append([InlineKeyboardButton(get_string('vacations.create', language), callback_data='my_vacations:create')])
-    keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='my_vacations:back')])
+        keyboard.append(
+            [InlineKeyboardButton(get_string('vacations.create', language), callback_data='my_vacations:create')])
+        keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='my_vacations:back')])
+    else:
+        keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='vacations:back')])
     return InlineKeyboardMarkup(keyboard)
 
 

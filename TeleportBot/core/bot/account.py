@@ -17,8 +17,6 @@ def select_role_choice(update: Update, context):
 
 
 def start(update: Update, context):
-    if 'has_action' in context.user_data:
-        return
     user = update.message.from_user
     user = users.user_exists(user.id)
     if not user:

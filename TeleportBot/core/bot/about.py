@@ -8,8 +8,6 @@ from .utils import Filters
 
 
 def about(update, context):
-    if 'has_action' in context.user_data:
-        return
     about_message = settings.get_settings().get('about')
     about_message = utils.replace_new_line(about_message)
     message = update.message.reply_text(text=about_message, parse_mode=ParseMode.HTML)

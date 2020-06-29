@@ -5,6 +5,7 @@ from core.services import users
 from core.resources import strings, keyboards, images
 from .utils import Filters, Navigation
 from config import Config
+from . import about, account, faq, news, referral
 
 from datetime import datetime
 import pytz
@@ -13,9 +14,6 @@ SUPPORT = range(1)
 
 
 def start(update, context):
-    if 'has_action' in context.user_data:
-        context.bot.delete_message(chat_id=update.message.chat_id, message_id=update.message.message_id)
-        return
     context.user_data['has_action'] = True
     user_id = update.message.from_user.id
     if 'user' not in context.user_data:
@@ -73,5 +71,11 @@ support_conversation = ConversationHandler(
     states={
         SUPPORT: [MessageHandler(TelegramFilters.text, support)]
     },
-    fallbacks=[MessageHandler(TelegramFilters.text, '')]
+    fallbacks=[
+        account.account_handler,
+        referral.referral_handler,
+        faq.faq_handler,
+        about.about_handler,
+        news.news_handler
+    ]
 )

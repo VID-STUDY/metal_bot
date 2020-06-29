@@ -2,9 +2,10 @@ from telegram.ext import ConversationHandler, CallbackQueryHandler, MessageHandl
 from telegram import LabeledPrice, ParseMode
 
 from core.resources import strings, keyboards
-from .utils import Navigation, Notifications
+from .utils import Navigation, Notifications, Filters as CustomFilters
 from config import Config
 from core.services import users, settings, resumes, vacations
+from . import about, account, faq, news, support, referral
 
 import secrets
 import re
@@ -130,15 +131,44 @@ def successful_payment_callback(update, context):
     Navigation.to_account(update, context)
 
 
+def main_menu_handler(update, context):
+    if CustomFilters.AboutFilter().filter(update.message):
+        about.about(update, context)
+    elif CustomFilters.FaqFilter().filter(update.message):
+        faq.faq(update, context)
+    elif CustomFilters.ReferralFilter().filter(update.message):
+        referral.start(update, context)
+    elif CustomFilters.AccountFilter().filter(update.message):
+        account.start(update, context)
+        return ConversationHandler.END
+    elif CustomFilters.SupportFilter().filter(update.message):
+        support.start(update, context)
+        return ConversationHandler.END
+    elif CustomFilters.NewsFilter().filter(update.message):
+        news.news(update, context)
+    else:
+        context.bot.delete_message(chat_id=update.message.chat_id, message_id=update.message.message_id)
+        return
+    return ConversationHandler.END
+
+
 payments_conversation = ConversationHandler(
     entry_points=[CallbackQueryHandler(start, pattern='account:balance')],
     states={
-        TARIFFS: [CallbackQueryHandler(tariffs)],
-        PROVIDER: [CallbackQueryHandler(providers)],
+        TARIFFS: [CallbackQueryHandler(tariffs), MessageHandler(Filters.text, main_menu_handler)],
+        PROVIDER: [CallbackQueryHandler(providers), MessageHandler(Filters.text, main_menu_handler)],
         PRE_CHECKOUT: [PreCheckoutQueryHandler(pre_checkout_callback),
-                       MessageHandler(Filters.text, pre_checkout_callback)]
+                       MessageHandler(Filters.text, pre_checkout_callback),
+                       MessageHandler(Filters.text, main_menu_handler)]
     },
-    fallbacks=[MessageHandler(Filters.text, '')]
+    fallbacks=[
+        account.account_handler,
+        referral.referral_handler,
+        faq.faq_handler,
+        about.about_handler,
+        support.support_conversation,
+        news.news_handler
+    ]
 )
 
 pre_checkout_handler = PreCheckoutQueryHandler(pre_checkout_callback)

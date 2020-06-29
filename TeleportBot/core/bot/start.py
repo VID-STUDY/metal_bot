@@ -8,8 +8,6 @@ LANGUAGES = 1
 
 
 def referral_start(update, context):
-    if 'has_action' in context.user_data:
-        return
     user = users.user_exists(update.message.from_user.id)
     if user:
         Navigation.to_main_menu(update, user.get('language'), user_name=user.get('name'))

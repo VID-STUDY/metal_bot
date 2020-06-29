@@ -38,6 +38,20 @@ def main():
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
 
+    dp.add_handler(resumes.resume_back_handler)
+    dp.add_handler(resumes.create_resume_conversation)
+    dp.add_handler(resumes.action_resume_conversation)
+    dp.add_handler(resumes.resume_vacations_conversation)
+
+    dp.add_handler(vacations.create_vacation_conversation)
+    dp.add_handler(vacations.action_vacation_conversation)
+    dp.add_handler(vacations.vacation_back_handler)
+    dp.add_handler(vacations.vacation_resumes_handler)
+
+    dp.add_handler(payments.payments_conversation)
+    dp.add_handler(payments.pre_checkout_handler)
+    dp.add_handler(payments.successful_payment_handler)
+
     dp.add_handler(start.conversation_handler)
 
     dp.add_handler(notifications.close_handler)
