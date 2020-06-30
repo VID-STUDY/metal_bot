@@ -3,14 +3,16 @@ from telegram.ext import MessageHandler
 from telegram.error import BadRequest
 
 from core.resources import utils, images
-from core.services import settings
+from core.services import settings, users
 from .utils import Filters
 
 
 def faq(update, context):
     faq_message = settings.get_settings().get('faq')
     faq_message = utils.replace_new_line(faq_message)
-    image = images.get_faq_image()
+    if 'user' not in context.user_data:
+        context.user_data['user'] = users.user_exists(update.message.from_user.id)
+    image = images.get_faq_image(context.user_data['user'].get('language'))
     if image:
         chat_id = update.message.chat_id
         message = context.bot.send_photo(chat_id=chat_id, photo=image, caption=faq_message, parse_mode=ParseMode.HTML)

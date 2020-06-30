@@ -21,7 +21,7 @@ def start(update, context):
     language = context.user_data['user'].get('language')
     support_message = strings.get_string('support.welcome', language).format(name=context.user_data['user'].get('name'))
     support_keyboard = keyboards.get_keyboard('support.cancel', language)
-    image = images.get_support_image()
+    image = images.get_support_image(language)
     if image:
         chat_id = update.message.chat_id
         message = context.bot.send_photo(chat_id=chat_id, photo=image, caption=support_message,

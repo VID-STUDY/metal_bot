@@ -1,5 +1,5 @@
 from config import Config
-from core.resources import strings, keyboards
+from core.resources import strings, keyboards, images
 from core.services import users, referral
 
 from telegram.error import BadRequest
@@ -76,11 +76,18 @@ def check_channel(update, context):
         link = helpers.create_deep_linked_url(context.bot.get_me().username, str(user_id))
         referral_message = strings.from_referral_tender(referral_tender, language, len(invited_users), link)
         referral_keyboard = keyboards.get_keyboard('referral', language)
-        if update.message:
-            message = update.message.reply_text(text=referral_message, reply_markup=referral_keyboard, parse_mode=ParseMode.HTML)
+        image = images.get_referral_image(language)
+        if image:
+            if update.callback_query:
+                context.bot.delete_message(chat_id=user_id, message_id=update.callback_query.message.message_id)
+            message = context.bot.send_photo(chat_id=user_id, photo=image, caption=referral_message,
+                                             reply_markup=referral_keyboard, parse_mode=ParseMode.HTML)
         else:
-            message = update.callback_query.edit_message_text(text=referral_message, reply_markup=referral_keyboard,
-                                                              parse_mode=ParseMode.HTML)
+            if update.message:
+                message = update.message.reply_text(text=referral_message, reply_markup=referral_keyboard, parse_mode=ParseMode.HTML)
+            else:
+                message = update.callback_query.edit_message_text(text=referral_message, reply_markup=referral_keyboard,
+                                                                  parse_mode=ParseMode.HTML)
         if 'referral_message_id' in context.user_data:
             try:
                 context.bot.delete_message(chat_id=user_id,

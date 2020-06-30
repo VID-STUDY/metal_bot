@@ -7,17 +7,32 @@ import threading
 
 class Navigation:
     @staticmethod
-    def to_main_menu(update, language, message_text=None, user_name=None, context=None):
+    def to_main_menu(update, language, message_text=None, user_name=None, context=None, welcome=False):
         if message_text:
             menu_message = message_text
         else:
-            menu_message = strings.get_string('start.welcome', language).format(username=user_name)
+            if welcome:
+                menu_message = strings.get_string('start.welcome', language).format(username=user_name)
+            else:
+                menu_message = strings.get_string('menu.welcome', language)
         menu_keyboard = keyboards.get_keyboard('menu', language)
         if update.message:
-            update.message.reply_text(menu_message, reply_markup=menu_keyboard)
+            chat_id = update.message.chat_id
         else:
-            context.bot.send_message(chat_id=update.callback_query.message.chat_id, text=menu_message,
-                                     reply_markup=menu_keyboard)
+            chat_id = update.callback_query.message.chat_id
+        if welcome:
+            image = images.get_welcome_image(language)
+            if image:
+                context.bot.send_photo(chat_id=chat_id, photo=image, caption=menu_message, reply_markup=menu_keyboard)
+            else:
+                context.bot.send_message(chat_id=update.callback_query.message.chat_id, text=menu_message,
+                                         reply_markup=menu_keyboard)
+        else:
+            if update.message:
+                update.message.reply_text(menu_message, reply_markup=menu_keyboard)
+            else:
+                context.bot.send_message(chat_id=update.callback_query.message.chat_id, text=menu_message,
+                                         reply_markup=menu_keyboard)
 
     @staticmethod
     def to_account(update, context, new_message=False):
@@ -30,7 +45,8 @@ class Navigation:
         user = context.user_data['user']
         account_message = strings.get_user_info(user)
         account_keyboard = keyboards.get_account_keyboard(user)
-        image = images.get_account_image(context.user_data['user'].get('user_role'))
+        image = images.get_account_image(context.user_data['user'].get('user_role'),
+                                         context.user_data['user'].get('language'))
         if update.message:
             if image:
                 message = context.bot.send_photo(chat_id=user_id, photo=image, caption=account_message,

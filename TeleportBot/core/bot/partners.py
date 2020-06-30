@@ -2,15 +2,22 @@ from telegram import ParseMode
 from telegram.ext import MessageHandler
 from telegram.error import BadRequest
 
-from core.resources import utils
-from core.services import settings
+from core.resources import utils, images
+from core.services import settings, users
 from .utils import Filters
 
 
 def partners(update, context):
+    if 'user' not in context.user_data:
+        context.user_data['user'] = users.user_exists(update.message.from_user.id)
     partners_message = settings.get_settings().get('partners')
     partners_message = utils.replace_new_line(partners_message)
-    message = update.message.reply_text(text=partners_message, parse_mode=ParseMode.HTML)
+    image = images.get_partners_image(context.user_data['user'].get('language'))
+    if image:
+        chat_id = update.message.chat_id
+        message = context.bot.send_photo(chat_id=chat_id, photo=image, caption=partners_message, parse_mode=ParseMode.HTML)
+    else:
+        message = update.message.reply_text(text=partners_message, parse_mode=ParseMode.HTML)
     if 'partners_message_id' in context.user_data:
         try:
             context.bot.delete_message(chat_id=update.message.chat_id,

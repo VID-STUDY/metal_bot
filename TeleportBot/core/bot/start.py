@@ -10,7 +10,7 @@ LANGUAGES = 1
 def referral_start(update, context):
     user = users.user_exists(update.message.from_user.id)
     if user:
-        Navigation.to_main_menu(update, user.get('language'), user_name=user.get('name'))
+        Navigation.to_main_menu(update, user.get('language'), user_name=user.get('name'), welcome=True, context=context)
         help_message = strings.get_string('start.help', user.get('language'))
         update.message.reply_text(help_message)
         return ConversationHandler.END
@@ -43,7 +43,7 @@ def languages(update: Update, context):
     user_name = _get_user_name(user)
     users.create_user(user.id, user_name, user.username, language,
                       referral_from_id=context.user_data.get('referral_from_id', None))
-    Navigation.to_main_menu(update, language, user_name=user_name)
+    Navigation.to_main_menu(update, language, user_name=user_name, welcome=True, context=context)
     help_message = strings.get_string('start.help', language)
     update.message.reply_text(help_message)
     return ConversationHandler.END
