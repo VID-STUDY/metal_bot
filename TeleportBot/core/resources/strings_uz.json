@@ -1,12 +1,14 @@
 {
-    "start.languages": "Выберите язык:\n\nTilni tanlang:",
     "languages.ru": "\uD83C\uDDF7\uD83C\uDDFA Русский",
     "languages.uz": "\uD83C\uDDFA\uD83C\uDDFF O`zbek",
+
+    "start.languages": "Выберите язык:\n\nTilni tanlang:",
     "start.welcome": "{username}, салом. Ботимизга ҳўш келибсиз! \uD83E\uDD16",
     "start.help": "Келинг, бўлимлар билан қискача танишиб чикамиз.\n\nИш берувчилар шаҳсий кабинети. Ушбу бўлимда Сиз куйидагиларни бажаришингизни мумкин \"режимни танланг\" (резюме берувчи/иш берувчи), \"фиккр- мулоҳазалар\" (бўш иш урнингизга кимлар жавоб берган ), \"Ҳисобни тулдириш\" (бўш иш турнингизни ботга жойлаштириш учун ), \"Менинг бўш жойларим\" (бўш иш уринларни яратиш/таҳрирлаш).\n\n\"Шаҳсий кабинет\" иш қидирувчилар учун. Ушбу бўлимда Сиз куйидагиларн бажаришингиз мумкин: \"режимни танланг\" (иш қидирувчи/иш берувчи ) ,\"вакансия\" (Жойлаган вакансиянгизга кимлар жавоб берган), \"тулдириш \" (иш урнингизни жойлаштириш учун), \"менинг резюме\" (резюме яратиш/таҳрирлаш).\n\n\"Биз ҳақимизда\"- Компаниямиз ҳақида маълумот\n\n\"Савол- жавоб\" - Сиз қизиқтирган саволларига жавоб бериш\n\n\"Янгиликлар\" - Янгиликлар ва янгиланишлар ҳақида \n\n\"Қуллаб - қувватлаш\" - Сиз барча қизиктирадигансаволларга жавоб, таклиф ва мулохазалар. Ўзингизни қизиқтирган бўлимни танланг \uD83D\uDC47",
+
     "account.select_role": "⚙ <b>Керакли иш режимини танланг</b> <i>(режимни созламалардан ўзгартириш мумкин)</i>",
     "account.select_role.contractor": "\uD83D\uDCB5 Иш қидирувчи",
-    "account.select_role.employer": "⛏ Иш берувчи работадатель",
+    "account.select_role.employer": "⛏ Иш берувчи",
     "account.select_role.selected": "✅ Иш тартиби танланган",
     "account.change_role": "\uD83D\uDD04 Режимни танлаш",
     "account.up_balance": "\uD83D\uDCB5 Ҳисобни Тулдириш",
@@ -32,23 +34,23 @@
     "referral.rating.template": "\uD83C\uDFC6 Етакчилик рўйхати:\n\n{}",
     "referral.rating.item.template": "{}. {} - {} ҳамкорлар",
 
-    "payments.contractor.template": "\uD83D\uDCB3 Выберите тариф:\n\n\uD83C\uDFC3\uD83C\uDFFC\u200D♂ Тарифные планы для Соискателей:",
-    "payments.employer.template": "\uD83D\uDCB3 Выберите тариф:\n\n\uD83C\uDFC3\uD83C\uDFFC\u200D♂ Тарифные планы для Работодателей:",
-    "payments.contractor.1item.template": "✨ Размещение 1-ого резюме: - {} сум",
-    "payments.contractor.2item.template": "✨Размещение 2-х резюме - {} сум",
-    "payments.contractor.3item.template": "✨Размещение 3-х резюме - {} сум",
-    "payments.employer.1item.template": "✨Размещение 1-ой вакансии - {} сум",
-    "payments.employer.2item.template": "✨Размещение 2-х вакансий - {} сум",
-    "payments.employer.3item.template": "✨Размещение 3-х вакансий - {} сум",
-    "payments.providers": "\uD83D\uDCB3 Выберите способ оплаты:",
-    "payments.description.contractor": "Оплата тарифа для Соискателя",
-    "payments.description.employer": "Оплата тарифа для Работодателя",
-    "payments.tariff.contractor_tariff_1": "✨ Размещение 1-ого резюме",
-    "payments.tariff.contractor_tariff_2": "✨ Размещение 2-ух резюме",
-    "payments.tariff.contractor_tariff_3": "✨ Размещение 3-ёх резюме",
-    "payments.tariff.employer_tariff_1": "✨ Размещение 1-й вакансии",
-    "payments.tariff.employer_tariff_2": "✨Размещение 2-х вакансий",
-    "payments.tariff.employer_tariff_3": "✨Размещение 3-х вакансий",
+    "payments.contractor.template": "\uD83D\uDCB3 Тариф режани танланг:\n\n\uD83C\uDFC3\uD83C\uDFFC\u200D♂ Иш қидирувчилар учун тариф режалари:",
+    "payments.employer.template": "\uD83D\uDCB3 Тариф режани танланг:\n\n\uD83C\uDFC3\uD83C\uDFFC\u200D♂ Иш берувчилар учун тариф режалари:",
+    "payments.contractor.1item.template": "✨1та резюмени жойлаштириш - {} сўм",
+    "payments.contractor.2item.template": "✨2та резюмени жойлаштириш - {} сўм",
+    "payments.contractor.3item.template": "✨3та резюмени жойлаштириш - {} сўм",
+    "payments.employer.1item.template": "✨1та вакансияни (бўш иш жойни) жойлаштириш - {} сўм",
+    "payments.employer.2item.template": "✨2та вакансияни (бўш иш жойни) жойлаштириш - {} сўм",
+    "payments.employer.3item.template": "✨3та вакансияни (бўш иш жойни) жойлаштириш - {} сўм",
+    "payments.providers": "\uD83D\uDCB3 Тўлов усулини танланг:",
+    "payments.description.contractor": "Иш қидирувчилар учун тарифни тўлаш",
+    "payments.description.employer": "Иш берувчи учун тарифни тўлаш",
+    "payments.tariff.contractor_tariff_1": "✨ 1та резюмени жойлаштириш",
+    "payments.tariff.contractor_tariff_2": "✨ 2та резюмени жойлаштириш",
+    "payments.tariff.contractor_tariff_3": "✨ 3та резюмени жойлаштириш",
+    "payments.tariff.employer_tariff_1": "✨ 1та вакансияни (бўш иш жойни) жойлаштириш",
+    "payments.tariff.employer_tariff_2": "✨ 2та вакансияни (бўш иш жойни) жойлаштириш",
+    "payments.tariff.employer_tariff_3": "✨ 3та вакансияни (бўш иш жойни) жойлаштириш",
     "payments.message": "\uD83D\uDCB3 Хақ тўлаш",
 
     "support.welcome": "<b>\"Ёрдам бериш\"</b>\n\n<b>Иложи борича нималарни ёзмаслиги керак?</b>\n- \"Биз ҳақимизда\" ва \"Савол- жавоб\" саҳифалар билан танишимасдан\n- Бизнинг билим савиямизни текшириш учун совол бериш\n\n<b>Нималарни ёзиш мумкин эмас?</b>\n- Ҳақоратли сўзлар\n- Бот Ишига доир бўлмаган саволларни бериш\n\n<b>Жавоблар ҳақида:</b>\n- Сиз берган соволингизга беш минут ичида ёки 24 соат давомида жавоб олишингиз мумкин \n\n<b>* Агар Сиз жавоб топаолмаган бўлсангиз ту́ғри шу ерга телефон қилинг, бизнинг операторларимиз Сизга албатта ёрдам беришади</b>",
@@ -76,14 +78,12 @@
     "resumes.create.success": "✅ Хаммаси тайер!",
     "resumes.create.success.help": "ℹ <b>Яқинда Сиз янги бўш иш уринлар ҳақида маълумот олишингиз мумкин.</b>\n<i>Қизиктирган бўш. Иш уринга жавоб беришини Шаҳсий кабинетида менюда</i> - \uD83D\uDCE9 Вакансиялар",
     "resumes.empty_list": "❗ Сизда ҳақиқий резюме йўқ",
-
     "resumes.vacations.select": "\uD83C\uDFBE Kerakli rezyumeni tanlang va takliflarni ko'rasiz",
     "resumes.vacations.empty": "☹ Афсуски, бугунги кунга қадар бўш иш ўринлари йўқ, илтимос, кейинроқ яна уриниб кўринг",
-
     "resumes.edit.title": "✅ <b>Савлоҳа</b>\n<i>Масаланг: Курьер</i>",
     "resumes.edit.description": "✅ <b>Тарифлаш</b>\n<i>Масаланг: 20 йилдан бери, йўл транспорт ҳадисаларсих Президентнинг ҳайдовчиси бўлиб ишлаганман, шу билан биргаликда  кстримал ҳайдаш маҳоратларни ургаткман. Аэробус хайдаш учун ҳалқаро сертификатга эга ман</i>",
     "resumes.edit.contacts": "✅ <b>Алоқа учун маълумотлар</b>\n<i>Email-манзил, телефон рақамингиз ва исмингиз</i>",
-
+    "resumes.notify.new": "Сизнинг иш учун янги резюмеси! Шахсий ҳисобингизда кўришингиз мумкин",
     "resumes.template": "ℹ Яратилган кун:\n{date}\n\nℹ Номи:\n{title}\nℹ Тарифлаш:\n{description}\nℹ Алоқа учун контактларингиз:\n{contacts}\nℹ Танланган шахар:\n{location}\nℹ Уланган тоифалар:\n{categories}",
     "resumes.template.for_vacation": "ℹ Яратилган кун:\n{date}\n\nℹ Номи:\n{title}\nℹ Тарифлаш:\n{description}\nℹ Алоқа учун контактларингиз:\n{contacts}\nℹ Танланган шахар:\n{location}\n",
     "resumes.edit": "<b>Резюме {}</b>\n\nℹ <b>Ўзингиз таҳрирламоқчи бўлган нарсани танланг</b>\n\n❗ <i>Диққат! Шаҳар ва имконсиз категория таҳрирлаш, уларни ўзгартириш учун сиз янги хулоса яратиш керак</i>",
@@ -110,9 +110,9 @@
     "vacations.edit.contacts": "✅ <b>Контакт учун маълумотлар</b>\n<i>Emаil-манзил, телефон рақамингиз - исмингиз</i>",
     "vacations.edit": "<b>Бўш жой {}</b>\n\nℹ <b>Ўзингиз таҳрирламоқчи бўлган нарсани танланг</b>\n\n❗ <i>Диққат! Шаҳар ва имконсиз категория таҳрирлаш, уларни ўзгартириш учун сиз янги хулоса яратиш керак</i>",
     "vacations.empty_list": "❗ Сизда фаол Бўш жойлар йўқ",
-
     "vacations.resumes.select": "\uD83C\uDFBE Керакли бўш урнини танланганингиздан сўнг, иш берувчиларнинг таклифларни куришингиз мумкин",
     "vacations.resumes.empty": "☹ Афсуски, ўткир жавоблар йўқ, илтимос кейинроқ такрорланг",
+    "vacations.notify.new": "Сизнинг резюмеси учун янги бўш жой! Шахсий ҳисобингизда кўришингиз мумкин",
 
     "location.regions": "\uD83D\uDDFA Қуйидаги рўйхатдан Ўзбекистон Республикаси учун минтақани танланг",
     "location.select.city": "\uD83D\uDDFA Руйҳатда {} кўрсатилган. Ўз танловингизни қилинг.",
@@ -277,7 +277,6 @@
         "\uD83D\uDDFA Шуманай"
     ],
 
-
     "menu.cabinet": "Шаҳсий кабинет \uD83D\uDCDD",
     "menu.referral": "Реферал тизим \uD83E\uDD1D",
     "menu.about": "\uD83D\uDDC2 Биз ҳақимизда",
@@ -285,12 +284,12 @@
     "menu.news": "\uD83D\uDCEC Янгиликлар",
     "menu.support": "Ёрдам бериш ☎",
     "menu.partners": "Бизнинг ҳамқорларимиз \uD83D\uDCBC",
+    "menu.welcome": "Asosiy menyu \uD83E\uDD16",
 
     "account.id": "\uD83C\uDD94 - ",
     "account.days": "\uD83D\uDD54 Қачондан бери ботда сиз: ",
     "account.balance": "\uD83D\uDCB0 Сизнинг балансингиз: ",
     "account.status": "\uD83D\uDCCD Ҳозирги статусингиз: ",
-
 
     "go_back": "⬅ Орқага",
     "save": "\uD83D\uDCBE Сақлаш",
@@ -311,5 +310,6 @@
     "rules": "\uD83D\uDCC3 Қоидалар",
     "prize_place": "\uD83C\uDFC6 Сорвинли ўринлар",
     "rating": "\uD83D\uDD1D Энг кўп таклиф қилганларни ўнталиги",
-    "cancel": "❎ Бекор қилиш"
+    "cancel": "❎ Бекор қилиш",
+    "close": "❎ Ёпиш"
 }
