@@ -56,6 +56,9 @@ class VacationController extends Controller
                 return $resume->location == $vacation->location || $resume->location == 'all';
             });
         $users = $resumes->pluck('user');
+        $users = $users->unique(function ($user) {
+            return $user->id;
+        });
         $result = [
             'vacation' => $vacation->load('user'),
             'notifyUsers' => $users
