@@ -45,9 +45,9 @@ def resumes_for_vacation(update, context):
     context.user_data['current_page'] = 1
     first_resume = resumes[0]
     user = users.user_exists(first_resume.get('user_id'))
-    vacation_message = strings.from_resume(first_resume, language, for_vacation=True)
-    vacations_keyboard = keyboards.get_list_paginated_keyboard(resumes, language, user)
-    query.edit_message_text(text=vacation_message, reply_markup=vacations_keyboard)
+    vacation_message = strings.from_resume(first_resume, language, for_vacation=True, user=user)
+    vacations_keyboard = keyboards.get_list_paginated_keyboard(resumes, language)
+    query.edit_message_text(text=vacation_message, reply_markup=vacations_keyboard, parse_mode=ParseMode.HTML)
     return RESUMES
 
 
@@ -66,9 +66,9 @@ def paginated_resumes(update, context):
         return RESUMES
     resume = context.user_data['found_resumes'][int(page) - 1]
     user = users.user_exists(resume.get('user_id'))
-    resume_message = strings.from_resume(resume, language, for_vacation=True)
+    resume_message = strings.from_resume(resume, language, for_vacation=True, user=user)
     resume_keyboard = keyboards.get_list_paginated_keyboard(context.user_data['found_resumes'],
-                                                            language, user, current_page=int(page))
-    query.edit_message_text(text=resume_message, reply_markup=resume_keyboard)
+                                                            language, current_page=int(page))
+    query.edit_message_text(text=resume_message, reply_markup=resume_keyboard, parse_mode=ParseMode.HTML)
     context.user_data['current_page'] = int(page)
     return RESUMES

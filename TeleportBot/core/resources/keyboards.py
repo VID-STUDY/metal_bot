@@ -250,8 +250,8 @@ def get_cities_from_region(region_number: str, language: str) -> InlineKeyboardM
     return InlineKeyboardMarkup(keyboard)
 
 
-def get_list_paginated_keyboard(entities: list, language: str, user: dict, current_page=1) -> InlineKeyboardMarkup:
-    keyboard = [[InlineKeyboardButton(get_string('open_chat', language), url='tg://user?id=' + str(user.get('id')))]]
+def get_list_paginated_keyboard(entities: list, language: str, current_page=1) -> InlineKeyboardMarkup:
+    keyboard = []
     links = []
     for i in range(len(entities)):
         if i + 1 == current_page:

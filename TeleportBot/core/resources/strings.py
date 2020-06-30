@@ -78,7 +78,7 @@ def from_categories_message(added_category: dict, categories: list, added: bool,
     return message
 
 
-def from_resume(resume: dict, language: str, for_vacation=False) -> str:
+def from_resume(resume: dict, language: str, for_vacation=False, user=None) -> str:
     if for_vacation:
         template = get_string('resumes.template.for_vacation', language)
     else:
@@ -91,9 +91,11 @@ def from_resume(resume: dict, language: str, for_vacation=False) -> str:
         city_name = get_city_from_region(region, city, language)
         location = region_name + ', ' + city_name
     if for_vacation:
-        return template.format(date=utils.reformat_datetime(resume.get('created_at')), title=resume.get('title'),
-                               description=resume.get('description'), contacts=resume.get('contacts'),
-                               location=location)
+        result = template.format(date=utils.reformat_datetime(resume.get('created_at')), title=resume.get('title'),
+                                 description=resume.get('description'), contacts=resume.get('contacts'),
+                                 location=location)
+        result += '\n\n<a href="tg://user?id={}">'.format(user.get('id')) + get_string('open_chat', language) + '</a>'
+        return result
     else:
         categories_string = ''
         for category in resume['categories']:
@@ -103,7 +105,7 @@ def from_resume(resume: dict, language: str, for_vacation=False) -> str:
                                location=location, categories=categories_string)
 
 
-def from_vacation(vacation: dict, language: str, for_resume=False) -> str:
+def from_vacation(vacation: dict, language: str, for_resume=False, user=None) -> str:
     if for_resume:
         template = get_string('vacations.template.for_resume', language)
     else:
@@ -116,10 +118,12 @@ def from_vacation(vacation: dict, language: str, for_resume=False) -> str:
         city_name = get_city_from_region(region, city, language)
         location = region_name + ', ' + city_name
     if for_resume:
-        return template.format(date=utils.reformat_datetime(vacation.get('created_at')), title=vacation.get('title'),
-                               salary=vacation.get('salary'), category=vacation.get('category'),
-                               description=vacation.get('description'), contacts=vacation.get('contacts'),
-                               location=location)
+        result = template.format(date=utils.reformat_datetime(vacation.get('created_at')), title=vacation.get('title'),
+                                 salary=vacation.get('salary'), category=vacation.get('category'),
+                                 description=vacation.get('description'), contacts=vacation.get('contacts'),
+                                 location=location)
+        result += '\n\n<a href="tg://user?id={}">'.format(user.get('id')) + get_string('open_chat', language) + '</a>'
+        return result
     else:
         categories_string = ''
         for category in vacation['categories']:
