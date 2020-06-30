@@ -60,6 +60,7 @@ def support(update, context):
         context.bot.delete_message(chat_id=message.chat_id, message_id=message.message_id)
         success_message = strings.get_string('support.success', language)
         update.message.reply_text(text=success_message)
+        Navigation.to_main_menu(update, language, context=context)
         del context.user_data['has_action']
         return ConversationHandler.END
     else:
