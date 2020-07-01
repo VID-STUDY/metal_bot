@@ -4,7 +4,7 @@ from telegram import LabeledPrice, ParseMode
 from core.resources import strings, keyboards
 from .utils import Navigation, Notifications, Filters as CustomFilters
 from config import Config
-from core.services import users, settings, resumes, vacations
+from core.services import users, settings, resumes, vacations, categories
 from . import about, account, faq, news, support, referral
 
 import secrets
@@ -34,9 +34,18 @@ def tariffs(update, context):
     language = context.user_data['user'].get('language')
     tariff = query.data.split(':')[1]
     if tariff == 'back':
-        Navigation.to_account(update, context)
-        del context.user_data['has_action']
-        return ConversationHandler.END
+        if 'resume' in context.user_data or 'vacation' in context.user_data:
+            from .resumes.create import to_parent_categories
+            to_parent_categories(query, context)
+            if 'resume' in context.user_data:
+                return 8
+            if 'vacation' in context.user_data:
+                return 10
+        else:
+            Navigation.to_main_menu(update, language, context=context)
+            Navigation.to_account(update, context)
+            del context.user_data['has_action']
+            return ConversationHandler.END
     context.user_data['payments.tariff'] = tariff
     provider_message = strings.get_string('payments.providers', language)
     providers_keyboard = keyboards.get_keyboard('payments.providers', language)
@@ -77,10 +86,11 @@ def providers(update, context):
     context.bot.delete_message(chat_id=chat_id, message_id=query.message.message_id)
     go_back_keyboard = keyboards.get_keyboard('go_back', language)
     payment_message = strings.get_string('payments.message', language)
-    context.bot.send_message(chat_id=chat_id, text=payment_message, reply_markup=go_back_keyboard)
+    keyboard_message = context.bot.send_message(chat_id=chat_id, text=payment_message, reply_markup=go_back_keyboard)
     invoice_message = context.bot.send_invoice(chat_id, title, description, payload, provider_token, start_parameter,
                                                currency, prices)
     context.user_data['invoice_message_id'] = invoice_message.message_id
+    context.user_data['keyboard_message_id'] = keyboard_message.message_id
     return PRE_CHECKOUT
 
 
@@ -89,6 +99,8 @@ def pre_checkout_callback(update, context):
     if update.message:
         if strings.get_string('go_back', language) in update.message.text:
             context.bot.delete_message(chat_id=update.message.chat_id, message_id=context.user_data['invoice_message_id'])
+            if 'resume' not in context.user_data and 'vacation' not in context.user_data:
+                context.bot.delete_message(chat_id=update.message.chat_id, message_id=context.user_data['keyboard_message_id'])
             provider_message = strings.get_string('payments.providers', language)
             providers_keyboard = keyboards.get_keyboard('payments.providers', language)
             context.bot.send_message(chat_id=update.message.chat_id, text=provider_message,
