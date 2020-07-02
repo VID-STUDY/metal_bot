@@ -22,6 +22,7 @@ Route::middleware('auth')->name('admin.')->namespace('Admin')->group(function ()
     // Users routes
     Route::resource('/users', 'UserController');
     Route::post('/users/{userId}/message', 'UserController@sendMessage')->name('users.message');
+    Route::get('/users/{userId}/block', 'UserController@blockUnblockUser')->name('users.block');
 
     Route::resource('/referral', 'ReferralController');
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Repositories\UserRepositoryInterface;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -133,6 +134,13 @@ class UserController extends Controller
         return redirect()->back()->with('change_password_success', 'Пароль успешно изменён');
     }
 
+    /**
+     * Send message to a user
+     *
+     * @param Request $request
+     * @param $userId
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function sendMessage(Request $request, $userId) {
         $text = $request->get('text');
         $text = str_replace('<br />', "", $text);
@@ -142,5 +150,13 @@ class UserController extends Controller
         $telegramToken = env('TELEGRAM_BOT_TOKEN');
         $client->request('GET', 'https://api.telegram.org/bot'.$telegramToken.'/sendMessage?chat_id='.$userId.'&text='.$text.'&parse_mode=HTML');
         return redirect()->route('admin.users.edit', $userId);
+    }
+
+    public function blockUnblockUser($userId)
+    {
+        $user = User::findOrFail($userId);
+        $user->is_blocked = !$user->is_blocked;
+        $user->save();
+        return redirect()->back();
     }
 }

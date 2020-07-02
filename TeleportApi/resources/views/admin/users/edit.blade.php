@@ -13,8 +13,9 @@
         @method('put')
         <div class="block">
             <div class="block-header block-header-default">
-                <h3 class="block-title"><i class="fa fa-user-circle mr-5 text-muted"></i> {{ $user->name }}</h3>
+                <h3 class="block-title"><i class="fa fa-user-circle mr-5 text-muted"></i> {{ $user->name }} @if ($user->is_blocked) <small class="text-danger"><i class="si si-lock"></i> Заблокирован</small> @endif</h3>
                 <div class="block-options">
+                    <a href="{{ route('admin.users.block', $user->id) }}" class="btn btn-alt-warning mr-5">@if ($user->is_blocked) <i class="si si-lock-open"></i> Разблокировать@else <i class="si si-lock"></i> Заблокировать@endif</a>
                     <button class="btn btn-alt-success"><i class="fa fa-check"></i> Сохранить</button>
                 </div>
             </div>
@@ -42,7 +43,7 @@
                                 <span class="badge-pill badge-info">Соискатель</span> @endif</p>
                     </div>
                     <div class="col-sm-12 col-md-4">
-                        <h3 class="content-heading pt-0">Баланс сосикателя</h3>
+                        <h3 class="content-heading pt-0">Баланс соискателя</h3>
                         <div class="form-group">
                             <div class="form-material">
                                 <input type="text" name="balance_contractor" id="balance_contractor" class="form-control"
