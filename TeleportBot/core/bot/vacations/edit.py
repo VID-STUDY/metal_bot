@@ -9,6 +9,11 @@ UPDATE_VACATION, VACATION_ACTION, EDIT_ACTION = range(3)
 
 
 def vacation(update, context):
+    context.user_data['user'] = users.user_exists(update.callback_query.from_user.id)
+    if context.user_data['user'].get('is_blocked'):
+        blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
+        update.callback_query.answer(text=blocked_message, show_alert=True)
+        return ConversationHandler.END
     context.user_data['has_action'] = True
     language = context.user_data['user'].get('language')
     query = update.callback_query
@@ -22,6 +27,11 @@ def vacation(update, context):
 
 
 def vacation_action(update, context):
+    context.user_data['user'] = users.user_exists(update.callback_query.from_user.id)
+    if context.user_data['user'].get('is_blocked'):
+        blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
+        update.callback_query.answer(text=blocked_message, show_alert=True)
+        return ConversationHandler.END
     language = context.user_data['user'].get('language')
     query = update.callback_query
     data = query.data
@@ -51,6 +61,11 @@ def edit(update, context):
 
 
 def edit_action(update, context):
+    context.user_data['user'] = users.user_exists(update.callback_query.from_user.id)
+    if context.user_data['user'].get('is_blocked'):
+        blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
+        update.callback_query.answer(text=blocked_message, show_alert=True)
+        return ConversationHandler.END
     query = update.callback_query
     data = query.data
     language = context.user_data['user'].get('language')

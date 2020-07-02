@@ -15,6 +15,11 @@ TARIFFS, PROVIDER, PRE_CHECKOUT = range(3)
 
 
 def start(update, context):
+    context.user_data['user'] = users.user_exists(update.callback_query.from_user.id)
+    if context.user_data['user'].get('is_blocked'):
+        blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
+        update.callback_query.answer(text=blocked_message, show_alert=True)
+        return ConversationHandler.END
     context.user_data['has_action'] = True
     query = update.callback_query
     language = context.user_data['user'].get('language')
@@ -109,6 +114,11 @@ def pre_checkout_callback(update, context):
         context.bot.delete_message(chat_id=update.message.chat_id, message_id=update.message.message_id)
         return PRE_CHECKOUT
     query = update.pre_checkout_query
+    context.user_data['user'] = users.user_exists(update.query.from_user.id)
+    if context.user_data['user'].get('is_blocked'):
+        query.answer(ok=False, error_message=strings.get_string('blocked', language))
+        del context.user_data['has_action']
+        return ConversationHandler.END
     if query.invoice_payload == context.user_data['payments.payload']:
         query.answer(ok=True)
         return ConversationHandler.END
@@ -122,6 +132,10 @@ def successful_payment_callback(update, context):
                                                       context.user_data['payments.tariff'])
     menu_keyboard = keyboards.get_keyboard('menu', language)
     update.message.reply_text(strings.get_string('vacations.create.success', language), reply_markup=menu_keyboard)
+    if context.user_data['user'].get('is_blocked'):
+        blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
+        update.message.reply_text(blocked_message)
+        return
     if 'resume' in context.user_data:
         result = resumes.create_resume(context.user_data['resume'])
         resume = result.get('resume')

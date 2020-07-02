@@ -2,7 +2,7 @@ from telegram import ParseMode
 from telegram.ext import ConversationHandler
 from core.resources import strings, keyboards
 from core.bot.utils import Navigation, Notifications
-from core.services import categories, vacations, settings
+from core.services import categories, vacations, settings, users
 from core.bot import payments
 
 TARIFFS, PROVIDER, PRE_CHECKOUT, TITLE, SALARY, CATEGORY, DESCRIPTION, CONTACTS, REGION, CITY, CATEGORIES = range(11)
@@ -62,6 +62,11 @@ def from_payments_to_categories(update, context):
 
 
 def create(update, context):
+    context.user_data['user'] = users.user_exists(update.callback_query.from_user.id)
+    if context.user_data['user'].get('is_blocked'):
+        blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
+        update.callback_query.answer(text=blocked_message, show_alert=True)
+        return ConversationHandler.END
     context.user_data['has_action'] = True
     query = update.callback_query
     context.user_data['vacation'] = {}
@@ -197,6 +202,11 @@ def vacation_categories(update, context):
         else:
             return to_parent_categories(query, context)
     if category_id == 'save':
+        context.user_data['user'] = users.user_exists(update.callback_query.from_user.id)
+        if context.user_data['user'].get('is_blocked'):
+            blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
+            update.callback_query.answer(text=blocked_message, show_alert=True)
+            return ConversationHandler.END
         if user.get(user.get('user_role') + '_tariff') or user.get('free_actions_count') > 0:
             payment_settings = settings.get_settings()
             item_cost = payment_settings.get(user.get(user.get('user_role') + '_tariff'))

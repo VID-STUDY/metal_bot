@@ -10,6 +10,10 @@ LANGUAGES = 1
 def referral_start(update, context):
     user = users.user_exists(update.message.from_user.id)
     if user:
+        if user.get('is_blocked'):
+            blocked_message = strings.get_string('blocked', user.get('language'))
+            update.message.reply_text(blocked_message)
+            return ConversationHandler.END
         Navigation.to_main_menu(update, user.get('language'), user_name=user.get('name'), welcome=True, context=context)
         help_message = strings.get_string('start.help', user.get('language'))
         update.message.reply_text(help_message)

@@ -30,6 +30,10 @@ def start(update, context):
     user_id = message.from_user.id
     if 'user' not in context.user_data:
         context.user_data['user'] = users.user_exists(user_id)
+    if context.user_data['user'].get('is_blocked'):
+        blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
+        update.message.reply_text(blocked_message)
+        return
     check_channel(update, context)
 
 

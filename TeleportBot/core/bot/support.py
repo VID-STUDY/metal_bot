@@ -14,10 +14,14 @@ SUPPORT = range(1)
 
 
 def start(update, context):
-    context.user_data['has_action'] = True
     user_id = update.message.from_user.id
     if 'user' not in context.user_data:
         context.user_data['user'] = users.user_exists(user_id)
+    if context.user_data['user'].get('is_blocked'):
+        blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
+        update.message.reply_text(blocked_message)
+        return ConversationHandler.END
+    context.user_data['has_action'] = True
     language = context.user_data['user'].get('language')
     support_message = strings.get_string('support.welcome', language).format(name=context.user_data['user'].get('name'))
     support_keyboard = keyboards.get_keyboard('support.cancel', language)

@@ -1,10 +1,8 @@
-from telegram import Update, ParseMode, CallbackQuery
-from telegram.ext import CommandHandler, MessageHandler, Filters, CallbackQueryHandler
+from telegram import Update, ParseMode
+from telegram.ext import MessageHandler, CallbackQueryHandler
 from core.resources import strings, keyboards
 from core.services import users
 from .utils import Navigation, Filters
-
-SELECT_ROLE = 1
 
 
 def select_role_choice(update: Update, context):
@@ -22,16 +20,24 @@ def start(update: Update, context):
     if not user:
         return
     context.user_data['user'] = user
+    if user.get('is_blocked'):
+        blocked_message = strings.get_string('blocked', user.get('language'))
+        update.message.reply_text(blocked_message)
+        return
     if user.get('user_role'):
         Navigation.to_account(update, context)
     else:
         select_role_message = strings.get_string('account.select_role', user.get('language'))
         select_role_keyboard = keyboards.get_keyboard('account.select_role', user.get('language'))
         update.message.reply_text(select_role_message, parse_mode=ParseMode.HTML, reply_markup=select_role_keyboard)
-        return SELECT_ROLE
 
 
 def change_role(update, context):
+    context.user_data['user'] = users.user_exists(update.callback_query.from_user.id)
+    if context.user_data['user'].get('is_blocked'):
+        blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
+        update.callback_query.answer(text=blocked_message, show_alert=True)
+        return
     query = update.callback_query
     query.answer()
     language = context.user_data['user'].get('language')
@@ -41,6 +47,11 @@ def change_role(update, context):
 
 
 def change_language(update, context):
+    context.user_data['user'] = users.user_exists(update.callback_query.from_user.id)
+    if context.user_data['user'].get('is_blocked'):
+        blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
+        update.callback_query.answer(text=blocked_message, show_alert=True)
+        return
     query = update.callback_query
     query.answer()
     language = context.user_data['user'].get('language')
@@ -64,6 +75,11 @@ def select_language(update, context):
 
 
 def user_resumes(update, context):
+    context.user_data['user'] = users.user_exists(update.callback_query.from_user.id)
+    if context.user_data['user'].get('is_blocked'):
+        blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
+        update.callback_query.answer(text=blocked_message, show_alert=True)
+        return
     language = context.user_data['user'].get('language')
     query = update.callback_query
     query.answer()
@@ -76,6 +92,11 @@ def user_resumes(update, context):
 
 
 def user_vacations(update, context):
+    context.user_data['user'] = users.user_exists(update.callback_query.from_user.id)
+    if context.user_data['user'].get('is_blocked'):
+        blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
+        update.callback_query.answer(text=blocked_message, show_alert=True)
+        return
     language = context.user_data['user'].get('language')
     query = update.callback_query
     user_id = query.from_user.id

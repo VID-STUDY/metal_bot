@@ -10,6 +10,11 @@ LIST, RESUMES = range(2)
 
 
 def vacations_list(update, context):
+    context.user_data['user'] = users.user_exists(update.callback_query.from_user.id)
+    if context.user_data['user'].get('is_blocked'):
+        blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
+        update.callback_query.answer(text=blocked_message, show_alert=True)
+        return ConversationHandler.END
     context.user_data['has_action'] = True
     query = update.callback_query
     language = context.user_data['user'].get('language')
@@ -28,6 +33,11 @@ def vacations_list(update, context):
 
 
 def resumes_for_vacation(update, context):
+    context.user_data['user'] = users.user_exists(update.callback_query.from_user.id)
+    if context.user_data['user'].get('is_blocked'):
+        blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
+        update.callback_query.answer(text=blocked_message, show_alert=True)
+        return ConversationHandler.END
     query = update.callback_query
     language = context.user_data['user'].get('language')
     vacation_id = query.data.split(':')[1]
