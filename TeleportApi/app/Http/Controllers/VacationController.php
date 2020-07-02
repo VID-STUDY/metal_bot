@@ -120,7 +120,8 @@ class VacationController extends Controller
         $resumes = $resumes->unique(function ($resume) {
             return $resume->id;
         })->filter(function ($resume, $key) use ($vacation) {
-            return $resume->user->id != $vacation->user_id;
+            return $resume->user->id != $vacation->user_id &&
+                   !$resume->user->is_blocked;
         });
         if ($vacation->location !== 'all')
             $resumes = $resumes->filter(function ($resume, $key) use ($vacation) {

@@ -117,7 +117,8 @@ class ResumeController extends Controller
             return $item->id;
         });
         $vacations = $vacations->filter(function ($vacation, $key) use ($resume) {
-            return $vacation->user->id != $resume->user_id;
+            return $vacation->user->id != $resume->user_id &&
+                   !$vacation->user->is_blocked;
         });
         if ($resume->location !== 'all')
             $vacations = $vacations->filter(function ($vacation, $key) use ($resume) {
