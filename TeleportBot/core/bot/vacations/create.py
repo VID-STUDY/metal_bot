@@ -213,6 +213,8 @@ def vacation_categories(update, context):
                 del context.user_data['vacation']
                 del context.user_data['has_action']
                 Notifications.notify_users_new_item(context.bot, result.get('notifyUsers'), 'vacations.notify.new')
+                if result.get('notifyUsers'):
+                    Notifications.notify_users_new_item(context.bot, [user], 'resumes.notify.new')
                 return ConversationHandler.END
         empty_balance = strings.get_string('empty_balance', language)
         query.answer(text=empty_balance, show_alert=True)

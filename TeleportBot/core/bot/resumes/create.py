@@ -191,6 +191,8 @@ def resume_categories(update, context):
                 del context.user_data['has_action']
                 notifiable_users = result.get('notifyUsers')
                 Notifications.notify_users_new_item(context.bot, notifiable_users, 'resumes.notify.new')
+                if notifiable_users:
+                    Notifications.notify_users_new_item(context.bot, [user], 'vacations.notify.new')
                 return ConversationHandler.END
         empty_balance = strings.get_string('empty_balance', language)
         query.answer(text=empty_balance, show_alert=True)
