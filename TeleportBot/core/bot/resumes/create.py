@@ -21,44 +21,27 @@ def to_parent_categories(query, context):
 
 def from_location_to_contacts(update, context):
     language = context.user_data['user'].get('language')
-    if strings.get_string('go_back', language) in update.message.text:
-        context.bot.delete_message(chat_id=update.message.chat.id, message_id=context.user_data['location_message_id'])
-        message = strings.get_string('resumes.create.contacts', language)
-        update.message.reply_text(message, parse_mode=ParseMode.HTML)
-        return CONTACTS
-    else:
-        context.bot.delete_message(chat_id=update.message.chat.id, message_id=update.message.message_id)
-        if context.user_data['location_step'] == 'region':
-            return REGION
-        elif context.user_data['location_step'] == 'city':
-            return CITY
+    context.bot.delete_message(chat_id=update.callback_query.message.chat_id,
+                               message_id=context.user_data['location_message_id'])
+    message = strings.get_string('resumes.create.contacts', language)
+    keyboard = keyboards.get_keyboard('go_back.one_time', language)
+    context.bot.send_message(chat_id=update.callback_query.message.chat_id,
+                             text=message,
+                             reply_markup=keyboard,
+                             parse_mode=ParseMode.HTML)
+    return CONTACTS
 
 
 def from_categories_to_location(update, context):
     language = context.user_data['user'].get('language')
-    if strings.get_string('go_back', language) in update.message.text:
-        context.bot.delete_message(chat_id=update.message.chat.id, message_id=context.user_data['categories_message_id'])
-        message = strings.get_string('location.regions', language)
-        keyboard = keyboards.get_keyboard('location.regions', language)
-        message = update.message.reply_text(text=message, reply_markup=keyboard)
-        context.user_data['location_message_id'] = message.message_id
-        return REGION
-    else:
-        context.bot.delete_message(chat_id=update.message.chat.id, message_id=update.message.message_id)
-        return CATEGORIES
-
-
-def from_payments_to_categories(update, context):
-    language = context.user_data['user'].get('language')
-    if strings.get_string('go_back', language) in update.message.text:
-        parent_categories = categories.get_parent_categories()
-        message = strings.get_string('resumes.create.categories', language)
-        keyboard = keyboards.get_parent_categories_keyboard(parent_categories, language)
-        message = update.message.reply_text(message, reply_markup=keyboard)
-        context.user_data['categories_message_id'] = message.message_id
-        return CATEGORIES
-    else:
-        context.bot.delete_message(chat_id=update.message.chat_id, message_id=update.message.message_id)
+    context.bot.delete_message(chat_id=update.callback_query.message.chat_id,
+                               message_id=context.user_data['categories_message_id'])
+    message = strings.get_string('location.regions', language)
+    keyboard = keyboards.get_keyboard('location.regions', language)
+    message = context.bot.send_message(chat_id=update.callback_query.message.chat_id,
+                                       text=message, reply_markup=keyboard)
+    context.user_data['location_message_id'] = message.message_id
+    return REGION
 
 
 def create(update, context):
@@ -74,7 +57,7 @@ def create(update, context):
     language = context.user_data['user'].get('language')
     query.answer(text=strings.get_string('resumes.menu_has_gone', language), show_alert=True)
     message = strings.get_string('resumes.create.title', language)
-    keyboard = keyboards.get_keyboard('go_back', language)
+    keyboard = keyboards.get_keyboard('go_back.one_time', language)
     context.bot.delete_message(chat_id=query.from_user.id, message_id=query.message.message_id)
     context.bot.send_message(chat_id=query.from_user.id, text=message, reply_markup=keyboard, parse_mode=ParseMode.HTML)
     return TITLE
@@ -101,7 +84,8 @@ def resume_description(update, context):
         return TITLE
     context.user_data['resume']['description'] = update.message.text
     message = strings.get_string('resumes.create.contacts', language)
-    update.message.reply_text(message, parse_mode=ParseMode.HTML)
+    keyboard = keyboards.get_keyboard('go_back.one_time', language)
+    update.message.reply_text(message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
     return CONTACTS
 
 
@@ -114,6 +98,11 @@ def resume_contacts(update, context):
     context.user_data['resume']['contacts'] = update.message.text
     message = strings.get_string('location.regions', language)
     keyboard = keyboards.get_keyboard('location.regions', language)
+    remove_keyboard = keyboards.get_keyboard('remove')
+    remove_message = strings.get_string('remove_keyboard', language)
+    removed_message = context.bot.send_message(chat_id=update.message.chat_id, text=remove_message,
+                                               reply_markup=remove_keyboard, disable_notification=True)
+    context.bot.delete_message(chat_id=update.message.chat_id, message_id=removed_message.message_id)
     message = update.message.reply_text(message, reply_markup=keyboard)
     context.user_data['location_message_id'] = message.message_id
     context.user_data['location_step'] = 'region'

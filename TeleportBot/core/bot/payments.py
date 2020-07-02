@@ -89,7 +89,7 @@ def providers(update, context):
     prices = [LabeledPrice(strings.get_string('payments.tariff.' + context.user_data['payments.tariff']), price * 100)]
     query.answer()
     context.bot.delete_message(chat_id=chat_id, message_id=query.message.message_id)
-    go_back_keyboard = keyboards.get_keyboard('go_back', language)
+    go_back_keyboard = keyboards.get_keyboard('go_back.one_time', language)
     payment_message = strings.get_string('payments.message', language)
     keyboard_message = context.bot.send_message(chat_id=chat_id, text=payment_message, reply_markup=go_back_keyboard)
     invoice_message = context.bot.send_invoice(chat_id, title, description, payload, provider_token, start_parameter,
@@ -104,8 +104,7 @@ def pre_checkout_callback(update, context):
     if update.message:
         if strings.get_string('go_back', language) in update.message.text:
             context.bot.delete_message(chat_id=update.message.chat_id, message_id=context.user_data['invoice_message_id'])
-            if 'resume' not in context.user_data and 'vacation' not in context.user_data:
-                context.bot.delete_message(chat_id=update.message.chat_id, message_id=context.user_data['keyboard_message_id'])
+            context.bot.delete_message(chat_id=update.message.chat_id, message_id=context.user_data['keyboard_message_id'])
             provider_message = strings.get_string('payments.providers', language)
             providers_keyboard = keyboards.get_keyboard('payments.providers', language)
             context.bot.send_message(chat_id=update.message.chat_id, text=provider_message,

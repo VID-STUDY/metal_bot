@@ -16,6 +16,8 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
         return ReplyKeyboardRemove()
     elif key == 'go_back':
         return _create_keyboard([[get_string('go_back', language)]])
+    elif key == 'go_back.one_time':
+        return _create_keyboard([[get_string('go_back', language)]], one_time=True)
     elif key == 'start.languages':
         return _create_keyboard([[get_string('languages.ru', language), get_string('languages.uz')]], one_time=True)
     elif key == 'menu':
@@ -38,6 +40,7 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
         for i in range(13):
             keyboard.append([InlineKeyboardButton(get_string('location.regions.' + str(i)),
                                                   callback_data='region:' + str(i))])
+        keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='region:back')])
         return InlineKeyboardMarkup(keyboard)
     elif key == 'resume':
         keyboard = [
@@ -226,7 +229,8 @@ def get_categories_keyboard(categories: list, language: str, selected_categories
 def get_parent_categories_keyboard(categories: list, language: str) -> InlineKeyboardMarkup:
     keyboard = [
         [InlineKeyboardButton(categories[0][language + '_title'], callback_data='category:' + str(categories[0]['id'])),
-         InlineKeyboardButton(categories[1][language + '_title'], callback_data='category:' + str(categories[1]['id']))]
+         InlineKeyboardButton(categories[1][language + '_title'], callback_data='category:' + str(categories[1]['id']))],
+        [InlineKeyboardButton(get_string('go_back', language), callback_data='category:to_location')]
     ]
     return InlineKeyboardMarkup(keyboard)
 
