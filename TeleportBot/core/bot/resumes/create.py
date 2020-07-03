@@ -1,6 +1,6 @@
 from telegram import ParseMode
 from telegram.ext import ConversationHandler
-from core.resources import strings, keyboards
+from core.resources import strings, keyboards, images
 from core.bot.utils import Navigation, Notifications
 from core.services import categories, resumes, settings, users
 from core.bot import payments
@@ -184,8 +184,13 @@ def resume_categories(update, context):
                 context.bot.delete_message(chat_id=query.message.chat.id, message_id=query.message.message_id)
                 context.bot.send_message(chat_id=query.message.chat.id, text=success_message)
                 menu_keyboard = keyboards.get_keyboard('menu', language)
-                context.bot.send_message(chat_id=query.message.chat.id, text=help_message, parse_mode=ParseMode.HTML,
-                                         reply_markup=menu_keyboard)
+                help_image = images.get_help_panel_image()
+                if help_image:
+                    context.bot.send_photo(chat_id=query.message.chat_id, photo=help_image, caption=help_message,
+                                           parse_mode=ParseMode.HTML, reply_markup=menu_keyboard)
+                else:
+                    context.bot.send_message(chat_id=query.message.chat.id, text=help_message, parse_mode=ParseMode.HTML,
+                                             reply_markup=menu_keyboard)
                 Navigation.to_account(update, context, new_message=True)
                 del context.user_data['resume']
                 del context.user_data['has_action']

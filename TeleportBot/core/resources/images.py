@@ -40,3 +40,7 @@ def get_welcome_image(language):
 
 def get_partners_image(language):
     return _get_image('partners_' + language + '.jpg')
+
+
+def get_help_panel_image():
+    return _get_image('help_panel.jpg')
