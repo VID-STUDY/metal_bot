@@ -13,7 +13,10 @@ def partners(update, context):
         blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
         update.message.reply_text(blocked_message)
         return
-    partners_message = settings.get_settings().get('partners')
+    if context.user_data['user'].get('language') == 'uz':
+        partners_message = settings.get_settings().get('partners_uz')
+    else:
+        partners_message = settings.get_settings().get('partners')
     partners_message = utils.replace_new_line(partners_message)
     image = images.get_partners_image(context.user_data['user'].get('language'))
     if image:

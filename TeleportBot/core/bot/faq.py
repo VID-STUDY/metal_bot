@@ -8,13 +8,16 @@ from .utils import Filters
 
 
 def faq(update, context):
-    faq_message = settings.get_settings().get('faq')
-    faq_message = utils.replace_new_line(faq_message)
     context.user_data['user'] = users.user_exists(update.message.from_user.id)
     if context.user_data['user'].get('is_blocked'):
         blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
         update.message.reply_text(blocked_message)
         return
+    if context.user_data['user'].get('language') == 'uz':
+        faq_message = settings.get_settings().get('faq_uz')
+    else:
+        faq_message = settings.get_settings().get('faq')
+    faq_message = utils.replace_new_line(faq_message)
     image = images.get_faq_image(context.user_data['user'].get('language'))
     if image:
         chat_id = update.message.chat_id

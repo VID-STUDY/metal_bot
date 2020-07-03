@@ -28,12 +28,15 @@ class SettingsController extends Controller
     public function store(Request $request)
     {
         $settings = Settings::first();
+        $data = $request->all();
+        $data['about'] = str_replace('&nbsp;', ' ', $data['about']);
+        $data['about'] = str_replace('&mdash;', '-', $data['about']);
         if (!$settings) {
             $settings = Settings::create(['employer_tariff_1' => 7000,
                 'employer_tariff_2' => 13000, 'employer_tariff_3' => 18000, 'contractor_tariff_1' => 1200,
                 'contractor_tariff_2' => 1100, 'contractor_tariff_3' => 1000]);
         }
-        $settings->update($request->all());
+        $settings->update($data);
         return redirect()->route('admin.settings.index');
     }
 }

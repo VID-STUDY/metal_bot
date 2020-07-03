@@ -13,7 +13,10 @@ def about(update, context):
         blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
         update.message.reply_text(blocked_message)
         return
-    about_message = settings.get_settings().get('about')
+    if context.user_data['user'].get('language') == 'uz':
+        about_message = settings.get_settings().get('about_uz')
+    else:
+        about_message = settings.get_settings().get('about')
     about_message = utils.replace_new_line(about_message)
     message = update.message.reply_text(text=about_message, parse_mode=ParseMode.HTML)
     if 'about_message_id' in context.user_data:

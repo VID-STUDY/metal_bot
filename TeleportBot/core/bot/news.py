@@ -13,7 +13,10 @@ def news(update, context):
         blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
         update.message.reply_text(blocked_message)
         return
-    news_message = settings.get_settings().get('news')
+    if context.user_data['user'].get('language') == 'uz':
+        news_message = settings.get_settings().get('news_uz')
+    else:
+        news_message = settings.get_settings().get('news')
     news_message = utils.replace_new_line(news_message)
     image = images.get_news_image()
     if image:

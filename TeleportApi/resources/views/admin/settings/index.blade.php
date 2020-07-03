@@ -74,7 +74,7 @@
                         </div>
                     </div>
                 </div>
-                <h2 class="content-heading">Настройка текста</h2>
+                <h2 class="content-heading">Настройка текста на русском языке</h2>
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
@@ -104,6 +104,39 @@
                         <div class="form-group">
                             <label for="news">Новости</label>
                             <textarea name="news" id="news" class="form-control">{!! $settings->news !!}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <h2 class="content-heading">Настройка текста на узбекском языке</h2>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="faq_uz">Вопросы и ответы</label>
+                            <textarea name="faq_uz" id="faq_uz" class="form-control">{!! $settings->faq_uz !!}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="about_uz">О нас</label>
+                            <textarea name="about_uz" id="about_uz" class="form-control">{!! $settings->about_uz !!}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="partners_uz">Наши партнёры</label>
+                            <textarea name="partners_uz" id="partners_uz" class="form-control">{!! $settings->partners_uz !!}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="news_uz">Новости</label>
+                            <textarea name="news_uz" id="news_uz" class="form-control">{!! $settings->news_uz !!}</textarea>
                         </div>
                     </div>
                 </div>
