@@ -63,6 +63,8 @@
     $(function(){
         var editor = CKEDITOR.replaceAll(function (textarea, config) {
             config.enterMode = CKEDITOR.ENTER_BR;
+            config.fillEmptyBlocks = false;
+            config.forcePasteAsPlainText = true;
         });
         CKFinder.setupCKEditor( editor );
     });
