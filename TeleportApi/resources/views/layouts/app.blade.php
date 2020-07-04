@@ -65,6 +65,9 @@
             config.enterMode = CKEDITOR.ENTER_BR;
             config.fillEmptyBlocks = false;
             config.forcePasteAsPlainText = true;
+            config.htmlEncodeOutput = false;
+            config.entities = false;
+            config.autoParagraph = false;
         });
         CKFinder.setupCKEditor( editor );
     });
