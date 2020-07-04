@@ -19,9 +19,12 @@ def partners(update, context):
         partners_message = settings.get_settings().get('partners')
     partners_message = utils.replace_new_line(partners_message)
     image = images.get_partners_image(context.user_data['user'].get('language'))
+    photo_message = None
     if image:
         chat_id = update.message.chat_id
-        message = context.bot.send_photo(chat_id=chat_id, photo=image, caption=partners_message, parse_mode=ParseMode.HTML)
+        image = images.get_partners_image(context.user_data['user'].get('language'))
+        photo_message = context.bot.send_photo(chat_id=chat_id, photo=image)
+        message = context.bot.send_message(chat_id=chat_id, text=partners_message, parse_mode=ParseMode.HTML)
     else:
         message = update.message.reply_text(text=partners_message, parse_mode=ParseMode.HTML)
     if 'partners_message_id' in context.user_data:
@@ -30,7 +33,15 @@ def partners(update, context):
                                        message_id=context.user_data['partners_message_id'])
         except BadRequest:
             pass
+    if 'partners_photo_id' in context.user_data:
+        try:
+            context.bot.delete_message(chat_id=update.message.chat_id,
+                                       message_id=context.user_data['partners_photo_id'])
+        except BadRequest:
+            pass
     context.user_data['partners_message_id'] = message.message_id
+    if photo_message:
+        context.user_data['partners_photo_id'] = photo_message.message_id
 
 
 partners_handler = MessageHandler(Filters.PartnersFilter(), partners)
