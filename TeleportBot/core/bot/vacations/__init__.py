@@ -2,7 +2,7 @@ from . import create
 from . import edit
 from . import resumes
 
-from core.bot import about, account, faq, news, support, referral
+from core.bot import about, account, faq, news, support, referral, start
 
 from core.bot.utils import Navigation, Filters as CustomFilters
 
@@ -24,6 +24,9 @@ def main_menu_handler(update, context):
         return ConversationHandler.END
     elif CustomFilters.NewsFilter().filter(update.message):
         news.news(update, context)
+    elif '/start' in update.message.text:
+        start.referral_start(update, context)
+        return ConversationHandler.END
     else:
         context.bot.delete_message(chat_id=update.message.chat_id, message_id=update.message.message_id)
         return

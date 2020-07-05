@@ -5,7 +5,7 @@ from core.resources import strings, keyboards
 from .utils import Navigation, Notifications, Filters as CustomFilters
 from config import Config
 from core.services import users, settings, resumes, vacations, categories
-from . import about, account, faq, news, support, referral
+from . import about, account, faq, news, support, referral, start as bot_start
 
 import secrets
 import re
@@ -173,6 +173,9 @@ def main_menu_handler(update, context):
         return ConversationHandler.END
     elif CustomFilters.NewsFilter().filter(update.message):
         news.news(update, context)
+    elif '/start' in update.message.text:
+        bot_start.referral_start(update, context)
+        return ConversationHandler.END
     else:
         context.bot.delete_message(chat_id=update.message.chat_id, message_id=update.message.message_id)
         return
