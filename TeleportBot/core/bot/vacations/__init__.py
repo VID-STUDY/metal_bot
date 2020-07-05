@@ -42,13 +42,16 @@ create_vacation_conversation = ConversationHandler(
         create.DESCRIPTION: [MessageHandler(Filters.text, create.vacation_description)],
         create.CONTACTS: [MessageHandler(Filters.text, create.vacation_contacts)],
         create.REGION: [CallbackQueryHandler(create.from_location_to_contacts, pattern='region:back'),
-                        CallbackQueryHandler(create.vacation_region)],
+                        CallbackQueryHandler(create.vacation_region), MessageHandler(Filters.text, main_menu_handler)],
         create.CITY: [CallbackQueryHandler(create.vacation_city),
-                      MessageHandler(Filters.text, create.from_location_to_contacts)],
+                      MessageHandler(Filters.text, main_menu_handler)],
         create.CATEGORIES: [CallbackQueryHandler(create.from_categories_to_location, pattern='category:to_location'),
-                            CallbackQueryHandler(create.vacation_categories)],
-        create.TARIFFS: [CallbackQueryHandler(create.payments.tariffs)],
-        create.PROVIDER: [CallbackQueryHandler(create.payments.providers)],
+                            CallbackQueryHandler(create.vacation_categories),
+                            MessageHandler(Filters.text, main_menu_handler)],
+        create.TARIFFS: [CallbackQueryHandler(create.payments.tariffs),
+                         MessageHandler(Filters.text, main_menu_handler)],
+        create.PROVIDER: [CallbackQueryHandler(create.payments.providers),
+                          MessageHandler(Filters.text, main_menu_handler)],
         create.PRE_CHECKOUT: [PreCheckoutQueryHandler(create.payments.pre_checkout_callback),
                               MessageHandler(Filters.text, create.payments.pre_checkout_callback)]
     },
@@ -83,8 +86,10 @@ vacation_back_handler = CallbackQueryHandler(Navigation.to_account, pattern='my_
 vacation_resumes_handler = ConversationHandler(
     entry_points=[CallbackQueryHandler(resumes.vacations_list, pattern='account:responses')],
     states={
-        resumes.LIST: [CallbackQueryHandler(resumes.resumes_for_vacation), MessageHandler(Filters.text, main_menu_handler)],
-        resumes.RESUMES: [CallbackQueryHandler(resumes.paginated_resumes), MessageHandler(Filters.text, main_menu_handler)]
+        resumes.LIST: [CallbackQueryHandler(resumes.resumes_for_vacation),
+                       MessageHandler(Filters.text, main_menu_handler)],
+        resumes.RESUMES: [CallbackQueryHandler(resumes.paginated_resumes),
+                          MessageHandler(Filters.text, main_menu_handler)]
     },
     fallbacks=[
         account.account_handler,
