@@ -18,6 +18,7 @@ Route::middleware('auth')->name('admin.')->namespace('Admin')->group(function ()
     Route::get('/', 'DashboardController@index')->name('index');
     // Handbook Category Routes
     Route::resource('/categories', 'HandbookCategoryController');
+    Route::post('/categories/position', 'HandbookCategoryController@changePosition')->name('categories.change.position');
 
     // Users routes
     Route::resource('/users', 'UserController');
