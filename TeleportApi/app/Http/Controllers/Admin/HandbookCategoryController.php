@@ -147,4 +147,20 @@ class HandbookCategoryController extends Controller
         else
             return redirect()->route('admin.categories.index');
     }
+
+    /**
+     * Change position for category
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function changePosition(Request $request)
+    {
+        $categoryId = $request->get('id');
+        $position = $request->get('position');
+        if ($this->handbookCategoryRepository->setPosition($categoryId, $position))
+            return Response::create("", 200);
+        else
+            return Response::create("", 400);
+    }
 }

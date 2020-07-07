@@ -53,6 +53,12 @@
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
+                                    <select name="position" class="position" data-id="{{ $category->id }}">
+                                        @for($i = 0; $i <= count($categories); $i++)
+                                            <option value="{{ $i }}"
+                                                    @if($category->position == $i) selected @endif>{{ $i }}</option>
+                                        @endfor
+                                    </select>
                                 </div>
                             </td>
                         </tr>
@@ -75,6 +81,34 @@
             lengthMenu: [[10, 20, 30, 50], [10, 20, 30, 50]],
             autoWidth: true,
             language: ru_datatable
+        });
+        $('.position').change(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            let formData = new FormData;
+            formData.append('id', $(this).data('id'));
+            formData.append('position', $(this).val());
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('admin.categories.change.position') }}',
+                dataType: 'json',
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    $('.position').attr('disabled', 'disabled');
+                },
+                success: function () {
+                    $('.position').removeAttr('disabled', '');
+                },
+                error: function (data) {
+                    console.log(data);
+                    $('.position').removeAttr('disabled', '');
+                }
+            })
         });
     </script>
 @endsection
