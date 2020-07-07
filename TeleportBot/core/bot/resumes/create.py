@@ -10,6 +10,7 @@ TARIFFS, PROVIDER, PRE_CHECKOUT, TITLE, DESCRIPTION, CONTACTS, REGION, CITY, CAT
 
 def to_parent_categories(query, context):
     parent_categories = categories.get_parent_categories()
+    parent_categories = sorted(parent_categories, key=lambda i: i['position'])
     language = context.user_data['user'].get('language')
     message = strings.get_string('resumes.create.categories', language)
     keyboard = keyboards.get_parent_categories_keyboard(parent_categories, language)
@@ -208,6 +209,7 @@ def resume_categories(update, context):
     if 'categories' not in context.user_data['resume']:
         context.user_data['resume']['categories'] = []
     if children_categories:
+        children_categories = sorted(children_categories, key=lambda i: i['position'])
         keyboard = keyboards.get_categories_keyboard(children_categories, language,
                                                      context.user_data['resume']['categories'])
         message = strings.get_category_description(category, language)
