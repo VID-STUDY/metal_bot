@@ -230,6 +230,7 @@ def resume_categories(update, context):
             added = True
             context.user_data['resume']['categories'].append(category)
         category_siblings = categories.get_siblings(category_id)
+        category_siblings = sorted(category_siblings, key=lambda i: i['position'])
         keyboard = keyboards.get_categories_keyboard(category_siblings, language,
                                                      context.user_data['resume']['categories'])
         message = strings.from_categories(category, context.user_data['resume']['categories'], added, language)
