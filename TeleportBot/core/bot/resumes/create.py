@@ -158,6 +158,7 @@ def resume_categories(update, context):
         current_category = context.user_data['current_category']
         if current_category.get('parent_id'):
             siblings_category = categories.get_siblings(current_category.get('id'))
+            siblings_category = sorted(siblings_category, key=lambda i: i['position'])
             message = strings.get_category_description(current_category, language)
             keyboard = keyboards.get_categories_keyboard(siblings_category, language,
                                                          context.user_data['resume']['categories'])
