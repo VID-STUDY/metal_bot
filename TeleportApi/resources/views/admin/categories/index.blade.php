@@ -54,7 +54,7 @@
                                         </button>
                                     </form>
                                     <select name="position" class="position" data-id="{{ $category->id }}">
-                                        @for($i = 0; $i <= count($categories); $i++)
+                                        @for($i = 1; $i <= count($categories); $i++)
                                             <option value="{{ $i }}"
                                                     @if($category->position == $i) selected @endif>{{ $i }}</option>
                                         @endfor

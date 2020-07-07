@@ -25,30 +25,30 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($category->categories()->orderBy('position', 'asc')->get() as $category)
+                    @foreach($category->categories()->orderBy('position', 'asc')->get() as $childCategory)
                         <tr>
-                            <td class="font-w600">{{ $category->getTitle() }}</td>
+                            <td class="font-w600">{{ $childCategory->getTitle() }}</td>
                             <td class="text-center">
-                                @if($category->hasCategories())
-                                    <a href="{{ route('admin.categories.show', $category->id) }}" class="btn btn-sm btn-alt-primary">Посмотреть</a>
+                                @if($childCategory->hasCategories())
+                                    <a href="{{ route('admin.categories.show', $childCategory->id) }}" class="btn btn-sm btn-alt-primary">Посмотреть</a>
                                 @else
                                     Нет
                                 @endif
                             </td>
                             <td class="text-center">
                                 <div class="d-flex align-items-center justify-content-around">
-                                    <a href="{{ route('admin.categories.edit', $category->id) }}" data-toggle="tooltip" class="btn btn-sm btn-alt-info" title="Редактировать"><i class="fa fa-edit"></i></a>
-                                    <form method="post" action="{{ route('admin.categories.destroy', $category->id) }}">
+                                    <a href="{{ route('admin.categories.edit', $childCategory->id) }}" data-toggle="tooltip" class="btn btn-sm btn-alt-info" title="Редактировать"><i class="fa fa-edit"></i></a>
+                                    <form method="post" action="{{ route('admin.categories.destroy', $childCategory->id) }}">
                                         @csrf
                                         @method('delete')
                                         <button class="btn btn-sm btn-alt-danger" onclick="return confirm('Вы уверены?')" data-toggle="tooltip" title="Удалить">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
-                                    <select name="position" class="position" data-id="{{ $category->id }}">
-                                        @for($i = 0; $i <= count($categories); $i++)
+                                    <select name="position" class="position" data-id="{{ $childCategory->id }}">
+                                        @for($i = 1; $i <= $category->categories->count(); $i++)
                                             <option value="{{ $i }}"
-                                                    @if($category->position == $i) selected @endif>{{ $i }}</option>
+                                                    @if($childCategory->position == $i) selected @endif>{{ $i }}</option>
                                         @endfor
                                     </select>
                                 </div>
