@@ -13,12 +13,12 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $dayEnd = now()->endOfDay()->format('Y-m-d');
-        $dayStart = now()->startOfDay()->format('Y-m-d');
+        $dayEnd = now()->endOfDay();
+        $dayStart = now()->startOfDay();
         $usersToday = User::where('created_at', '<', $dayEnd)->where('created_at', '>', $dayStart)->count();
         $vacationsToday = Vacation::where('created_at', '<', $dayEnd)->where('created_at', '>', $dayStart)->count();
         $resumesToday = Resume::where('created_at', '<', $dayEnd)->where('created_at', '>', $dayStart)->count();
-        $oneWeekAgo = now()->subDays(6)->startOfDay()->format('Y-m-d');
+        $oneWeekAgo = now()->subDays(6)->startOfDay();
         $weekUsersCount = User::where('created_at', '>=', $oneWeekAgo)
             ->groupBy('date')
             ->orderBy('date', 'ASC')
