@@ -40,11 +40,13 @@ def tariffs(update, context):
     tariff = query.data.split(':')[1]
     if tariff == 'back':
         if 'resume' in context.user_data or 'vacation' in context.user_data:
-            from .resumes.create import to_parent_categories
-            to_parent_categories(query, context)
             if 'resume' in context.user_data:
+                from .resumes.create import to_parent_categories
+                to_parent_categories(query, context)
                 return 8
             if 'vacation' in context.user_data:
+                from .vacations.create import to_parent_categories
+                to_parent_categories(query, context)
                 return 10
         else:
             Navigation.to_main_menu(update, language, context=context)
