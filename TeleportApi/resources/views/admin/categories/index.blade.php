@@ -28,7 +28,7 @@
                     <tbody>
                     @foreach($categories as $category)
                         <tr>
-                            <td class="font-w600 text-center">{{ $category->getTitle() }}</td>
+                            <td class="font-w600 text-center">{{ $category->getTitle() }} | {{ $category->uz_title }}</td>
                             <td class="text-center">
                                 @if($category->hasCategories())
                                     <a href="{{ route('admin.categories.show', $category->id) }}"

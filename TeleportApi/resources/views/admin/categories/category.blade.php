@@ -27,7 +27,7 @@
                     <tbody>
                     @foreach($category->categories()->orderBy('position', 'asc')->get() as $childCategory)
                         <tr>
-                            <td class="font-w600">{{ $childCategory->getTitle() }}</td>
+                            <td class="font-w600">{{ $childCategory->getTitle() }} | {{ $category->uz_title }}</td>
                             <td class="text-center">
                                 @if($childCategory->hasCategories())
                                     <a href="{{ route('admin.categories.show', $childCategory->id) }}" class="btn btn-sm btn-alt-primary">Посмотреть</a>
