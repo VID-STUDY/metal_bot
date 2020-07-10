@@ -36,9 +36,9 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
         ]
         return InlineKeyboardMarkup(keyboard)
     elif key == 'location.regions':
-        keyboard = [[InlineKeyboardButton(get_string('location.regions.all'), callback_data='region:all')]]
+        keyboard = [[InlineKeyboardButton(get_string('location.regions.all', language), callback_data='region:all')]]
         for i in range(13):
-            keyboard.append([InlineKeyboardButton(get_string('location.regions.' + str(i)),
+            keyboard.append([InlineKeyboardButton(get_string('location.regions.' + str(i), language),
                                                   callback_data='region:' + str(i))])
         keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='region:back')])
         return InlineKeyboardMarkup(keyboard)
