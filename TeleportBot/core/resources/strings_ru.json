@@ -34,6 +34,10 @@
     "referral.rating.template": "\uD83C\uDFC6 Список лидеров:\n\n{}",
     "referral.rating.item.template": "{}. {} - {} рефералов",
 
+    "partners": "<b>НАШИ ПАРТНЕРЫ</b>",
+    "partners.tariffs": "Тарифы",
+    "partners.ad": "Реклама",
+
     "payments.contractor.template": "\uD83D\uDCB3 Выберите тариф:\n\n\uD83C\uDFC3\uD83C\uDFFC\u200D♂ Тарифные планы для Соискателей:",
     "payments.employer.template": "\uD83D\uDCB3 Выберите тариф:\n\n\uD83C\uDFC3\uD83C\uDFFC\u200D♂ Тарифные планы для Работодателей:",
     "payments.contractor.1item.template": "✨Размещение 1-ого резюме - {} сум",

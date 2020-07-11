@@ -10,7 +10,8 @@ class Settings extends Model
         'employer_tariff_1', 'employer_tariff_2', 'employer_tariff_3',
         'contractor_tariff_1', 'contractor_tariff_2', 'contractor_tariff_3',
         'faq', 'about', 'partners', 'news',
-        'faq_uz', 'about_uz', 'partners_uz', 'news_uz'
+        'faq_uz', 'about_uz', 'partners_uz', 'news_uz',
+        'partners_tariffs', 'partners_tariffs_uz'
     ];
 
     public static function get()

@@ -128,6 +128,13 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
     elif key == 'notifications.close':
         keyboard = [[InlineKeyboardButton(get_string('close', language), callback_data='notify:close')]]
         return InlineKeyboardMarkup(keyboard)
+    elif key == 'partners':
+        keyboard = [
+            [InlineKeyboardButton(get_string('partners.tariffs', language), callback_data='partners:tariffs'),
+             InlineKeyboardButton(get_string('partners.ad', language), callback_data='partners:ad')],
+            [InlineKeyboardButton(get_string('close', language), callback_data='partners:close')]
+        ]
+        return InlineKeyboardMarkup(keyboard)
 
 
 def get_account_keyboard(user: dict) -> Optional[InlineKeyboardMarkup]:

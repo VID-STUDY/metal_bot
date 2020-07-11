@@ -94,9 +94,15 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <label for="partners">Наши партнёры</label>
+                            <label for="partners">Наши партнёры (Реклама)</label>
                             <textarea name="partners" id="partners" class="form-control">{!! $settings->partners !!}</textarea>
                         </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="partners_tariffs">Наши партнёры (Тарифы)</label>
+                        <textarea name="partners_tariffs" id="partners_tariffs" class="form-control">{!! $settings->partners_tariffs !!}</textarea>
                     </div>
                 </div>
                 <div class="row">
@@ -127,8 +133,14 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <label for="partners_uz">Наши партнёры</label>
+                            <label for="partners_uz">Наши партнёры (Реклама)</label>
                             <textarea name="partners_uz" id="partners_uz" class="form-control">{!! $settings->partners_uz !!}</textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="partners_tariffs_uz">Наши партнёры (Тарифы)</label>
+                            <textarea name="partners_tariffs_uz" id="partners_tariffs_uz" class="form-control">{!! $settings->partners_tariffs_uz !!}</textarea>
                         </div>
                     </div>
                 </div>

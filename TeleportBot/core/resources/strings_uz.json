@@ -34,6 +34,10 @@
     "referral.rating.template": "\uD83C\uDFC6 Етакчилик рўйхати:\n\n{}",
     "referral.rating.item.template": "{}. {} - {} ҳамкорлар",
 
+    "partners": "<b>БИЗНИНГ ХАМКОРЛАРИМИЗ</b>",
+    "partners.tariffs": "Тарифлар",
+    "partners.ad": "Реклама",
+
     "payments.contractor.template": "\uD83D\uDCB3 Тариф режани танланг:\n\n\uD83C\uDFC3\uD83C\uDFFC\u200D♂ Иш қидирувчилар учун тариф режалари:",
     "payments.employer.template": "\uD83D\uDCB3 Тариф режани танланг:\n\n\uD83C\uDFC3\uD83C\uDFFC\u200D♂ Иш берувчилар учун тариф режалари:",
     "payments.contractor.1item.template": "✨1та резюмени жойлаштириш - {} сўм",
