@@ -21,7 +21,7 @@ def to_referral_tender(update, context):
     referral_message = strings.from_referral_tender(context.user_data['referral_tender'], language, len(invited_users),
                                                     link)
     referral_keyboard = keyboards.get_keyboard('referral', language)
-    query.edit_message_text(text=referral_message, reply_markup=referral_keyboard, parse_mode=ParseMode.HTML)
+    query.edit_message_caption(caption=referral_message, reply_markup=referral_keyboard, parse_mode=ParseMode.HTML)
     return ConversationHandler.END
 
 
