@@ -3,7 +3,7 @@ from core.resources import strings, keyboards, images
 from core.services import users, referral
 
 from telegram.error import BadRequest
-from telegram import ParseMode
+from telegram import ParseMode, CallbackQuery
 from telegram.ext import MessageHandler, ConversationHandler, CallbackQueryHandler
 from telegram.utils import helpers
 from .utils import Filters
@@ -106,7 +106,7 @@ def referral_rules(update, context):
     language = context.user_data['user'].get('language')
     rules_message = strings.from_referral_rules(context.user_data['referral_tender'], language)
     keyboard = keyboards.get_keyboard('referral.rules', language)
-    query.edit_message_text(text=rules_message, reply_markup=keyboard, parse_mode=ParseMode.HTML)
+    query.edit_message_caption(caption=rules_message, reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
 
 def prize_places(update, context):
@@ -114,7 +114,7 @@ def prize_places(update, context):
     language = context.user_data['user'].get('language')
     prize_message = strings.from_referral_prize_places(context.user_data['referral_tender'], language)
     keyboard = keyboards.get_keyboard('referral.prize', language)
-    query.edit_message_text(text=prize_message, reply_markup=keyboard, parse_mode=ParseMode.HTML)
+    query.edit_message_caption(caption=prize_message, reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
 
 def rating(update, context):
@@ -123,7 +123,7 @@ def rating(update, context):
     referral_rating = referral.get_top_referrals(context.user_data['referral_tender'].get('id'))
     rating_message = strings.from_referral_rating(referral_rating, language)
     keyboard = keyboards.get_keyboard('referral.rating', language)
-    query.edit_message_text(text=rating_message, reply_markup=keyboard)
+    query.edit_message_caption(caption=rating_message, reply_markup=keyboard)
 
 
 referral_handler = MessageHandler(Filters.ReferralFilter(), start)
