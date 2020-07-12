@@ -81,7 +81,6 @@ def main():
 
     dp.add_handler(partners.partners_handler)
     dp.add_handler(partners.tariffs_handler)
-    dp.add_handler(partners.ad_handler)
     dp.add_handler(partners.close_handler)
 
     dp.add_handler(support.support_conversation)
