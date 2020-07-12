@@ -30,32 +30,12 @@ class SettingsController extends Controller
      */
     public function store(Request $request)
     {
-        $settings = Settings::first();
+        $settings = Settings::get();
         $data = $request->all();
-        $data['about'] = str_replace('&nbsp;', ' ', $data['about']);
-        $data['about'] = str_replace('&mdash;', '-', $data['about']);
-        $data['about_uz'] = str_replace('&nbsp;', ' ', $data['about_uz']);
-        $data['about_uz'] = str_replace('&mdash;', '-', $data['about_uz']);
-        $data['news'] = str_replace('&nbsp;', ' ', $data['news']);
-        $data['news'] = str_replace('&mdash;', '-', $data['news']);
-        $data['news_uz'] = str_replace('&nbsp;', ' ', $data['news_uz']);
-        $data['news_uz'] = str_replace('&mdash;', '-', $data['news_uz']);
-        $data['partners'] = str_replace('&nbsp;', ' ', $data['partners']);
-        $data['partners'] = str_replace('&mdash;', '-', $data['partners']);
-        $data['partners_uz'] = str_replace('&nbsp;', ' ', $data['partners_uz']);
-        $data['partners_uz'] = str_replace('&mdash;', '-', $data['partners_uz']);
-        $data['partners_tariffs'] = str_replace('&nbsp;', ' ', $data['partners_tariffs']);
-        $data['partners_tariffs'] = str_replace('&mdash;', '-', $data['partners_tariffs']);
-        $data['partners_tariffs_uz'] = str_replace('&nbsp;', ' ', $data['partners_tariffs_uz']);
-        $data['partners_tariffs_uz'] = str_replace('&mdash;', '-', $data['partners_tariffs_uz']);
-        $data['faq'] = str_replace('&nbsp;', ' ', $data['faq']);
-        $data['faq'] = str_replace('&mdash;', '-', $data['faq']);
-        $data['faq_uz'] = str_replace('&nbsp;', ' ', $data['faq_uz']);
-        $data['faq_uz'] = str_replace('&mdash;', '-', $data['faq_uz']);
-        if (!$settings) {
-            $settings = Settings::create(['employer_tariff_1' => 7000,
-                'employer_tariff_2' => 13000, 'employer_tariff_3' => 18000, 'contractor_tariff_1' => 1200,
-                'contractor_tariff_2' => 1100, 'contractor_tariff_3' => 1000]);
+        foreach ($data as $key => $value) {
+            $data[$key] = str_replace('&nbsp;', ' ', $data[$key]);
+            $data[$key] = str_replace('&mdash;', '-', $data[$key]);
+            $data[$key] = strip_tags($data[$key], ['b', 'i', 'u', 's', 'a', 'code', 'pre', 'strong', 'em', 'br']);
         }
         $settings->update($data);
         $image = $request->file('partners_ad_image');

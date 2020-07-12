@@ -22,11 +22,9 @@ class TelegramController extends Controller
         $users = User::where('name', '!=', 'Admin')->get();
         $client = new \GuzzleHttp\Client(array('base_uri' => 'https://api.telegram.org/bot' . env('TELEGRAM_BOT_TOKEN'). '/'));
         $text = $request->get('text');
-        $text = str_replace('<br />', "", $text);
         $text = str_replace('&nbsp;', ' ', $text);
-        $text = str_replace('<p>', '', $text);
-        $text = str_replace('</p>', '', $text);
         $text = str_replace('&mdash;', '-', $text);
+        $text = strip_tags($text, ['b', 'i', 'u', 's', 'a', 'code', 'pre', 'strong', 'em']);
         if ($request->has('image'))
         {
             $image = $request->file('image');

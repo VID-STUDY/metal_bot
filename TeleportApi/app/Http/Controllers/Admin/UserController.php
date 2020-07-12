@@ -143,11 +143,9 @@ class UserController extends Controller
      */
     public function sendMessage(Request $request, $userId) {
         $text = $request->get('text');
-        $text = str_replace('<br />', "", $text);
         $text = str_replace('&nbsp;', ' ', $text);
-        $text = str_replace('<p>', '', $text);
-        $text = str_replace('</p>', '', $text);
         $text = str_replace('&mdash;', '-', $text);
+        $text = strip_tags($text, ['b', 'i', 'u', 's', 'a', 'code', 'pre', 'strong', 'em']);
         $client = new \GuzzleHttp\Client();
         $telegramToken = env('TELEGRAM_BOT_TOKEN');
         $client->request('GET', 'https://api.telegram.org/bot'.$telegramToken.'/sendMessage?chat_id='.$userId.'&text='.$text.'&parse_mode=HTML');
