@@ -78,7 +78,8 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
         keyboard = [
             [InlineKeyboardButton(get_string('rules', language), callback_data='referral:rules'),
              InlineKeyboardButton(get_string('prize_place', language), callback_data='referral:prize')],
-            [InlineKeyboardButton(get_string('rating', language), callback_data='referral:rating')]
+            [InlineKeyboardButton(get_string('rating', language), callback_data='referral:rating')],
+            [InlineKeyboardButton(get_string('close', language), callback_data='referral:close')]
         ]
         return InlineKeyboardMarkup(keyboard)
     elif key == 'payments.contractor':
@@ -140,6 +141,21 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
             [InlineKeyboardButton(get_string('partners.tariffs', language), callback_data='partners:tariffs'),
              InlineKeyboardButton(get_string('partners.ad', language), callback_data='partners:ad')],
             [InlineKeyboardButton(get_string('close', language), callback_data='partners:close')]
+        ]
+        return InlineKeyboardMarkup(keyboard)
+    elif key == 'about':
+        keyboard = [
+            [InlineKeyboardButton(get_string('close', language), callback_data='about:close')]
+        ]
+        return InlineKeyboardMarkup(keyboard)
+    elif key == 'news':
+        keyboard = [
+            [InlineKeyboardButton(get_string('close', language), callback_data='news:close')]
+        ]
+        return InlineKeyboardMarkup(keyboard)
+    elif key == 'faq':
+        keyboard = [
+            [InlineKeyboardButton(get_string('close', language), callback_data='faq:close')]
         ]
         return InlineKeyboardMarkup(keyboard)
 

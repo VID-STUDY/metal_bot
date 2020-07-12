@@ -126,9 +126,18 @@ def rating(update, context):
     query.edit_message_caption(caption=rating_message, reply_markup=keyboard)
 
 
+def close(update, context):
+    query = update.callback_query
+    try:
+        context.bot.delete_message(chat_id=query.message.chat_id, message_id=query.message.message_id)
+    except BadRequest:
+        pass
+
+
 referral_handler = MessageHandler(Filters.ReferralFilter(), start)
 check_channel_handler = CallbackQueryHandler(check_channel, pattern='referral:check_channel')
 rules_handler = CallbackQueryHandler(referral_rules, pattern='referral:rules')
 prize_handler = CallbackQueryHandler(prize_places, pattern='referral:prize')
 rating_handler = CallbackQueryHandler(rating, pattern='referral:rating')
 back_handler = CallbackQueryHandler(to_referral_tender, pattern='referral:back')
+close_handler = CallbackQueryHandler(close, pattern='referral:close')

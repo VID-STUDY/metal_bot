@@ -70,10 +70,14 @@ def main():
     dp.add_handler(referral.prize_handler)
     dp.add_handler(referral.rating_handler)
     dp.add_handler(referral.back_handler)
+    dp.add_handler(referral.close_handler)
 
     dp.add_handler(about.about_handler)
+    dp.add_handler(about.close_handler)
     dp.add_handler(faq.faq_handler)
+    dp.add_handler(faq.close_handler)
     dp.add_handler(news.news_handler)
+    dp.add_handler(news.close_handler)
 
     dp.add_handler(partners.partners_handler)
     dp.add_handler(partners.tariffs_handler)
