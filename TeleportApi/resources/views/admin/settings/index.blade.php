@@ -3,7 +3,7 @@
 @section('title', 'Настройки')
 
 @section('content')
-    <form action="{{ route('admin.settings.store') }}" method="post">
+    <form action="{{ route('admin.settings.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="block">
             <div class="block-header block-header-default">
@@ -100,6 +100,18 @@
                     </div>
                     <div class="col-sm-12">
                         <div class="form-group">
+                            <label for="partners_ad_image">Изображение для рекламы</label>
+                            <input type="file" name="partners_ad_image" id="partners_ad_image">
+                            @if ($settings->partners_ad_image)
+                                <a href="{{ route('admin.settings.delete', 'ru') }}" class="btn btn-alt-danger"><i class="fa fa-trash"></i> Удалить</a>
+                            @endif
+                        </div>
+                        @if ($settings->partners_ad_image)
+                            <img src="{{ $settings->getAdImage() }}" alt="" class="w-50">
+                        @endif
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
                             <label for="partners_tariffs">Наши партнёры (Тарифы)</label>
                             <textarea name="partners_tariffs" id="partners_tariffs" class="form-control">{!! $settings->partners_tariffs !!}</textarea>
                         </div>
@@ -136,6 +148,18 @@
                             <label for="partners_uz">Наши партнёры (Реклама)</label>
                             <textarea name="partners_uz" id="partners_uz" class="form-control">{!! $settings->partners_uz !!}</textarea>
                         </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="partners_ad_image_uz">Изображение для рекламы</label>
+                            <input type="file" name="partners_ad_image_uz" id="partners_ad_image_uz">
+                            @if ($settings->partners_ad_image_uz)
+                                <a href="{{ route('admin.settings.delete', 'uz') }}" class="btn btn-alt-danger"><i class="fa fa-trash"></i> Удалить</a>
+                            @endif
+                        </div>
+                        @if ($settings->partners_ad_image_uz)
+                            <img src="{{ $settings->getAdImageUz() }}" alt="" class="w-50">
+                        @endif
                     </div>
                     <div class="col-sm-12">
                         <div class="form-group">

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
 
 class Settings extends Model
 {
@@ -23,5 +24,15 @@ class Settings extends Model
                 'contractor_tariff_2' => 1100, 'contractor_tariff_3' => 1000]);
         }
         return $settings;
+    }
+
+    public function getAdImage()
+    {
+        return '/storage/' . File::basename($this->partners_ad_image);
+    }
+
+    public function getAdImageUz()
+    {
+        return '/storage/' . File::basename($this->partners_ad_image_uz);
     }
 }

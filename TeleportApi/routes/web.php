@@ -28,6 +28,7 @@ Route::middleware('auth')->name('admin.')->namespace('Admin')->group(function ()
     Route::resource('/referral', 'ReferralController');
 
     Route::resource('/settings', 'SettingsController');
+    Route::get('/settings/ad/{language}/delete', 'SettingsController@deleteAdImage')->name('settings.delete');
 
     Route::get('/telegram', 'TelegramController@index')->name('telegram.index');
     Route::post('/telegram/distribution', 'TelegramController@distribution')->name('telegram.distribution');
