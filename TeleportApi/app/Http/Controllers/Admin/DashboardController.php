@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\HandbookCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
@@ -27,6 +28,20 @@ class DashboardController extends Controller
                 DB::raw('COUNT(*) as "count"')
             ))->pluck('count', 'date');
 
-        return view('admin.index', compact('usersToday', 'vacationsToday', 'resumesToday', 'weekUsersCount'));
+        $positions = collect();
+        $allCategories = HandbookCategory::all();
+        foreach ($allCategories as $category) {
+            if (!$category->hasCategories())
+                $positions->add($category);
+        }
+        $statistics = collect();
+        foreach ($positions as $position) {
+            $statistics->put($position->ru_title, [
+                'vacations' => $position->vacations()->count(),
+                'resumes' => $position->resumes()->count()
+            ]);
+        }
+
+        return view('admin.index', compact('usersToday', 'vacationsToday', 'resumesToday', 'weekUsersCount', 'statistics'));
     }
 }

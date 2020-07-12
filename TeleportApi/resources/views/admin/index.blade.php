@@ -56,6 +56,34 @@
             </div>
         </div>
     </div>
+    <h2 class="content-heading">Статистика</h2>
+    <div class="block">
+        <div class="block-header">
+            <h3 class="block-title">Статистика должностей</h3>
+        </div>
+        <div class="block-content">
+            <div class="table-responsive">
+                <table class="table table-stripped table-bordered table-vcenter">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Должность</th>
+                            <th class="text-center">Количество вакансий</th>
+                            <th class="text-center">Количество резюме</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($statistics as $key => $item)
+                            <tr>
+                                <td class="text-center">{{ $key }}</td>
+                                <td class="text-center">{{ $item['vacations'] }}</td>
+                                <td class="text-center">{{ $item['resumes'] }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     <template id="chartData">
         <ul id="dates">
             @foreach($weekUsersCount as $date => $count)

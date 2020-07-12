@@ -45,7 +45,10 @@ class ReferralController extends Controller
             'uz_description' => 'required|string',
             'total_pot' => 'required|integer'
         ]);
-        $referralTender = ReferralTender::create($request->all());
+        $data = $request->all();
+        $data['ru_description'] = str_replace('&nbsp;', ' ', $data['ru_description']);
+        $data['uz_description'] = str_replace('&nbsp;', ' ', $data['uz_description']);
+        $referralTender = ReferralTender::create($data);
         foreach ($request->get('levels') as $level) {
             $referralTender->levels()->create($level);
         }
@@ -87,7 +90,10 @@ class ReferralController extends Controller
             'uz_description' => 'required|string',
             'total_pot' => 'required|integer'
         ]);
-        $referral->update($request->all());
+        $data = $request->all();
+        $data['ru_description'] = str_replace('&nbsp;', ' ', $data['ru_description']);
+        $data['uz_description'] = str_replace('&nbsp;', ' ', $data['uz_description']);
+        $referral->update($data);
         $referral->levels()->delete();
         foreach ($request->get('levels') as $level) {
             $referral->levels()->create($level);
