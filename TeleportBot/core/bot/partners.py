@@ -24,6 +24,7 @@ def partners(update, context):
     else:
         ad_image_path = bot_settings.get('partners_ad_image')
         partners_message = bot_settings.get('partners')
+    partners_message = utils.replace_new_line(partners_message)
     if ad_image_path:
         if os.path.exists(ad_image_path):
             image = open(ad_image_path, 'rb')

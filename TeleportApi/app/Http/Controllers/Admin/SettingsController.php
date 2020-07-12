@@ -44,6 +44,10 @@ class SettingsController extends Controller
         $data['partners'] = str_replace('&mdash;', '-', $data['partners']);
         $data['partners_uz'] = str_replace('&nbsp;', ' ', $data['partners_uz']);
         $data['partners_uz'] = str_replace('&mdash;', '-', $data['partners_uz']);
+        $data['partners_tariffs'] = str_replace('&nbsp;', ' ', $data['partners_tariffs']);
+        $data['partners_tariffs'] = str_replace('&mdash;', '-', $data['partners_tariffs']);
+        $data['partners_tariffs_uz'] = str_replace('&nbsp;', ' ', $data['partners_tariffs_uz']);
+        $data['partners_tariffs_uz'] = str_replace('&mdash;', '-', $data['partners_tariffs_uz']);
         $data['faq'] = str_replace('&nbsp;', ' ', $data['faq']);
         $data['faq'] = str_replace('&mdash;', '-', $data['faq']);
         $data['faq_uz'] = str_replace('&nbsp;', ' ', $data['faq_uz']);

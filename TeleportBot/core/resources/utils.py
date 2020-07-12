@@ -31,7 +31,9 @@ def date_difference_now(date_string: str):
 
 
 def replace_new_line(string: str):
-    return re.sub(r'<br\s*?/>', '', string)
+    without_new_line = re.sub(r'<br\s*?/>', '', string)
+    without_p_tag = re.sub(r'</*?p>', '', without_new_line)
+    return without_p_tag
 
 
 def reformat_datetime(date_string: str):

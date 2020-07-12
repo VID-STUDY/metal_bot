@@ -24,6 +24,9 @@ class TelegramController extends Controller
         $text = $request->get('text');
         $text = str_replace('<br />', "", $text);
         $text = str_replace('&nbsp;', ' ', $text);
+        $text = str_replace('<p>', '', $text);
+        $text = str_replace('</p>', '', $text);
+        $text = str_replace('&mdash;', '-', $text);
         if ($request->has('image'))
         {
             $image = $request->file('image');
