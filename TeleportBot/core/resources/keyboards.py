@@ -89,7 +89,8 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
                                   callback_data='payments:contractor_tariff_2')],
             [InlineKeyboardButton(get_string('payments.tariff.contractor_tariff_3', language),
                                   callback_data='payments:contractor_tariff_3')],
-            [InlineKeyboardButton(get_string('go_back', language), callback_data='payments:back')]
+            [InlineKeyboardButton(get_string('payments.history', language), callback_data='payments:history')],
+            [InlineKeyboardButton(get_string('go_back', language), callback_data='payments:back')],
         ]
         return InlineKeyboardMarkup(keyboard)
     elif key == 'payments.employer':
@@ -100,7 +101,8 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
                                   callback_data='payments:employer_tariff_2')],
             [InlineKeyboardButton(get_string('payments.tariff.employer_tariff_3', language),
                                   callback_data='payments:employer_tariff_3')],
-            [InlineKeyboardButton(get_string('go_back', language), callback_data='payments:back')]
+            [InlineKeyboardButton(get_string('payments.history', language), callback_data='payments:history')],
+            [InlineKeyboardButton(get_string('go_back', language), callback_data='payments:back')],
         ]
         return InlineKeyboardMarkup(keyboard)
     elif key == 'payments.providers':
@@ -109,6 +111,11 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
             [InlineKeyboardButton(get_string('payments.payme', language), callback_data='payments:payme')],
             # [InlineKeyboardButton(get_string('payments.yandex', language), callback_data='payments:yandex')],
             [InlineKeyboardButton(get_string('go_back', language), callback_data='payments:back')]
+        ]
+        return InlineKeyboardMarkup(keyboard)
+    elif key == 'payments.history':
+        keyboard = [
+            [InlineKeyboardButton(get_string('go_back', language), callback_data='payments:history:back')]
         ]
         return InlineKeyboardMarkup(keyboard)
     elif key == 'referral.rules' or key == 'referral.prize' or key == 'referral.rating':

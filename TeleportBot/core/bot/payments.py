@@ -11,7 +11,7 @@ import secrets
 import re
 
 
-TARIFFS, PROVIDER, PRE_CHECKOUT = range(3)
+TARIFFS, PROVIDER, PRE_CHECKOUT, HISTORY = range(4)
 
 
 def start(update, context):
@@ -53,12 +53,30 @@ def tariffs(update, context):
             Navigation.to_account(update, context)
             del context.user_data['has_action']
             return ConversationHandler.END
+    if tariff == 'history':
+        history = users.get_user_payment_history(context.user_data['user'].get('id'))
+        history_string = strings.from_payment_history(history, language)
+        history_keyboard = keyboards.get_keyboard('payments.history', language)
+        query.edit_message_text(text=history_string, parse_mode=ParseMode.HTML, reply_markup=history_keyboard)
+        return HISTORY
     context.user_data['payments.tariff'] = tariff
     provider_message = strings.get_string('payments.providers', language)
     providers_keyboard = keyboards.get_keyboard('payments.providers', language)
     query.answer()
     query.edit_message_text(text=provider_message, reply_markup=providers_keyboard)
     return PROVIDER
+
+
+def history_handler(update, context):
+    query = update.callback_query
+    language = context.user_data['user'].get('language')
+    config = settings.get_settings()
+    context.user_data['settings'] = config
+    payment_message = strings.payments_string(config, context.user_data['user'].get('user_role'), language)
+    payment_keyboard = keyboards.get_keyboard('payments.' + context.user_data['user'].get('user_role'), language)
+    query.answer()
+    query.edit_message_text(text=payment_message, reply_markup=payment_keyboard, parse_mode=ParseMode.HTML)
+    return TARIFFS
 
 
 def providers(update, context):
@@ -115,14 +133,17 @@ def pre_checkout_callback(update, context):
         context.bot.delete_message(chat_id=update.message.chat_id, message_id=update.message.message_id)
         return PRE_CHECKOUT
     query = update.pre_checkout_query
-    context.user_data['user'] = users.user_exists(update.query.from_user.id)
+    context.user_data['user'] = users.user_exists(query.from_user.id)
     if context.user_data['user'].get('is_blocked'):
         query.answer(ok=False, error_message=strings.get_string('blocked', language))
         del context.user_data['has_action']
         return ConversationHandler.END
     if query.invoice_payload == context.user_data['payments.payload']:
         query.answer(ok=True)
-        return ConversationHandler.END
+        if 'resume' not in context.user_data and 'vacation' not in context.user_data:
+            payments_conversation.update_state(ConversationHandler.END, (query.from_user.id, query.from_user.id))
+        else:
+            return ConversationHandler.END
     else:
         query.answer(ok=False, error_message=strings.get_string('error', language))
 
@@ -191,7 +212,8 @@ payments_conversation = ConversationHandler(
         PROVIDER: [CallbackQueryHandler(providers), MessageHandler(Filters.text, main_menu_handler)],
         PRE_CHECKOUT: [PreCheckoutQueryHandler(pre_checkout_callback),
                        MessageHandler(Filters.text, pre_checkout_callback),
-                       MessageHandler(Filters.text, main_menu_handler)]
+                       MessageHandler(Filters.text, main_menu_handler)],
+        HISTORY: [CallbackQueryHandler(history_handler), MessageHandler(Filters.text, main_menu_handler)]
     },
     fallbacks=[
         account.account_handler,

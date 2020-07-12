@@ -78,7 +78,8 @@ def set_user_tariff(user: dict, price: int, tariff):
         balance = 0
     payload = {
         user.get('user_role') + '_tariff': tariff,
-        'balance_' + user.get('user_role'): balance + price
+        'balance_' + user.get('user_role'): balance + price,
+        'add_to_payment_history': price
     }
     response = make_put_request(ENTITY, str(user.get('id')), payload).json()
     return response
@@ -89,4 +90,12 @@ def change_language(user_id, language):
         'language': language
     }
     response = make_put_request(ENTITY, str(user_id), payload).json()
+    return response
+
+
+def get_user_payment_history(user_id):
+    parameters = {
+        'limit': 10
+    }
+    response = make_get_request(ENTITY, str(user_id) + '/paymentHistory', payload=parameters).json()
     return response

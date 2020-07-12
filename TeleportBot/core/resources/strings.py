@@ -186,3 +186,17 @@ def from_referral_rating(referral_rating: dict, language: str) -> str:
     for name in referral_rating:
         rating_string += (get_string('referral.rating.item.template', language).format(i, name, referral_rating[name]) + '\n')
     return template.format(rating_string)
+
+
+def from_payment_history(history: list, language) -> str:
+    message = get_string('payments.history.title', language)
+    message += '\n\n'
+    if len(history) == 0:
+        message += get_string('payments.history.empty', language)
+    else:
+        for i in range(len(history)):
+            item = get_string('payments.history.item', language).format(number=i+1, amount=history[i]['amount'],
+                                                                        date=utils.reformat_datetime(history[i]['created_at']))
+            item += '\n'
+            message += item
+    return message

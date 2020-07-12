@@ -41,6 +41,7 @@ Route::prefix('api')->group(function () {
     Route::apiResource('users', 'UsersController');
     Route::get('/users/{user}/resumes', "UsersController@getResumes");
     Route::get('/users/{user}/vacations', 'UsersController@getVacations');
+    Route::get('/users/{user}/paymentHistory', 'UsersController@getPaymentHistory');
 
     Route::apiResource('vacations', 'VacationController');
     Route::get('/vacations/{vacation}/resumes', 'VacationController@getResumesForVacation');

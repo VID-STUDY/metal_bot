@@ -98,11 +98,11 @@
                             <textarea name="partners" id="partners" class="form-control">{!! $settings->partners !!}</textarea>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <label for="partners_tariffs">Наши партнёры (Тарифы)</label>
-                        <textarea name="partners_tariffs" id="partners_tariffs" class="form-control">{!! $settings->partners_tariffs !!}</textarea>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="partners_tariffs">Наши партнёры (Тарифы)</label>
+                            <textarea name="partners_tariffs" id="partners_tariffs" class="form-control">{!! $settings->partners_tariffs !!}</textarea>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
