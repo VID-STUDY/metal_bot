@@ -53,7 +53,8 @@ create_vacation_conversation = ConversationHandler(
         create.PROVIDER: [CallbackQueryHandler(create.payments.providers),
                           MessageHandler(Filters.text, main_menu_handler)],
         create.PRE_CHECKOUT: [PreCheckoutQueryHandler(create.payments.pre_checkout_callback),
-                              MessageHandler(Filters.text, create.payments.pre_checkout_callback)]
+                              MessageHandler(Filters.text, create.payments.pre_checkout_callback)],
+        create.HISTORY: [CallbackQueryHandler(create.payments.history_handler), MessageHandler(Filters.text, main_menu_handler)]
     },
     fallbacks=[
         account.account_handler,
