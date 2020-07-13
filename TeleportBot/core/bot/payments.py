@@ -42,12 +42,10 @@ def tariffs(update, context):
         if 'resume' in context.user_data or 'vacation' in context.user_data:
             if 'resume' in context.user_data:
                 from .resumes.create import to_parent_categories
-                to_parent_categories(query, context)
-                return 8
+                return to_parent_categories(query, context)
             if 'vacation' in context.user_data:
                 from .vacations.create import to_parent_categories
-                to_parent_categories(query, context)
-                return 10
+                return to_parent_categories(query, context)
         else:
             Navigation.to_main_menu(update, language, context=context)
             Navigation.to_account(update, context)
