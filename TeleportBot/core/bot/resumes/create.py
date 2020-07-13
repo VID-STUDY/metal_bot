@@ -5,7 +5,7 @@ from core.bot.utils import Navigation, Notifications
 from core.services import categories, resumes, settings, users
 from core.bot import payments
 
-TARIFFS, PROVIDER, PRE_CHECKOUT, TITLE, DESCRIPTION, CONTACTS, REGION, CITY, CATEGORIES = range(9)
+TARIFFS, PROVIDER, PRE_CHECKOUT, HISTORY, TITLE, DESCRIPTION, CONTACTS, REGION, CITY, CATEGORIES = range(10)
 
 
 def to_parent_categories(query, context):
@@ -177,7 +177,10 @@ def resume_categories(update, context):
         if user.get(user.get('user_role')+'_tariff') or user.get('free_actions_count') > 0:
             payment_settings = settings.get_settings()
             item_cost = payment_settings.get(user.get(user.get('user_role')+'_tariff'))
-            if int(user.get('balance_' + user.get('user_role'))) >= int(item_cost) or user.get('free_actions_count') > 0:
+            user_balance = user.get('balance_' + user.get('user_role'))
+            if user_balance is None:
+                user_balance = 0
+            if user_balance >= int(item_cost) or user.get('free_actions_count') > 0:
                 result = resumes.create_resume(context.user_data['resume'])
                 resume = result.get('resume')
                 context.user_data['user'] = resume.get('user')

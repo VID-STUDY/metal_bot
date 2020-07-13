@@ -5,7 +5,7 @@ from core.bot.utils import Navigation, Notifications
 from core.services import categories, vacations, settings, users
 from core.bot import payments
 
-TARIFFS, PROVIDER, PRE_CHECKOUT, TITLE, SALARY, CATEGORY, DESCRIPTION, CONTACTS, REGION, CITY, CATEGORIES = range(11)
+TARIFFS, PROVIDER, PRE_CHECKOUT, HISTORY, TITLE, SALARY, CATEGORY, DESCRIPTION, CONTACTS, REGION, CITY, CATEGORIES = range(12)
 
 
 def to_parent_categories(query, context):
@@ -200,7 +200,10 @@ def vacation_categories(update, context):
         if user.get(user.get('user_role') + '_tariff') or user.get('free_actions_count') > 0:
             payment_settings = settings.get_settings()
             item_cost = payment_settings.get(user.get(user.get('user_role') + '_tariff'))
-            if int(user.get('balance_' + user.get('user_role'))) >= int(item_cost) or user.get('free_actions_count') > 0:
+            user_balance = user.get('balance_' + user.get('user_role'))
+            if user_balance is None:
+                user_balance = 0
+            if user_balance >= int(item_cost) or user.get('free_actions_count') > 0:
                 result = vacations.create_vacation(context.user_data['vacation'])
                 vacation = result.get('vacation')
                 context.user_data['user'] = vacation.get('user')
