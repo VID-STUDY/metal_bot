@@ -129,9 +129,9 @@
         <div class="block-header block-header-default">
             <h3 class="block-title">
                 @if ($referralTender)
-                    <i class="si si-user-follow mr-5"></i>Пользователи, приглаёшнные по реферальной ссылки в течении текущего конкурса {{ $referralTender->date_from }} - {{ $referralTender->date_to }}
+                    <i class="si si-user-follow mr-5"></i>Пользователи, приглаёшнные по реферальной ссылки в течении текущего конкурса {{ $referralTender->date_from }} - {{ $referralTender->date_to }} <span class="badge badge-pill badge-primary">{{ $referralsInTender->count() }}</span>
                 @else
-                    <i class="si si-user-follow mr-5"></i>Пользователи, приглашённые за всё время в условиях всех реферальных конкурсов
+                    <i class="si si-user-follow mr-5"></i>Пользователи, приглашённые за всё время в условиях всех реферальных конкурсов <span class="badge badge-pill badge-primary">{{ $referralsInTender->count() }}</span>
                 @endif
             </h3>
         </div>
@@ -147,7 +147,7 @@
     </div>
     <div class="block">
         <div class="block-header block-header-default">
-            <h3 class="block-title"><i class="si si-user-follow mr-5"></i>Пользователи, приглашённые вне условий реферальных конкурсов</h3>
+            <h3 class="block-title"><i class="si si-user-follow mr-5"></i>Пользователи, приглашённые вне условий реферальных конкурсов <span class="badge badge-pill badge-primary">{{ $referralsNotInTender->count() }}</span></h3>
         </div>
         <div class="block-content block-content-full">
             <ul class="list-group list-group-flush mb-20">
