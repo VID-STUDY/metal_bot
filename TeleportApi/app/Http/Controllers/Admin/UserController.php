@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ReferralTender;
 use App\Repositories\UserRepositoryInterface;
 use App\User;
 use Illuminate\Http\Request;
@@ -81,8 +82,18 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = $this->usersRepository->get($id);
+        $referralTender = ReferralTender::current();
+        $referralsInTender = null;
+        if ($referralTender)
+            $referralsInTender = $user->referrals()->where('referral_tender_id', $referralTender->id)->get();
+        else
+            $referralsInTender = $user->referrals()->whereNotNull('referral_tender_id')->get();
+        $referralsNotInTender = $user->referrals()->whereNull('referral_tender_id')->get();
         $data = [
             'user' => $user,
+            'referralsInTender' => $referralsInTender,
+            'referralsNotInTender' => $referralsNotInTender,
+            'referralTender' => $referralTender
         ];
 
         return view('admin.users.edit', $data);

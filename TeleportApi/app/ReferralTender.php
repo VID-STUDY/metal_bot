@@ -14,4 +14,10 @@ class ReferralTender extends Model
     {
         return $this->hasMany(ReferralTenderLevel::class);
     }
+
+    public static function current()
+    {
+        $now = now()->format('Y-m-d');
+        return self::where('date_from', '<=', $now)->where('date_to', '>=', $now)->first();
+    }
 }

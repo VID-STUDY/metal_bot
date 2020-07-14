@@ -13,7 +13,8 @@
         @method('put')
         <div class="block">
             <div class="block-header block-header-default">
-                <h3 class="block-title"><i class="fa fa-user-circle mr-5 text-muted"></i> {{ $user->name }} @if ($user->is_blocked) <small class="text-danger"><i class="si si-lock"></i> Заблокирован</small> @endif</h3>
+                <h3 class="block-title"><i class="fa fa-user-circle mr-5 text-muted"></i> {{ $user->name }} @if ($user->is_blocked) <small class="text-danger"><i class="si si-lock"></i> Заблокирован</small> @endif @if ($user->referralFrom) <small class="text-success"><i class="si si-user-follow"></i> Приглашён пользователем
+                        <a href="{{ route('admin.users.edit', $user->referral_from_id) }}" class="link-effect">{{ $user->referralFrom->name }}</a></small>@endif</h3>
                 <div class="block-options">
                     <a href="{{ route('admin.users.block', $user->id) }}" class="btn btn-alt-warning mr-5">@if ($user->is_blocked) <i class="si si-lock-open"></i> Разблокировать@else <i class="si si-lock"></i> Заблокировать@endif</a>
                     <button class="btn btn-alt-success"><i class="fa fa-check"></i> Сохранить</button>
@@ -118,11 +119,46 @@
             <div class="block-content">
                 <div class="form-group">
                     <label for="text">Текст</label>
-                    <textarea name="text" id="text" cols="30" rows="10" class="form-control"></textarea>
+                    <texta$referralTenderrea name="text" id="text" cols="30" rows="10" class="form-control"></textarea>
                 </div>
             </div>
         </div>
     </form>
+    <h2 class="content-heading">Статистика</h2>
+    <div class="block">
+        <div class="block-header block-header-default">
+            <h3 class="block-title">
+                @if ($referralTender)
+                    <i class="si si-user-follow mr-5"></i>Пользователи, приглаёшнные по реферальной ссылки в течении текущего конкурса {{ $referralTender->date_from }} - {{ $referralTender->date_to }}
+                @else
+                    <i class="si si-user-follow mr-5"></i>Пользователи, приглашённые за всё время в условиях всех реферальных конкурсов
+                @endif
+            </h3>
+        </div>
+        <div class="block-content block-content-full">
+            <ul class="list-group list-group-flush mb-20">
+                @foreach($referralsInTender as $referral)
+                    <li class="list-group-item list-group-item-info">
+                        <a href="{{ route('admin.users.edit', $referral->id) }}" class="link-effect">{{ $referral->name }}</a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+    <div class="block">
+        <div class="block-header block-header-default">
+            <h3 class="block-title"><i class="si si-user-follow mr-5"></i>Пользователи, приглашённые вне условий реферальных конкурсов</h3>
+        </div>
+        <div class="block-content block-content-full">
+            <ul class="list-group list-group-flush mb-20">
+                @foreach($referralsNotInTender as $referral)
+                    <li class="list-group-item">
+                        <a href="{{ route('admin.users.edit', $referral->id) }}" class="link-effect">{{ $referral->name }}</a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
 @endsection
 @section('js')
     <script src="{{ asset('assets/js/plugins/select2/select2.full.min.js') }}"></script>

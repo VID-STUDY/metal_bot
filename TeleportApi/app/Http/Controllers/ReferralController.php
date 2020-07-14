@@ -73,16 +73,15 @@ class ReferralController extends Controller
 
     /**
      * Get current referral tender
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function current()
     {
-        $now = now()->format('Y-m-d');
-        $tender = ReferralTender::where('date_from', '<=', $now)->where('date_to', '>=', $now)->first();
+        $tender = ReferralTender::current();
         if ($tender)
             return response()->json($tender->load('levels'), 200);
-        else 
+        else
             return \response()->json(null, 200);
     }
 
@@ -95,7 +94,7 @@ class ReferralController extends Controller
         return response()->json($invited, 200);
     }
 
-    public function topReferrals(int $referralTenderId) 
+    public function topReferrals(int $referralTenderId)
     {
         $users = User::all();
         $result = [];
