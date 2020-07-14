@@ -119,7 +119,7 @@
             <div class="block-content">
                 <div class="form-group">
                     <label for="text">Текст</label>
-                    <texta$referralTenderrea name="text" id="text" cols="30" rows="10" class="form-control"></textarea>
+                    <textarea name="text" id="text" cols="30" rows="10" class="form-control"></textarea>
                 </div>
             </div>
         </div>
@@ -138,7 +138,7 @@
         <div class="block-content block-content-full">
             <ul class="list-group list-group-flush mb-20">
                 @foreach($referralsInTender as $referral)
-                    <li class="list-group-item list-group-item-info">
+                    <li class="list-group-item">
                         <a href="{{ route('admin.users.edit', $referral->id) }}" class="link-effect">{{ $referral->name }}</a>
                     </li>
                 @endforeach
