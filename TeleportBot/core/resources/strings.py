@@ -188,6 +188,7 @@ def from_referral_rating(referral_rating: dict, language: str) -> str:
     i = 1
     for name in referral_rating:
         rating_string += (get_string('referral.rating.item.template', language).format(i, name, referral_rating[name]) + '\n')
+        i += 1
     return template.format(rating_string)
 
 
