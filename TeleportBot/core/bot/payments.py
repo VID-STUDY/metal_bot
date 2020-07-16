@@ -97,7 +97,7 @@ def providers(update, context):
         return PROVIDER
     payload = secrets.token_hex(12)
     context.user_data['payments.payload'] = payload
-    title = strings.get_string('payments.tariff.' + context.user_data['payments.tariff'])
+    title = strings.get_string('payments.tariff.' + context.user_data['payments.tariff'], language)
     description = strings.get_string('payments.description.' + context.user_data['user'].get('user_role'), language)
     start_parameter = 'tariff-payment'
     currency = 'UZS'

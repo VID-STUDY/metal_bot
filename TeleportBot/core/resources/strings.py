@@ -60,7 +60,10 @@ def from_categories(added_category: dict, categories: list, added: bool, languag
     else:
         message = get_string('resumes.categories.selected.removed', language).format(
             added_category.get(language + '_title'))
-    message += get_string('resumes.categories.selected', language).format(len(categories), 10)
+    if language == 'uz':
+        message += get_string('resumes.categories.selected', language).format(10, len(categories))
+    else:
+        message += get_string('resumes.categories.selected', language).format(len(categories), 10)
     for i in range(len(categories)):
         item_str = get_string('resumes.categories.selected.item', language).format(i + 1, categories[i].get(
             language + '_title'))

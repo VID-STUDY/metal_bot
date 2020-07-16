@@ -56,7 +56,7 @@ def create(update, context):
     context.user_data['vacation'] = {}
     context.user_data['vacation']['user_id'] = query.from_user.id
     language = context.user_data['user'].get('language')
-    query.answer(text=strings.get_string('resumes.menu_has_gone', language), show_alert=True)
+    query.answer(text=strings.get_string('vacations.menu_has_gone', language), show_alert=True)
     message = strings.get_string('vacations.create.title', language)
     keyboard = keyboards.get_keyboard('go_back', language)
     context.bot.delete_message(chat_id=query.from_user.id, message_id=query.message.message_id)
