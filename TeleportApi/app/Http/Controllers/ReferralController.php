@@ -103,7 +103,7 @@ class ReferralController extends Controller
             if ($invitedCount > 0)
                 $result[$user->name] = $invitedCount;
         }
-        asort($result);
+        array_multisort($result, SORT_DESC);
         return \response()->json($result, 200);
     }
 }
