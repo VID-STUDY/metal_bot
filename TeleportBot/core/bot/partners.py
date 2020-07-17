@@ -24,6 +24,11 @@ def partners(update, context):
     else:
         ad_image_path = bot_settings.get('partners_ad_image')
         partners_message = bot_settings.get('partners')
+    if not partners_message:
+        if context.user_data['user'].get('language') == 'uz':
+            partners_message = bot_settings.get('partners_tariffs_uz')
+        else:
+            partners_message = bot_settings.get('partners_tariffs')
     partners_message = utils.replace_new_line(partners_message)
     if ad_image_path:
         if os.path.exists(ad_image_path):
