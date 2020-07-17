@@ -128,6 +128,29 @@ def pre_checkout_callback(update, context):
             context.bot.send_message(chat_id=update.message.chat_id, text=provider_message,
                                      reply_markup=providers_keyboard)
             return PROVIDER
+        elif CustomFilters.AboutFilter().filter(update.message):
+            about.about(update, context)
+            return ConversationHandler.END
+        elif CustomFilters.FaqFilter().filter(update.message):
+            faq.faq(update, context)
+            return ConversationHandler.END
+        elif CustomFilters.ReferralFilter().filter(update.message):
+            referral.start(update, context)
+            return ConversationHandler.END
+        elif CustomFilters.AccountFilter().filter(update.message):
+            account.start(update, context)
+            return ConversationHandler.END
+        elif CustomFilters.SupportFilter().filter(update.message):
+            support.support_conversation.handle_update(update, context.dispatcher,
+                                                       support.support_conversation.check_update(update), context)
+            support.start(update, context)
+            return ConversationHandler.END
+        elif CustomFilters.NewsFilter().filter(update.message):
+            news.news(update, context)
+            return ConversationHandler.END
+        elif '/start' in update.message.text:
+            bot_start.referral_start(update, context)
+            return ConversationHandler.END
         context.bot.delete_message(chat_id=update.message.chat_id, message_id=update.message.message_id)
         return PRE_CHECKOUT
     query = update.pre_checkout_query
