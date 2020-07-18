@@ -70,15 +70,15 @@ def edit_action(update, context):
     data = query.data
     language = context.user_data['user'].get('language')
     if data == 'title':
-        message = strings.get_string('vacations.edit.title')
+        message = strings.get_string('vacations.edit.title', language)
     elif data == 'description':
-        message = strings.get_string('vacations.edit.description')
+        message = strings.get_string('vacations.edit.description', language)
     elif data == 'contacts':
-        message = strings.get_string('vacations.edit.contacts')
+        message = strings.get_string('vacations.edit.contacts', language)
     elif data == 'salary':
-        message = strings.get_string('vacations.edit.salary')
+        message = strings.get_string('vacations.edit.salary', language)
     elif data == 'category':
-        message = strings.get_string('vacations.edit.category')
+        message = strings.get_string('vacations.edit.category', language)
     elif data == 'back':
         vacation_message = strings.from_vacation(context.user_data['editing_vacation'], language)
         vacation_keyboard = keyboards.get_keyboard('vacation', language)
@@ -100,6 +100,7 @@ def update_vacation(update, context):
     def go_back():
         vacation_message = strings.get_string('vacations.edit', language).format(
             context.user_data['editing_vacation'].get('title'))
+        Navigation.to_main_menu(update, language, user_name=context.user_data['user'].get('name'))
         edit_keyboard = keyboards.get_keyboard('vacation.edit', language)
         message.reply_text(text=vacation_message, reply_markup=edit_keyboard, parse_mode=ParseMode.HTML)
         return EDIT_ACTION

@@ -70,11 +70,11 @@ def edit_action(update, context):
     data = query.data
     language = context.user_data['user'].get('language')
     if data == 'title':
-        message = strings.get_string('resumes.edit.title')
+        message = strings.get_string('resumes.edit.title', language)
     elif data == 'description':
-        message = strings.get_string('resumes.edit.description')
+        message = strings.get_string('resumes.edit.description', language)
     elif data == 'contacts':
-        message = strings.get_string('resumes.edit.contacts')
+        message = strings.get_string('resumes.edit.contacts', language)
     elif data == 'back':
         resume_message = strings.from_resume(context.user_data['editing_resume'], language)
         resume_keyboard = keyboards.get_keyboard('resume', language)
@@ -92,15 +92,16 @@ def edit_action(update, context):
 
 def update_resume(update, context):
     message = update.message
+    language = context.user_data['user'].get('language')
 
     def go_back():
         resume_message = strings.get_string('resumes.edit', language).format(
             context.user_data['editing_resume'].get('title'))
+        Navigation.to_main_menu(update, language, user_name=context.user_data['user'].get('name'))
         edit_keyboard = keyboards.get_keyboard('resume.edit', language)
         message.reply_text(text=resume_message, reply_markup=edit_keyboard, parse_mode=ParseMode.HTML)
         return EDIT_ACTION
 
-    language = context.user_data['user'].get('language')
     if strings.get_string('go_back', language) in message.text:
         return go_back()
     payload = {context.user_data['editing_resume_step']: message.text}
