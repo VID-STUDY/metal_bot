@@ -312,6 +312,6 @@ def get_support_keyboard(link) -> InlineKeyboardMarkup:
 
 def get_payment_invoice_keyboard(price, language) -> InlineKeyboardMarkup:
     keyboard = [
-        [InlineKeyboardButton(get_string('payments.invoice', language).format(price), pay=True)]
+        [InlineKeyboardButton(get_string('payments.invoice', language).format('{:,}'.format(price).replace(',', ' ')), pay=True)]
     ]
     return InlineKeyboardMarkup(keyboard)
