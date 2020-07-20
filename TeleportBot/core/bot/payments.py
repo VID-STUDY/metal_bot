@@ -110,8 +110,9 @@ def providers(update, context):
     go_back_keyboard = keyboards.get_keyboard('go_back.one_time', language)
     payment_message = strings.get_string('payments.message', language)
     keyboard_message = context.bot.send_message(chat_id=chat_id, text=payment_message, reply_markup=go_back_keyboard)
+    payment_keyboard = keyboards.get_payment_invoice_keyboard(price, language)
     invoice_message = context.bot.send_invoice(chat_id, title, description, payload, provider_token, start_parameter,
-                                               currency, prices)
+                                               currency, prices, reply_markup=payment_keyboard)
     context.user_data['invoice_message_id'] = invoice_message.message_id
     context.user_data['keyboard_message_id'] = keyboard_message.message_id
     return PRE_CHECKOUT

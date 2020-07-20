@@ -308,3 +308,10 @@ def get_channel_keyboard(invite_link: str, language: str) -> InlineKeyboardMarku
 def get_support_keyboard(link) -> InlineKeyboardMarkup:
     keyboard = [[InlineKeyboardButton("Перейти на страницу пользователя", url=link)]]
     return InlineKeyboardMarkup(keyboard)
+
+
+def get_payment_invoice_keyboard(price, language) -> InlineKeyboardMarkup:
+    keyboard = [
+        [InlineKeyboardButton(get_string('payments.invoice', language).format(price), pay=True)]
+    ]
+    return InlineKeyboardMarkup(keyboard)
