@@ -164,7 +164,6 @@ def pre_checkout_callback(update, context):
         query.answer(ok=True)
         if 'resume' not in context.user_data and 'vacation' not in context.user_data:
             payments_conversation.update_state(ConversationHandler.END, (query.from_user.id, query.from_user.id))
-        if 'resume' in context.user_data:
         else:
             return ConversationHandler.END
     else:
