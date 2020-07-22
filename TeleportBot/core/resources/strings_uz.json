@@ -24,7 +24,7 @@
     "referral.channel.subscribe": "Обуна бўлиш",
     "referral.channel.check": "Текшириш ✅",
     "referral.channel.empty": "Сиз канал иштирокчилари рўйхатида емассиз!",
-    "referral.not_exist": "☹ Афсуски, ҳозирча фаол рақобат йўқ. Янгиликларимизни кузатиб boring!",
+    "referral.not_exist": "☹ Афсуски, ҳозирча фаол рақобат йўқ. Янгиликларимизни кузатиб боринг!",
     "referral.template": "\uD83D\uDC65 Ҳамкорлар дастури \uD83D\uDC65\n\n\uD83C\uDF93<b>Батафсил маълумот:</b>\n\n{referral_levels}\n\uD83D\uDC64 Сиз таклиф қилган фойдаланувчилар.:\n{invited_count} ҳамкор\n\uD83D\uDD17 Сизнинг ҳамкор ҳаволангиз:{referral_link}\n\n\uD83C\uDF81 Ҳамкорларни таклиф қилинг ва қуйидагиларга эга бўлинг:\n\n{levels_rewards}\n\uD83D\uDCB0 Қанча кўп инсонларни таклиф қилсангиз - шунча кўп иш ўринларингизни/резюмени бепул жойлаштиришингиз мумкин. Омад ёр булсин!",
     "referral.level.item": "<b>{}. Босқич</b>: {}",
     "referral.level.users": "{}дан {}гача таклиф қилинган фойдаланувчилар",
@@ -292,7 +292,7 @@
     "menu.about": "\uD83D\uDDC2 Биз ҳақимизда",
     "menu.faq": "\uD83D\uDCA1 Савол-жавоб",
     "menu.news": "\uD83D\uDCEC Янгиликлар",
-    "menu.support": "Кўллаб-қуватлаш ☎",
+    "menu.support": "Қўллаб-қувватлаш ☎",
     "menu.partners": "Бизнинг ҳамкорларимиз \uD83D\uDCBC",
     "menu.welcome": "Asosiy menyu \uD83E\uDD16",
 
