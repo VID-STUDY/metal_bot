@@ -33,7 +33,7 @@
     "referral.prize.template": "Призовые места \uD83C\uDFC6:\n\n{}",
     "referral.rating.template": "\uD83C\uDFC6 Список лидеров:\n\n{}",
     "referral.rating.item.template": "{}. {} - {} рефералов",
-    "referral.latest.template": "С {date_from} по {date_to} состаялся конкурс",
+    "referral.latest.template": "С {date_from} по {date_to} состоялся конкурс",
 
     "partners": "<b>НАШИ ПАРТНЕРЫ</b>",
     "partners.tariffs": "Тарифы",
