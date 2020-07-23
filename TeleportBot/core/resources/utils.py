@@ -39,3 +39,8 @@ def replace_new_line(string: str):
 def reformat_datetime(date_string: str):
     date = datetime.strptime(date_string, '%Y-%m-%dT%H:%M:%S.%fZ')
     return date.strftime('%d.%m.%Y')
+
+
+def reformat_date(date_string: str):
+    date = datetime.strptime(date_string, '%Y-%m-%d')
+    return date.strftime('%d.%m.%Y')
