@@ -74,6 +74,11 @@ def check_channel(update, context):
                 update.callback_query.answer(text=not_exist_message, show_alert=True)
                 context.bot.delete_message(chat_id=update.callback_query.message.chat.id,
                                            message_id=update.callback_query.message.message_id)
+            latest_referral_tender = referral.get_latest_tender()
+            if not latest_referral_tender:
+                return
+            latest_referral_tender_info = strings.from_latest_referral_tender(latest_referral_tender, language)
+            context.bot.send_message(chat_id=user_id, text=latest_referral_tender_info, parse_mode=ParseMode.HTML)
             return
         context.user_data['referral_tender'] = referral_tender
         invited_users = referral.get_invited_users(user_id, referral_tender.get('id'))

@@ -204,3 +204,14 @@ def from_payment_history(history: list, language) -> str:
             item += '\n'
             message += item
     return message
+
+
+def from_latest_referral_tender(latest_referral_tender_info, language) -> str:
+    tender = latest_referral_tender_info['tender']
+    top_referral = latest_referral_tender_info['topReferrals']
+    header = get_string('referral.latest.template', language).format(date_from=tender.get('date_from'), date_to=tender.get('date_to'))
+    prize = from_referral_prize_places(tender, language)
+    top = from_referral_rating(top_referral, language)
+    message = header + '\n\n' + prize + '\n\n' + top
+    return message
+

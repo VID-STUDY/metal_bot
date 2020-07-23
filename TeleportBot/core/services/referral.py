@@ -26,3 +26,8 @@ def get_referral_tender_by_id(referral_tender_id):
 def get_top_referrals(referral_tender_id):
     response = make_get_request(ENTITY, str(referral_tender_id) + '/top').json()
     return response
+
+
+def get_latest_tender():
+    response = make_get_request(ENTITY, 'latest').json()
+    return response
