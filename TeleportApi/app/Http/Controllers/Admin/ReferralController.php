@@ -70,7 +70,7 @@ class ReferralController extends Controller
             if ($invitedCount > 0)
                 $topReferrals[$user->name] = $invitedCount;
         }
-        asort($topReferrals);
+        array_multisort($topReferrals, SORT_DESC);
         return view('admin.referral.edit', compact('referral', 'topReferrals'));
     }
 
