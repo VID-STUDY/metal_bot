@@ -85,6 +85,31 @@ class ReferralController extends Controller
             return \response()->json(null, 200);
     }
 
+    /**
+     * Get the latest referral tender
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function latestTopReferral()
+    {
+        $tender = ReferralTender::latest('created_at')->first();
+        if (!$tender)
+            return response()->json(null, 200);
+        $users = User::all();
+        $topReferrals = [];
+        foreach($users as $user) {
+            $invitedCount = $user->referrals()->where('referral_tender_id', $tender->id)->count();
+            if ($invitedCount > 0)
+                $topReferrals[$user->name] = $invitedCount;
+        }
+        array_multisort($topReferrals, SORT_DESC);
+        $result = [
+            'tender' => $tender->load('levels'),
+            'topReferrals' => $topReferrals
+        ];
+        return response()->json($result, 200);
+    }
+
     public function invited(Request $request)
     {
         $userId = $request->get('user_id');

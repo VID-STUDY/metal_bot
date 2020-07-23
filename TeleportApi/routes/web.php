@@ -55,6 +55,7 @@ Route::prefix('api')->group(function () {
 
     Route::get('referral/current', 'ReferralController@current');
     Route::get('referral/invited', 'ReferralController@invited');
+    Route::get('referral/latest', 'ReferralController@latestTopReferral');
     Route::apiResource('referral', 'ReferralController');
     Route::get('referral/{referralTenderId}/top', 'ReferralController@topReferrals');
 
