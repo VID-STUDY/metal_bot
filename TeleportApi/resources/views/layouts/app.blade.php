@@ -40,6 +40,7 @@
     <main id="main-container">
         <!-- Page Content -->
         <div class="content">
+            @include('layouts.components.alerts')
             {{-- Content --}}
             @yield('content')
         </div>
