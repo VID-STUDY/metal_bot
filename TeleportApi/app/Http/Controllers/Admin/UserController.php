@@ -163,7 +163,7 @@ class UserController extends Controller
         try {
             $client->request('GET', 'https://api.telegram.org/bot'.$telegramToken.'/sendMessage?chat_id='.$userId.'&text='.$text.'&parse_mode=HTML');
         } catch (ClientException $e) {
-            redirect()->back()->with('warning', 'Этот пользователь заблокирлвал бота, вы не можете отправить ему сообщение');
+            return redirect()->back()->with('warning', 'Этот пользователь заблокирлвал бота, вы не можете отправить ему сообщение');
         }
         $user = User::find($userId);
         return redirect()->back()->with('success', "Вы отправили сообщение пользователю {$user->name}!");
