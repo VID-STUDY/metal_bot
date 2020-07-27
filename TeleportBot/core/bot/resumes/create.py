@@ -70,6 +70,7 @@ def resume_title(update, context):
         Navigation.to_main_menu(update, language, user_name=context.user_data['user'].get('name'))
         Navigation.to_account(update, context)
         del context.user_data['has_action']
+        del context.user_data['resume']
         return ConversationHandler.END
     context.user_data['resume']['title'] = update.message.text
     message = strings.get_string('resumes.create.description', language)

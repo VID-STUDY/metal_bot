@@ -16,14 +16,17 @@ def main_menu_handler(update, context):
         referral.start(update, context)
     elif CustomFilters.AccountFilter().filter(update.message):
         account.start(update, context)
+        del context.user_data['resume']
         return ConversationHandler.END
     elif CustomFilters.SupportFilter().filter(update.message):
         support.support_conversation.handle_update(update, context.dispatcher, support.support_conversation.check_update(update), context)
+        del context.user_data['resume']
         return ConversationHandler.END
     elif CustomFilters.NewsFilter().filter(update.message):
         news.news(update, context)
     elif '/start' in update.message.text:
         start.referral_start(update, context)
+        del context.user_data['resume']
         return ConversationHandler.END
     else:
         context.bot.delete_message(chat_id=update.message.chat_id, message_id=update.message.message_id)

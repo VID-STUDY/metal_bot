@@ -67,6 +67,7 @@ def create(update, context):
 def vacation_title(update, context):
     language = context.user_data['user'].get('language')
     if strings.get_string('go_back', language) in update.message.text:
+        del context.user_data['vacation']
         Navigation.to_main_menu(update, language, user_name=context.user_data['user'].get('name'))
         Navigation.to_account(update, context)
         del context.user_data['has_action']
