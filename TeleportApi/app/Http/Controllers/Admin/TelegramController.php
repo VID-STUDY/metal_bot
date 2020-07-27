@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
 
 class TelegramController extends Controller
@@ -30,14 +31,18 @@ class TelegramController extends Controller
             $image = $request->file('image');
             foreach ($users as $user) {
                 $imageFile = fopen($image->getPath() . '/' . $image->getFilename(), 'r');
-                $client->post('sendPhoto', [
-                    'multipart' => [
-                        ['name' => 'photo', 'contents' => $imageFile],
-                        ['name' => 'chat_id', 'contents' => $user->id],
-                        ['name' => 'caption', 'contents' => $text],
-                        ['name' => 'parse_mode', 'contents' => 'HTML']
-                    ]
-                ]);
+                try {
+                    $client->post('sendPhoto', [
+                        'multipart' => [
+                            ['name' => 'photo', 'contents' => $imageFile],
+                            ['name' => 'chat_id', 'contents' => $user->id],
+                            ['name' => 'caption', 'contents' => $text],
+                            ['name' => 'parse_mode', 'contents' => 'HTML']
+                        ]
+                    ]);
+                } catch (ClientException $e) {
+                    continue;
+                }
             }
         }
         else

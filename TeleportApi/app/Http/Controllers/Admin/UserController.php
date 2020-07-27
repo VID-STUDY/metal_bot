@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\ReferralTender;
 use App\Repositories\UserRepositoryInterface;
 use App\User;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -159,8 +160,13 @@ class UserController extends Controller
         $text = strip_tags($text, ['b', 'i', 'u', 's', 'a', 'code', 'pre', 'strong', 'em']);
         $client = new \GuzzleHttp\Client();
         $telegramToken = env('TELEGRAM_BOT_TOKEN');
-        $client->request('GET', 'https://api.telegram.org/bot'.$telegramToken.'/sendMessage?chat_id='.$userId.'&text='.$text.'&parse_mode=HTML');
-        return redirect()->route('admin.users.edit', $userId);
+        try {
+            $client->request('GET', 'https://api.telegram.org/bot'.$telegramToken.'/sendMessage?chat_id='.$userId.'&text='.$text.'&parse_mode=HTML');
+        } catch (ClientException $e) {
+            redirect()->back()->with('warning', 'Этот пользователь заблокирлвал бота, вы не можете отправить ему сообщение');
+        }
+        $user = User::find($userId);
+        return redirect()->back()->with('success', "Вы отправили сообщение пользователю {$user->name}!");
     }
 
     public function blockUnblockUser($userId)
