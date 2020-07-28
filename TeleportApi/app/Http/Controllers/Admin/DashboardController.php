@@ -16,9 +16,12 @@ class DashboardController extends Controller
     {
         $dayEnd = now()->endOfDay();
         $dayStart = now()->startOfDay();
-        $usersToday = User::where('created_at', '<', $dayEnd)->where('created_at', '>', $dayStart)->count();
-        $vacationsToday = Vacation::where('created_at', '<', $dayEnd)->where('created_at', '>', $dayStart)->count();
-        $resumesToday = Resume::where('created_at', '<', $dayEnd)->where('created_at', '>', $dayStart)->count();
+//        $usersToday = User::where('created_at', '<', $dayEnd)->where('created_at', '>', $dayStart)->count();
+//        $vacationsToday = Vacation::where('created_at', '<', $dayEnd)->where('created_at', '>', $dayStart)->count();
+//        $resumesToday = Resume::where('created_at', '<', $dayEnd)->where('created_at', '>', $dayStart)->count();
+        $usersCount = User::count();
+        $vacationsCount = Vacation::count();
+        $resumesCount = Resume::count();
         $oneWeekAgo = now()->subDays(6)->startOfDay();
         $weekUsersCount = User::where('created_at', '>=', $oneWeekAgo)
             ->groupBy('date')
@@ -42,6 +45,6 @@ class DashboardController extends Controller
             ]);
         }
 
-        return view('admin.index', compact('usersToday', 'vacationsToday', 'resumesToday', 'weekUsersCount', 'statistics'));
+        return view('admin.index', compact('usersCount', 'vacationsCount', 'resumesCount', 'weekUsersCount', 'statistics'));
     }
 }

@@ -12,8 +12,8 @@
                         <div class="mb-20">
                             <i class="si si-users fa-4x text-info-light"></i>
                         </div>
-                        <div class="font-size-h3 font-w600 text-white">{{ $usersToday }}</div>
-                        <div class="font-size-sm font-w600 text-uppercase text-info-light">Новых пользователей за день</div>
+                        <div class="font-size-h3 font-w600 text-white">{{ $usersCount }}</div>
+                        <div class="font-size-sm font-w600 text-uppercase text-info-light">Всего пользователей</div>
                     </div>
                 </div>
             </div>
@@ -25,8 +25,8 @@
                         <div class="mb-20">
                             <i class="si si-briefcase fa-4x text-info-light"></i>
                         </div>
-                        <div class="font-size-h3 font-w600 text-white">{{ $vacationsToday }}</div>
-                        <div class="font-size-sm font-w600 text-uppercase text-info-light">Новых вакансий за день</div>
+                        <div class="font-size-h3 font-w600 text-white">{{ $vacationsCount }}</div>
+                        <div class="font-size-sm font-w600 text-uppercase text-info-light">Всего вакансий</div>
                     </div>
                 </div>
             </div>
@@ -38,8 +38,8 @@
                         <div class="mb-20">
                             <i class="si si-docs fa-4x text-info-light"></i>
                         </div>
-                        <div class="font-size-h3 font-w600 text-white">{{ $resumesToday }}</div>
-                        <div class="font-size-sm font-w600 text-uppercase text-info-light">Новых резюме за день</div>
+                        <div class="font-size-h3 font-w600 text-white">{{ $resumesCount }}</div>
+                        <div class="font-size-sm font-w600 text-uppercase text-info-light">Всего резюме</div>
                     </div>
                 </div>
             </div>
