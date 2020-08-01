@@ -18,7 +18,7 @@
                     <textarea name="text" id="text" cols="30" rows="10" class="form-control"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="image">Изображение</label> <br>
+                    <label for="image">Файл (Изображение \ Видео)</label> <br>
                     <input type="file" name="image" id="image">
                 </div>
             </div>
