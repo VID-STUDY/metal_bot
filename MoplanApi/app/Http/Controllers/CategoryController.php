@@ -36,7 +36,7 @@ class CategoryController extends Controller
      */
     public function show(HandbookCategory $category)
     {
-        return response()->json($category->load('categories'));
+        return response()->json($category->load('categories')->load('vacations'));
     }
 
     /**
