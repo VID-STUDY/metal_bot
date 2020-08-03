@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 class Vacation extends Model
 {
     protected $fillable = [
-        'title', 'salary', 'category', 'description', 'contacts', 'location', 'user_id'
+        'title', 'price', 'name', 'contacts', 'location', 'user_id'
     ];
 
     /**

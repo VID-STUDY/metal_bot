@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 class Resume extends Model
 {
     protected $fillable = [
-        'title', 'description', 'contacts', 'location', 'user_id'
+        'title', 'price', 'name', 'contacts', 'location', 'user_id'
     ];
 
     /**
