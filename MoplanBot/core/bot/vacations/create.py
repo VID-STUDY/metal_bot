@@ -5,7 +5,7 @@ from core.bot.utils import Navigation, Notifications
 from core.services import categories, vacations, settings, users
 from core.bot import payments
 
-TARIFFS, PROVIDER, PRE_CHECKOUT, HISTORY, TITLE, SALARY, CATEGORY, DESCRIPTION, CONTACTS, REGION, CITY, CATEGORIES = range(12)
+TARIFFS, PROVIDER, PRE_CHECKOUT, HISTORY, TITLE, PRICE, NAME, CONTACTS, REGION, CITY, CATEGORIES = range(12)
 
 
 def to_parent_categories(query, context):
@@ -73,43 +73,31 @@ def vacation_title(update, context):
         del context.user_data['has_action']
         return ConversationHandler.END
     context.user_data['vacation']['title'] = update.message.text
-    message = strings.get_string('vacations.create.salary', language)
+    message = strings.get_string('vacations.create.price', language)
     update.message.reply_text(message, parse_mode=ParseMode.HTML)
-    return SALARY
+    return PRICE
 
 
-def vacation_salary(update, context):
+def vacation_price(update, context):
     language = context.user_data['user'].get('language')
     if strings.get_string('go_back', language) in update.message.text:
         message = strings.get_string('vacations.create.title', language)
         update.message.reply_text(text=message, parse_mode=ParseMode.HTML)
         return TITLE
-    context.user_data['vacation']['salary'] = update.message.text
+    context.user_data['vacation']['price'] = update.message.text
     message = strings.get_string('vacations.create.category', language)
     update.message.reply_text(message, parse_mode=ParseMode.HTML)
-    return CATEGORY
+    return NAME
 
 
-def vacation_category(update, context):
+def vacation_name(update, context):
     language = context.user_data['user'].get('language')
     if strings.get_string('go_back', language) in update.message.text:
-        message = strings.get_string('vacations.create.salary', language)
+        message = strings.get_string('vacations.create.price', language)
         update.message.reply_text(text=message, parse_mode=ParseMode.HTML)
-        return SALARY
-    context.user_data['vacation']['category'] = update.message.text
-    message = strings.get_string('vacations.create.description', language)
-    update.message.reply_text(message, parse_mode=ParseMode.HTML)
-    return DESCRIPTION
-
-
-def vacation_description(update, context):
-    language = context.user_data['user'].get('language')
-    if strings.get_string('go_back', language) in update.message.text:
-        message = strings.get_string('vacations.create.category', language)
-        update.message.reply_text(text=message, parse_mode=ParseMode.HTML)
-        return CATEGORY
-    context.user_data['vacation']['description'] = update.message.text
-    message = strings.get_string('vacations.create.contacts', language)
+        return PRICE
+    context.user_data['vacation']['name'] = update.message.text
+    message = strings.get_string('vacations.create.name', language)
     update.message.reply_text(message, parse_mode=ParseMode.HTML)
     return CONTACTS
 
@@ -117,9 +105,9 @@ def vacation_description(update, context):
 def vacation_contacts(update, context):
     language = context.user_data['user'].get('language')
     if strings.get_string('go_back', language) in update.message.text:
-        message = strings.get_string('vacations.create.description', language)
+        message = strings.get_string('vacations.create.name', language)
         update.message.reply_text(message, parse_mode=ParseMode.HTML)
-        return DESCRIPTION
+        return NAME
     context.user_data['vacation']['contacts'] = update.message.text
     message = strings.get_string('location.regions', language)
     keyboard = keyboards.get_keyboard('location.regions', language)

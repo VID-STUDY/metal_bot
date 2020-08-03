@@ -71,8 +71,10 @@ def edit_action(update, context):
     language = context.user_data['user'].get('language')
     if data == 'title':
         message = strings.get_string('resumes.edit.title', language)
-    elif data == 'description':
-        message = strings.get_string('resumes.edit.description', language)
+    elif data == 'price':
+        message = strings.get_string('resumes.edit.price', language)
+    elif data == 'name':
+        message = strings.get_string('resumes.edit.name', language)
     elif data == 'contacts':
         message = strings.get_string('resumes.edit.contacts', language)
     elif data == 'back':

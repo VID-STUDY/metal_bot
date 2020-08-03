@@ -71,14 +71,12 @@ def edit_action(update, context):
     language = context.user_data['user'].get('language')
     if data == 'title':
         message = strings.get_string('vacations.edit.title', language)
-    elif data == 'description':
-        message = strings.get_string('vacations.edit.description', language)
     elif data == 'contacts':
         message = strings.get_string('vacations.edit.contacts', language)
-    elif data == 'salary':
-        message = strings.get_string('vacations.edit.salary', language)
-    elif data == 'category':
-        message = strings.get_string('vacations.edit.category', language)
+    elif data == 'price':
+        message = strings.get_string('vacations.edit.price', language)
+    elif data == 'name':
+        message = strings.get_string('vacations.edit.name', language)
     elif data == 'back':
         vacation_message = strings.from_vacation(context.user_data['editing_vacation'], language)
         vacation_keyboard = keyboards.get_keyboard('vacation', language)

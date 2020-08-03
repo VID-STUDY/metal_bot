@@ -41,9 +41,8 @@ create_vacation_conversation = ConversationHandler(
     entry_points=[CallbackQueryHandler(create.create, pattern='my_vacations:create')],
     states={
         create.TITLE: [MessageHandler(Filters.text, create.vacation_title)],
-        create.SALARY: [MessageHandler(Filters.text, create.vacation_salary)],
-        create.CATEGORY: [MessageHandler(Filters.text, create.vacation_category)],
-        create.DESCRIPTION: [MessageHandler(Filters.text, create.vacation_description)],
+        create.PRICE: [MessageHandler(Filters.text, create.vacation_price)],
+        create.NAME: [MessageHandler(Filters.text, create.vacation_name)],
         create.CONTACTS: [MessageHandler(Filters.text, create.vacation_contacts)],
         create.REGION: [CallbackQueryHandler(create.from_location_to_contacts, pattern='region:back'),
                         CallbackQueryHandler(create.vacation_region), MessageHandler(Filters.text, main_menu_handler)],

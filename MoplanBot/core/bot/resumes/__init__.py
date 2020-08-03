@@ -39,7 +39,8 @@ create_resume_conversation = ConversationHandler(
     entry_points=[CallbackQueryHandler(create.create, pattern='resumes:create')],
     states={
         create.TITLE: [MessageHandler(Filters.text, create.resume_title)],
-        create.DESCRIPTION: [MessageHandler(Filters.text, create.resume_description)],
+        create.PRICE: [MessageHandler(Filters.text, create.resume_price)],
+        create.NAME: [MessageHandler(Filters.text, create.resume_name)],
         create.CONTACTS: [MessageHandler(Filters.text, create.resume_contacts)],
         create.REGION: [CallbackQueryHandler(create.from_location_to_contacts, pattern='region:back'),
                         CallbackQueryHandler(create.resume_region), MessageHandler(Filters.text, main_menu_handler)],

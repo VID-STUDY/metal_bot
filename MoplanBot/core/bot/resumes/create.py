@@ -5,7 +5,7 @@ from core.bot.utils import Navigation, Notifications
 from core.services import categories, resumes, settings, users
 from core.bot import payments
 
-TARIFFS, PROVIDER, PRE_CHECKOUT, HISTORY, TITLE, DESCRIPTION, CONTACTS, REGION, CITY, CATEGORIES = range(10)
+TARIFFS, PROVIDER, PRE_CHECKOUT, HISTORY, TITLE, PRICE, NAME, CONTACTS, REGION, CITY, CATEGORIES = range(10)
 
 
 def to_parent_categories(query, context):
@@ -73,21 +73,33 @@ def resume_title(update, context):
         del context.user_data['resume']
         return ConversationHandler.END
     context.user_data['resume']['title'] = update.message.text
-    message = strings.get_string('resumes.create.description', language)
+    message = strings.get_string('resumes.create.price', language)
     update.message.reply_text(message, parse_mode=ParseMode.HTML)
-    return DESCRIPTION
+    return PRICE
 
 
-def resume_description(update, context):
+def resume_price(update, context):
     language = context.user_data['user'].get('language')
     if strings.get_string('go_back', language) in update.message.text:
         message = strings.get_string('resumes.create.title', language)
         update.message.reply_text(message, parse_mode=ParseMode.HTML)
         return TITLE
-    context.user_data['resume']['description'] = update.message.text
+    context.user_data['resume']['price'] = update.message.text
     message = strings.get_string('resumes.create.contacts', language)
     keyboard = keyboards.get_keyboard('go_back.one_time', language)
     update.message.reply_text(message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
+    return NAME
+
+
+def resume_name(update, context):
+    language = context.user_data['user'].get('language')
+    if strings.get_string('go_back', language) in update.message.text:
+        message = strings.get_string('resumes.create.price', language)
+        update.message.reply_text(text=message, parse_mode=ParseMode.HTML)
+        return PRICE
+    context.user_data['resume']['name'] = update.message.text
+    message = strings.get_string('resumes.create.name', language)
+    update.message.reply_text(message, parse_mode=ParseMode.HTML)
     return CONTACTS
 
 
