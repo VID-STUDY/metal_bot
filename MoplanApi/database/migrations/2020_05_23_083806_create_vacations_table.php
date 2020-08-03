@@ -17,7 +17,7 @@ class CreateVacationsTable extends Migration
             $table->id();
 
             $table->string('title');
-            $table->float('price');
+            $table->string('price');
             $table->string('name');
             $table->string('contacts');
             $table->string('location');
