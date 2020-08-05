@@ -19,7 +19,7 @@ def news(update, context):
         news_message = settings.get_settings().get('news')
     news_message = utils.replace_new_line(news_message)
     news_keyboard = keyboards.get_keyboard('news', language=context.user_data['user'].get('language'))
-    image = images.get_news_image()
+    image = images.get_news_image(context.user_data['user'].get('language'))
     if image:
         chat_id = update.message.chat_id
         message = context.bot.send_photo(chat_id=chat_id, photo=image, caption=news_message, parse_mode=ParseMode.HTML,
