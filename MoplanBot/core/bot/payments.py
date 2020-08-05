@@ -190,7 +190,7 @@ def successful_payment_callback(update, context):
         Notifications.notify_users_new_item(context.bot, notifiable_users, 'resumes.notify.new')
         del context.user_data['resume']
         from .resumes import create_resume_conversation
-        create_resume_conversation.update_state(ConversationHandler.END, (query.from_user.id, query.from_user.id))
+        create_resume_conversation.update_state(ConversationHandler.END, (update.effective_chat.id, update.effective_chat.id))
     if 'vacation' in context.user_data:
         result = vacations.create_vacation(context.user_data['vacation'])
         vacation = result.get('vacation')
@@ -200,7 +200,7 @@ def successful_payment_callback(update, context):
         Notifications.notify_users_new_item(context.bot, result.get('notifyUsers'), 'vacations.notify.new')
         del context.user_data['vacation']
         from .vacations import create_vacation_conversation
-        create_vacation_conversation.update_state(ConversationHandler.END, (query.from_user.id, query.from_user.id))
+        create_vacation_conversation.update_state(ConversationHandler.END, (update.effective_chat.id, update.effective_chat.id))
     del context.user_data['has_action']
     Navigation.to_account(update, context)
 
