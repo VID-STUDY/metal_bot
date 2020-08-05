@@ -5,7 +5,7 @@ from core.bot.utils import Navigation, Notifications
 from core.services import categories, resumes, settings, users
 from core.bot import payments
 
-TARIFFS, PROVIDER, PRE_CHECKOUT, HISTORY, TITLE, PRICE, NAME, CONTACTS, REGION, CITY, CATEGORIES = range(10)
+TARIFFS, PROVIDER, PRE_CHECKOUT, HISTORY, TITLE, PRICE, NAME, CONTACTS, REGION, CITY, CATEGORIES = range(11)
 
 
 def to_parent_categories(query, context):
@@ -85,7 +85,7 @@ def resume_price(update, context):
         update.message.reply_text(message, parse_mode=ParseMode.HTML)
         return TITLE
     context.user_data['resume']['price'] = update.message.text
-    message = strings.get_string('resumes.create.contacts', language)
+    message = strings.get_string('resumes.create.name', language)
     keyboard = keyboards.get_keyboard('go_back.one_time', language)
     update.message.reply_text(message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
     return NAME
@@ -98,7 +98,7 @@ def resume_name(update, context):
         update.message.reply_text(text=message, parse_mode=ParseMode.HTML)
         return PRICE
     context.user_data['resume']['name'] = update.message.text
-    message = strings.get_string('resumes.create.name', language)
+    message = strings.get_string('resumes.create.contacts', language)
     update.message.reply_text(message, parse_mode=ParseMode.HTML)
     return CONTACTS
 
@@ -109,7 +109,10 @@ def resume_contacts(update, context):
         message = strings.get_string('resumes.create.description', language)
         update.message.reply_text(message, parse_mode=ParseMode.HTML)
         return DESCRIPTION
-    context.user_data['resume']['contacts'] = update.message.text
+    phone_number = update.message.text
+    if not phone_number.startswith('+'):
+        phone_number = '+' + phone_number
+    context.user_data['resume']['contacts'] = phone_number
     message = strings.get_string('location.regions', language)
     keyboard = keyboards.get_keyboard('location.regions', language)
     remove_keyboard = keyboards.get_keyboard('remove')

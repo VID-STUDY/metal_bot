@@ -5,7 +5,7 @@ from core.bot.utils import Navigation, Notifications
 from core.services import categories, vacations, settings, users
 from core.bot import payments
 
-TARIFFS, PROVIDER, PRE_CHECKOUT, HISTORY, TITLE, PRICE, NAME, CONTACTS, REGION, CITY, CATEGORIES = range(12)
+TARIFFS, PROVIDER, PRE_CHECKOUT, HISTORY, TITLE, PRICE, NAME, CONTACTS, REGION, CITY, CATEGORIES = range(11)
 
 
 def to_parent_categories(query, context):
@@ -85,7 +85,7 @@ def vacation_price(update, context):
         update.message.reply_text(text=message, parse_mode=ParseMode.HTML)
         return TITLE
     context.user_data['vacation']['price'] = update.message.text
-    message = strings.get_string('vacations.create.category', language)
+    message = strings.get_string('vacations.create.name', language)
     update.message.reply_text(message, parse_mode=ParseMode.HTML)
     return NAME
 
@@ -97,7 +97,7 @@ def vacation_name(update, context):
         update.message.reply_text(text=message, parse_mode=ParseMode.HTML)
         return PRICE
     context.user_data['vacation']['name'] = update.message.text
-    message = strings.get_string('vacations.create.name', language)
+    message = strings.get_string('vacations.create.contacts', language)
     update.message.reply_text(message, parse_mode=ParseMode.HTML)
     return CONTACTS
 
@@ -108,7 +108,10 @@ def vacation_contacts(update, context):
         message = strings.get_string('vacations.create.name', language)
         update.message.reply_text(message, parse_mode=ParseMode.HTML)
         return NAME
-    context.user_data['vacation']['contacts'] = update.message.text
+    phone_number = update.message.text
+    if not phone_number.startswith('+'):
+        phone_number = '+' + phone_number
+    context.user_data['vacation']['contacts'] = phone_number
     message = strings.get_string('location.regions', language)
     keyboard = keyboards.get_keyboard('location.regions', language)
     remove_keyboard = keyboards.get_keyboard('remove')
