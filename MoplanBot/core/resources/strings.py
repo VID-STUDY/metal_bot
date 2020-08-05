@@ -43,7 +43,7 @@ def get_user_info(user: dict) -> str:
 
 
 def get_city_from_region(region_number, city_number, language):
-    return get_string('location.regions.' + region_number + '.cities', language)[int(city_number)]
+    return get_string('location.regions.' + str(region_number) + '.cities', language)[int(city_number)]
 
 
 def get_category_description(category: dict, language) -> str:
@@ -215,3 +215,18 @@ def from_latest_referral_tender(latest_referral_tender_info, language) -> str:
     message = header + '\n\n' + prize + '\n\n' + top
     return message
 
+
+def from_vacations_list_message(vacations: list, category: dict, location: str, count, language: str):
+    header = get_string('catalog.header', language).format(category=category.get(language + '_title'), location=location, count=count)
+    message = header + '\n\n'
+    item_template = get_string('catalog.item', language)
+    for i in range(len(vacations)):
+        message += item_template.format(price=vacations[i]['price'], 
+                                        title=vacations[i]['title'],
+                                        name=vacations[i]['name'], 
+                                        phone=vacations[i]['contacts'],
+                                        number=i+1,
+                                        id=vacations[i].get('user').get('id'))
+        if i != len(vacations) - 1:
+            message += '\n\n'
+    return message

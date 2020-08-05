@@ -157,6 +157,11 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
             [InlineKeyboardButton(get_string('close', language), callback_data='faq:close')]
         ]
         return InlineKeyboardMarkup(keyboard)
+    elif key == 'catalog':
+        keyboard = [
+            [InlineKeyboardButton(get_string('go_back', language), callback_data='catalog:back')]
+        ]
+        return InlineKeyboardMarkup(keyboard)
 
 
 def get_account_keyboard(user: dict) -> Optional[InlineKeyboardMarkup]:
@@ -173,6 +178,10 @@ def get_account_keyboard(user: dict) -> Optional[InlineKeyboardMarkup]:
                                      callback_data='account:responses'),
                 InlineKeyboardButton(get_string('account.my_vacancies', user.get('language')),
                                      callback_data='account:my_vacations')
+            ],
+            [
+                InlineKeyboardButton(get_string('account.catalog', user.get('language')), 
+                                     callback_data='account:catalog')
             ],
             [
                 InlineKeyboardButton(get_string('account.change_language', user.get('language')),
@@ -192,6 +201,10 @@ def get_account_keyboard(user: dict) -> Optional[InlineKeyboardMarkup]:
                                      callback_data='account:vacations'),
                 InlineKeyboardButton(get_string('account.resumes', user.get('language')),
                                      callback_data='account:resumes')
+            ],
+            [
+                InlineKeyboardButton(get_string('account.catalog', user.get('language')), 
+                                     callback_data='account:catalog')
             ],
             [
                 InlineKeyboardButton(get_string('account.change_language', user.get('language')),

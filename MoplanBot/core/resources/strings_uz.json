@@ -16,9 +16,15 @@
     "account.my_vacancies": "\uD83D\uDCDC Вакансиялар",
     "account.vacancies": "\uD83D\uDCD1 Вакансиялар",
     "account.resumes": "\uD83D\uDCDC Менинг резюмеим",
+    "account.catalog": "🗂 Каталог",
     "account.change_language": "\uD83C\uDF0E Тил",
     "account.select_language": "\uD83C\uDF0E Тилни танланг",
     "account.select_language.success": "✅ Тил танлаган",
+
+    "catalog.categories": "Выберите интересующую вас категорию",
+    "catalog.header": "⚪️ {category}/{location}/Всего: {count} объявлений",
+    "catalog.item": "⚪️⚪️⚪️⚪️⚪️⚪️⚪️⚪️⚪️⚪️⚪️⚪️⚪️⚪️⚪️\n\n{number}) <b>Что:</b> {title}, <b>Цена:</b> {price}, <b>Продавец</b> - {name}, <b>Телефон</b> - <a href=\"callto:{phone}\">{phone}</a>\n\n<a href=\"tg://user?id={id}\">✉️ Или напишите ему в Telegram</a>",
+    "catalog.empty": "⚠️ Каталог пуст",
 
     "referral.channel": "\uD83D\uDE42 Реферал тизимда иштирок етиш учун бизнинг <b>{channelName}</b> каналимизга обуна бўлинг!",
     "referral.channel.subscribe": "Обуна бўлиш",
