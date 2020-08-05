@@ -1,7 +1,8 @@
 from telegram.ext import CallbackQueryHandler, ConversationHandler, CallbackContext, MessageHandler, Filters
 from telegram import Update, CallbackQuery, ParseMode
+from telegram.error import BadRequest
 
-from core.resources import strings, keyboards
+from core.resources import strings, keyboards, images
 from core.services import users, categories
 from core.bot.utils import Navigation, Filters as CustomFilters
 
@@ -12,15 +13,30 @@ LOCATION_REGION, LOCATION_CITY, CATEGORY, VACATIONS = range(4)
 
 
 def _to_location_region(update: Update, context: CallbackContext, new_message=False):
-    query = update.callback_query
+    message = update.message
     language = context.user_data['user'].get('language')
     select_location_message = strings.get_string('location.regions', language)
     select_location_keyboard = keyboards.get_keyboard('location.regions', language)
+    image = images.get_catalog_image(language)
     if new_message:
-        context.bot.delete_message(chat_id=query.from_user.id, message_id=query.message.message_id)
-        query.message.reply_text(text=select_location_message, reply_markup=select_location_keyboard)
+        photo_message = message.reply_photo(photo=image)
+        text_message = message.reply_text(text=select_location_message, reply_markup=select_location_keyboard)
+        if 'catalog_photo_id' in context.user_data:
+            try:
+                context.bot.delete_message(chat_id=update.message.chat_id,
+                                           message_id=context.user_data['catalog_photo_id'])
+            except BadRequest:
+                pass
+        if 'catalog_message_id' in context.user_data:
+            try:
+                context.bot.delete_message(chat_id=update.message.chat_id,
+                                           message_id=context.user_data['catalog_message_id'])
+            except BadRequest:
+                pass
+        context.user_data['catalog_photo_id'] = photo_message.message_id
+        context.user_data['catalog_message_id'] = text_message.message_id
     else:
-        query.edit_message_text(text=select_location_message, reply_markup=select_location_keyboard)
+        update.callback_query.edit_message_text(text=select_location_message, reply_markup=select_location_keyboard)
     return LOCATION_REGION
 
 
@@ -37,11 +53,11 @@ def _to_parent_categories(query: CallbackQuery, context: CallbackContext):
 
 
 def catalog(update: Update, context: CallbackContext):
-    query = update.callback_query
-    context.user_data['user'] = users.user_exists(query.from_user.id)
+    message = update.message
+    context.user_data['user'] = users.user_exists(message.from_user.id)
     if context.user_data['user'].get('is_blocked'):
         blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
-        query.answer(text=blocked_message, show_alert=True)
+        message.reply_text(text=blocked_message)
         return ConversationHandler.END
     context.user_data['catalog'] = {}
     return _to_location_region(update, context, new_message=True)
@@ -53,8 +69,13 @@ def catalog_location_region(update: Update, context: CallbackContext):
     region = query.data.split(':')[1]
     context.user_data['catalog']['location'] = {}
     if region == 'back':
-        Navigation.to_account(update, context, new_message=True)
         context.bot.delete_message(chat_id=query.from_user.id, message_id=query.message.message_id)
+        if 'catalog_photo_id' in context.user_data:
+            try:
+                context.bot.delete_message(chat_id=query.message.chat_id,
+                                           message_id=context.user_data['catalog_photo_id'])
+            except BadRequest:
+                pass
         del context.user_data['catalog']
         return ConversationHandler.END
     if region == 'all':
@@ -157,6 +178,10 @@ def main_menu_handler(update, context):
         faq.faq(update, context)
     elif CustomFilters.ReferralFilter().filter(update.message):
         referral.start(update, context)
+    elif CustomFilters.CatalogFilter().filter(update.message):
+        new_state = catalog(update, context)
+        catalog_conversation.update_state(new_state, (update.effective_chat.id, update.effective_chat.id))
+        return
     elif CustomFilters.AccountFilter().filter(update.message):
         account.start(update, context)
         if 'resume' in context.user_data:
@@ -179,7 +204,7 @@ def main_menu_handler(update, context):
 
 
 catalog_conversation = ConversationHandler(
-    entry_points=[CallbackQueryHandler(catalog, pattern='account:catalog')],
+    entry_points=[MessageHandler(CustomFilters.CatalogFilter(), catalog)],
     states={
         LOCATION_REGION: [CallbackQueryHandler(catalog_location_region), MessageHandler(Filters.text, main_menu_handler)],
         LOCATION_CITY: [CallbackQueryHandler(catalog_location_city), MessageHandler(Filters.text, main_menu_handler)],
