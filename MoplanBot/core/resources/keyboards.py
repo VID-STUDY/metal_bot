@@ -23,6 +23,7 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
     elif key == 'menu':
         keyboard = [
             [get_string('menu.cabinet', language)],
+            [get_string('menu.catalog', language)],
             [get_string('menu.about', language), get_string('menu.support', language)],
             [get_string('menu.faq', language), get_string('menu.partners', language)],
             [get_string('menu.news', language), get_string('menu.referral', language)]
@@ -52,7 +53,8 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
     elif key == 'resume.edit':
         keyboard = [
             [InlineKeyboardButton(get_string('title', language), callback_data='title')],
-            [InlineKeyboardButton(get_string('description', language), callback_data='description')],
+            [InlineKeyboardButton(get_string('price', language), callback_data='price')],
+            [InlineKeyboardButton(get_string('name', language), callback_data='name')],
             [InlineKeyboardButton(get_string('contacts', language), callback_data='contacts')],
             [InlineKeyboardButton(get_string('go_back', language), callback_data='back')]
         ]
@@ -67,9 +69,8 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
     elif key == 'vacation.edit':
         keyboard = [
             [InlineKeyboardButton(get_string('title', language), callback_data='title')],
-            [InlineKeyboardButton(get_string('salary', language), callback_data='salary')],
-            [InlineKeyboardButton(get_string('category', language), callback_data='category')],
-            [InlineKeyboardButton(get_string('description', language), callback_data='description')],
+            [InlineKeyboardButton(get_string('price', language), callback_data='price')],
+            [InlineKeyboardButton(get_string('name', language), callback_data='name')],
             [InlineKeyboardButton(get_string('contacts', language), callback_data='contacts')],
             [InlineKeyboardButton(get_string('go_back', language), callback_data='back')]
         ]
@@ -180,10 +181,6 @@ def get_account_keyboard(user: dict) -> Optional[InlineKeyboardMarkup]:
                                      callback_data='account:my_vacations')
             ],
             [
-                InlineKeyboardButton(get_string('account.catalog', user.get('language')), 
-                                     callback_data='account:catalog')
-            ],
-            [
                 InlineKeyboardButton(get_string('account.change_language', user.get('language')),
                                      callback_data='account:language')
             ]
@@ -201,10 +198,6 @@ def get_account_keyboard(user: dict) -> Optional[InlineKeyboardMarkup]:
                                      callback_data='account:vacations'),
                 InlineKeyboardButton(get_string('account.resumes', user.get('language')),
                                      callback_data='account:resumes')
-            ],
-            [
-                InlineKeyboardButton(get_string('account.catalog', user.get('language')), 
-                                     callback_data='account:catalog')
             ],
             [
                 InlineKeyboardButton(get_string('account.change_language', user.get('language')),
