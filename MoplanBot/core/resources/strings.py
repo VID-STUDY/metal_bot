@@ -95,7 +95,8 @@ def from_resume(resume: dict, language: str, for_vacation=False, user=None) -> s
         location = region_name + ', ' + city_name
     if for_vacation:
         result = template.format(date=utils.reformat_datetime(resume.get('created_at')), title=resume.get('title'),
-                                 description=resume.get('description'), contacts=resume.get('contacts'),
+                                 price=resume.get('price'), name=resume.get('name'),
+                                 contacts=resume.get('contacts'),
                                  location=location)
         result += '\n\n<a href="tg://user?id={}">'.format(user.get('id')) + get_string('open_chat', language) + '</a>'
         return result
@@ -104,7 +105,8 @@ def from_resume(resume: dict, language: str, for_vacation=False, user=None) -> s
         for category in resume['categories']:
             categories_string += category.get(language + '_title') + '\n'
         return template.format(date=utils.reformat_datetime(resume.get('created_at')), title=resume.get('title'),
-                               description=resume.get('description'), contacts=resume.get('contacts'),
+                               price=resume.get('price'), name=resume.get('name'), 
+                               contacts=resume.get('contacts'),
                                location=location, categories=categories_string)
 
 
@@ -122,8 +124,8 @@ def from_vacation(vacation: dict, language: str, for_resume=False, user=None) ->
         location = region_name + ', ' + city_name
     if for_resume:
         result = template.format(date=utils.reformat_datetime(vacation.get('created_at')), title=vacation.get('title'),
-                                 salary=vacation.get('salary'), category=vacation.get('category'),
-                                 description=vacation.get('description'), contacts=vacation.get('contacts'),
+                                 price=vacation.get('price'), name=vacation.get('name'),
+                                 contacts=vacation.get('contacts'),
                                  location=location)
         result += '\n\n<a href="tg://user?id={}">'.format(user.get('id')) + get_string('open_chat', language) + '</a>'
         return result
@@ -132,8 +134,8 @@ def from_vacation(vacation: dict, language: str, for_resume=False, user=None) ->
         for category in vacation['categories']:
             categories_string += category.get(language + '_title') + '\n'
         return template.format(date=utils.reformat_datetime(vacation.get('created_at')), title=vacation.get('title'),
-                               salary=vacation.get('salary'), category=vacation.get('category'),
-                               description=vacation.get('description'), contacts=vacation.get('contacts'),
+                               price=vacation.get('price'), name=vacation.get('name'),
+                               contacts=vacation.get('contacts'),
                                location=location, categories=categories_string)
 
 
