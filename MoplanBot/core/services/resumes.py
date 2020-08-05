@@ -8,7 +8,7 @@ ENTITY = 'resumes'
 
 
 def create_resume(data: dict) -> dict:
-    payload = {'title': data['title'], 'description': data['description'], 'contacts': data['contacts'],
+    payload = {'title': data['title'], 'price': data['price'], 'name': data['name'], 'contacts': data['contacts'],
                'location': data['location']['code'], 'user_id': data['user_id'],
                'categories': [category['id'] for category in data['categories']]}
     response = make_post_request(ENTITY, '', payload).json()

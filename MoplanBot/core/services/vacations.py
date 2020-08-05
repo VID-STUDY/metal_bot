@@ -9,8 +9,8 @@ ENTITY = 'vacations'
 
 def create_vacation(data: dict):
     payload = {
-        'title': data['title'], 'salary': data['salary'], 'category': data['category'],
-        'description': data['description'], 'contacts': data['contacts'], 'location': data['location']['code'],
+        'title': data['title'], 'price': data['price'], 'name': data['name'], 'contacts': data['contacts'], 
+        'location': data['location']['code'],
         'user_id': data['user_id'], 'categories': [category['id'] for category in data['categories']]
     }
     response = make_post_request(ENTITY, '', payload).json()
