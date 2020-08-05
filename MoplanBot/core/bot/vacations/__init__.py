@@ -2,7 +2,7 @@ from . import create
 from . import edit
 from . import resumes
 
-from core.bot import about, account, faq, news, support, referral, start
+from core.bot import about, account, faq, news, support, referral, start, catalog
 
 from core.bot.utils import Navigation, Filters as CustomFilters
 
@@ -16,6 +16,9 @@ def main_menu_handler(update, context):
         faq.faq(update, context)
     elif CustomFilters.ReferralFilter().filter(update.message):
         referral.start(update, context)
+    elif CustomFilters.CatalogFilter().filter(update.message):
+        catalog.catalog_conversation.handle_update(update, context.dispatcher, catalog.catalog_conversation.check_update(update), context)
+        return ConversationHandler.END
     elif CustomFilters.AccountFilter().filter(update.message):
         account.start(update, context)
         if 'vacation' in context.user_data:

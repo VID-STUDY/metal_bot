@@ -114,6 +114,11 @@ class Filters:
         def filter(self, message):
             return message.text and (strings.get_string('menu.support', 'ru') in message.text or
                                      strings.get_string('menu.support', 'uz') in message.text)
+    
+    class CatalogFilter(BaseFilter):
+        def filter(self, message):
+            return message.text and (strings.get_string('menu.catalog', 'ru') in message.text or 
+                                     strings.get_string('menu.catalog', 'uz') in message.text)
 
 
 class Notifications:
