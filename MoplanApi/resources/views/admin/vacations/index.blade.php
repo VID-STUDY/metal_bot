@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Вакансии')
+@section('title', 'Объявления')
 
 @section('content')
     <div class="block">
         <div class="block-header block-header-default">
-            <h3 class="block-title">Вакансии</h3>
+            <h3 class="block-title">Объявления</h3>
             <div class="block-options">
                 <a href="{{ route('admin.vacations.create') }}" class="btn btn-alt-primary"><i
-                        class="fa fa-plus mr-5"></i>Добавить вакансию</a>
+                        class="fa fa-plus mr-5"></i>Добавить объявление</a>
             </div>
         </div>
         <div class="block-content block-content-full">

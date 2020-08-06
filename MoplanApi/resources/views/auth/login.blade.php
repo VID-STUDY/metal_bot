@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 
-    <title>Вход | TeleportBot</title>
+    <title>Вход | Moplan</title>
 
-    <meta name="description" content="Административная панель TeleportBot">
+    <meta name="description" content="Административная панель Moplan">
     <meta name="author" content="VID">
     <meta name="robots" content="noindex, nofollow">
 
@@ -45,9 +45,9 @@
                         <div class="px-30 py-10">
                             <a class="link-effect font-w700" href="#">
                                 <i class="si si-fire"></i>
-                                <span class="font-size-xl text-primary-dark">Teleport</span><span class="font-size-xl">Bot</span>
+                                <span class="font-size-xl text-primary-dark">Admin</span><span class="font-size-xl">Panel</span>
                             </a>
-                            <h1 class="h3 font-w700 mt-30 mb-10">Добро пожаловать в административную панель Telegram бота Teleport</h1>
+                            <h1 class="h3 font-w700 mt-30 mb-10">Добро пожаловать в административную панель Telegram бота Moplan</h1>
                             <h2 class="h5 font-w400 text-muted mb-0">Пожалуйста, войдите</h2>
                         </div>
                         <!-- END Header -->

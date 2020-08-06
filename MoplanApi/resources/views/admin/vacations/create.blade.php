@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Создать резюме')
+@section('title', 'Создать объявление')
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('assets/js/plugins/select2/select2.min.css') }}">
@@ -12,7 +12,7 @@
         @csrf
         <div class="block">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Создать вакансию</h3>
+                <h3 class="block-title">Создать объявление</h3>
                 <div class="block-options">
                     <button type="submit" class="btn btn-alt-success"><i class="fa fa-check"></i> Сохранить</button>
                 </div>
@@ -23,15 +23,15 @@
                         <div class="form-group">
                             <div class="form-material floating">
                                 <input type="text" name="title" id="title" class="form-control" required>
-                                <label for="title">Заголовок</label>
+                                <label for="title">Что</label>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <div class="form-material floating">
-                                <input type="text" name="salary" id="salary" class="form-control" required>
-                                <label for="salary">Заработная плата</label>
+                                <input type="text" name="price" id="price" class="form-control" required>
+                                <label for="price">Цена</label>
                             </div>
                         </div>
                     </div>
@@ -40,16 +40,8 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <div class="form-material floating">
-                                <input type="text" name="category" id="category" class="form-control" required>
-                                <label for="category">Категория</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <div class="form-material floating">
-                                <input type="text" name="description" id="description" class="form-control" required>
-                                <label for="description">Описание</label>
+                                <input type="text" name="name" id="name" class="form-control" required>
+                                <label for="name">Имя</label>
                             </div>
                         </div>
                     </div>
@@ -59,7 +51,7 @@
                         <div class="form-group">
                             <div class="form-material floating">
                                 <input type="text" name="contacts" id="contacts" class="form-control" required>
-                                <label for="contacts">Контакты</label>
+                                <label for="contacts">Номер телефона</label>
                             </div>
                         </div>
                     </div>

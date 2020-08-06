@@ -35,7 +35,7 @@
                         @foreach($users as $user)
                             <tr>
                                 <td class="text-center font-w600">{{ $user->name }} @if ($user->is_blocked) <small class="text-danger"><i class="si si-lock"></i> Заблокирован</small> @endif</td>
-                                <td class="text-center font-w600"><span class="badge badge-pill badge-primary">@if ($user->user_role == 'contractor')Соискатель@elseif($user->user_role=='employer')Работодатель@endif</span></td>
+                                <td class="text-center font-w600"><span class="badge badge-pill badge-primary">@if ($user->user_role == 'contractor')Покупатель@elseif($user->user_role=='employer')Продавец@endif</span></td>
                                 <td class="text-center font-w600">{{ $user->created_at->format('d.m.Y h:i:s') }}</td>
                                 <td class="text-center font-w600 d-flex align-items-center justify-content-center">
                                     <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-alt-info mr-10" data-toggle="tooltip"

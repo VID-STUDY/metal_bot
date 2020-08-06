@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Создать резюме')
+@section('title', 'Создать закупку')
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('assets/js/plugins/select2/select2.min.css') }}">
@@ -12,7 +12,7 @@
         @csrf
         <div class="block">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Создать резюме</h3>
+                <h3 class="block-title">Создать закупку</h3>
                 <div class="block-options">
                     <button class="btn btn-alt-success" type="submit"><i class="fa fa-check"></i> Сохранить</button>
                 </div>
@@ -30,8 +30,18 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <div class="form-material floating">
-                                <input type="text" name="description" id="description" class="form-control" required>
-                                <label for="description">Описание</label>
+                                <input type="text" name="price" id="price" class="form-control" required>
+                                <label for="price">Цена</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <div class="form-material floating">
+                                <input type="text" name="name" id="name" class="form-control" required>
+                                <label for="name">Имя</label>
                             </div>
                         </div>
                     </div>

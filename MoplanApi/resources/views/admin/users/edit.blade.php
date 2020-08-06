@@ -40,11 +40,11 @@
                     <div class="col-sm-12 col-md-4">
                         <h3 class="content-heading pt-0">Текущий статус</h3>
                         <p>@if ($user->user_role == 'employer') <span
-                                class="badge-pill badge-info">Работодатель</span> @elseif($user->user_role == 'contractor')
-                                <span class="badge-pill badge-info">Соискатель</span> @endif</p>
+                                class="badge-pill badge-info">Продавец</span> @elseif($user->user_role == 'contractor')
+                                <span class="badge-pill badge-info">Покупатель</span> @endif</p>
                     </div>
                     <div class="col-sm-12 col-md-4">
-                        <h3 class="content-heading pt-0">Баланс соискателя</h3>
+                        <h3 class="content-heading pt-0">Баланс покупателя</h3>
                         <div class="form-group">
                             <div class="form-material">
                                 <input type="text" name="balance_contractor" id="balance_contractor" class="form-control"
@@ -55,16 +55,16 @@
                             <div class="form-material floating">
                                 <select name="contractor_tariff" id="contractor_tariff" class="form-control">
                                     <option disabled>Тариф не выбран</option>
-                                    <option value="contractor_tariff_1" @if ($user->contractor_tariff == 'contractor_tariff_1') selected @endif>Размещение 1-ого резюме</option>
-                                    <option value="contractor_tariff_2" @if ($user->contractor_tariff == 'contractor_tariff_2') selected @endif>Размещение 2-х резюме</option>
-                                    <option value="contractor_tariff_3" @if ($user->contractor_tariff == 'contractor_tariff_3') selected @endif>Размещение 3-х резюме</option>
+                                    <option value="contractor_tariff_1" @if ($user->contractor_tariff == 'contractor_tariff_1') selected @endif>Размещение 1-ого объявления</option>
+                                    <option value="contractor_tariff_2" @if ($user->contractor_tariff == 'contractor_tariff_2') selected @endif>Размещение 2-х объявлений</option>
+                                    <option value="contractor_tariff_3" @if ($user->contractor_tariff == 'contractor_tariff_3') selected @endif>Размещение 3-х объявлений</option>
                                 </select>
                                 <label for="contractor_tariff">Тариф</label>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-4">
-                        <h3 class="content-heading pt-0">Баланс работодателя</h3>
+                        <h3 class="content-heading pt-0">Баланс продавца</h3>
                         <div class="form-group">
                             <div class="form-material">
                                 <input type="text" name="balance_employer" id="balance_employer" class="form-control"
@@ -75,9 +75,9 @@
                             <div class="form-material floating">
                                 <select name="employer_tariff" id="employer_tariff" class="form-control">
                                     <option disabled>Тариф не выбран</option>
-                                    <option value="employer_tariff_1" @if ($user->employer_tariff == 'employer_tariff_1') selected @endif>Размещение 1-ой вакансии</option>
-                                    <option value="employer_tariff_2" @if ($user->employer_tariff == 'employer_tariff_2') selected @endif>Размещение 2-х вакансий</option>
-                                    <option value="employer_tariff_3" @if ($user->employer_tariff == 'employer_tariff_3') selected @endif>Размещение 3-х вакансий</option>
+                                    <option value="employer_tariff_1" @if ($user->employer_tariff == 'employer_tariff_1') selected @endif>Размещение 1-ого объявления</option>
+                                    <option value="employer_tariff_2" @if ($user->employer_tariff == 'employer_tariff_2') selected @endif>Размещение 2-х объявлений</option>
+                                    <option value="employer_tariff_3" @if ($user->employer_tariff == 'employer_tariff_3') selected @endif>Размещение 3-х объявлений</option>
                                 </select>
                                 <label for="employer_tariff">Тариф</label>
                             </div>
@@ -86,7 +86,7 @@
                 </div>
                 <div class="row mb-50">
                     <div class="col-sm-12 col-md-6">
-                        <h3 class="content-heading">Резюме</h3>
+                        <h3 class="content-heading">Закупки</h3>
                         <ul class="list-group list-group flush">
                             @foreach($user->resumes as $resume)
                                 <a href="{{ route('admin.resumes.show', $resume->id) }}"
@@ -95,7 +95,7 @@
                         </ul>
                     </div>
                     <div class="col-sm-12 col-md-6">
-                        <h3 class="content-heading">Вакансии</h3>
+                        <h3 class="content-heading">Объявления на продажу</h3>
                         <ul class="list-group list-group flush">
                             @foreach($user->vacations as $vacation)
                                 <a href="{{ route('admin.vacations.show', $vacation->id) }}"

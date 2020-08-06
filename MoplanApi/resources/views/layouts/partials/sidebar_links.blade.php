@@ -18,13 +18,13 @@
     <li>
         <a href="{{ route('admin.vacations.index') }}">
             <i class="si si-docs"></i>
-            <span class="sidebar-mini-hide">Вакансии</span>
+            <span class="sidebar-mini-hide">Объявления</span>
         </a>
     </li>
     <li>
         <a href="{{ route('admin.resumes.index') }}">
             <i class="si si-docs"></i>
-            <span class="sidebar-mini-hide">Резюме</span>
+            <span class="sidebar-mini-hide">Закупки</span>
         </a>
     </li>
     <li>

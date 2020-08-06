@@ -17,15 +17,19 @@
         </div>
         <div class="block-content">
             <div class="row">
-                <div class="col-md-4 col-sm-12">
-                    <h3 class="content-heading">Описание</h3>
-                    <p>{{ $resume->description }}</p>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <h3 class="content-heading">Цена</h3>
+                    <p>{{ $resume->price }}</p>
                 </div>
-                <div class="col-md-4 col-sm-12">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <h3 class="content-heading">Имя</h3>
+                    <p>{{ $resume->name }}</p>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
                     <h3 class="content-heading">Контакты</h3>
-                    <p>{{ $resume->contacts }}</p>
+                    <p><a href="callto:{{ $resume->contacts }}" class="link-effect">{{ $resume->contacts }}</a></p>
                 </div>
-                <div class="col-md-4 col-sm-12">
+                <div class="col-lg-3 col-md-4 col-sm-6">
                     <h3 class="content-heading">Локация</h3>
                     <p>{{ $resume->getLocation() }}</p>
                 </div>

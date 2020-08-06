@@ -18,20 +18,16 @@
         <div class="block-content">
             <div class="row">
                 <div class="col-md-4 col-sm-12">
-                    <h3 class="content-heading">Заработная плата</h3>
-                    <p>{{ $vacation->salary }}</p>
+                    <h3 class="content-heading">Цена</h3>
+                    <p>{{ $vacation->price }}</p>
                 </div>
                 <div class="col-md-4 col-sm-12">
-                    <h3 class="content-heading">Категория</h3>
-                    <p>{{ $vacation->category }}</p>
-                </div>
-                <div class="col-md-4 col-sm-12">
-                    <h3 class="content-heading">Описание</h3>
-                    <p>{{ $vacation->description}}</p>
+                    <h3 class="content-heading">Имя</h3>
+                    <p>{{ $vacation->name }}</p>
                 </div>
                 <div class="col-md-4 col-sm-12">
                     <h3 class="content-heading">Контакты</h3>
-                    <p>{{ $vacation->contacts}}</p>
+                    <p><a href="callto:{{ $vacation->contacts}}" class="link-effect">{{ $vacation->contacts}}</a></p>
                 </div>
                 <div class="col-md-4 col-sm-12">
                     <h3 class="content-heading">Локация</h3>

@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title') | TeleportBot</title>
+    <title>@yield('title') | Moplan</title>
 
-    <meta name="description" content="Административная панель TeleportBot">
+    <meta name="description" content="Административная панель Moplan">
     <meta name="author" content="vid.uz">
     <meta name="robots" content="noindex, nofollow">
 
