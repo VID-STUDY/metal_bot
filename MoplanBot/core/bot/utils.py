@@ -75,6 +75,14 @@ class Navigation:
                 context.bot.delete_message(chat_id=user_id, message_id=context.user_data['account_message_id'])
             except BadRequest:
                 pass
+        if 'catalog_photo_id' in context.user_data:
+            try:
+                context.bot.delete_message(chat_id=update.effective_chat.id,
+                                           message_id=context.user_data['catalog_photo_id'])
+            except BadRequest:
+                pass
+        if 'mode' in context.user_data:
+            del context.user_data['mode']
         context.user_data['account_message_id'] = message.message_id
 
 

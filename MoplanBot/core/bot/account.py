@@ -10,6 +10,12 @@ def select_role_choice(update: Update, context):
     role = query.data.split(':')[1]
     user = users.set_user_role(query.from_user.id, role)
     context.user_data['user'] = user
+    if 'mode' in context.user_data and context.user_data['mode'] == 'catalog':
+        if user.get('user_role') == 'employer':
+            user_vacations(update, context)
+        if user.get('user_role') == 'contractor':
+            user_resumes(update, context)
+        return
     Navigation.to_account(update, context)
     query.answer(text=strings.get_string('account.select_role.selected', context.user_data['user'].get('language')))
 
@@ -43,6 +49,9 @@ def change_role(update, context):
     language = context.user_data['user'].get('language')
     select_role_message = strings.get_string('account.select_role', language)
     select_role_keyboard = keyboards.get_keyboard('account.select_role', language)
+    if 'mode' in context.user_data and context.user_data['mode'] == 'catalog':
+        query.edit_message_text(select_role_message, parse_mode=ParseMode.HTML, reply_markup=select_role_keyboard)
+        return
     query.edit_message_caption(select_role_message, parse_mode=ParseMode.HTML, reply_markup=select_role_keyboard)
 
 

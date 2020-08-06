@@ -9,18 +9,24 @@ from core.bot.utils import Navigation, Filters as CustomFilters
 from core.bot import about, account, faq, news, support, referral, start
 
 
-LOCATION_REGION, LOCATION_CITY, CATEGORY, VACATIONS = range(4)
+CATALOG_ACTION, LOCATION_REGION, LOCATION_CITY, CATEGORY, VACATIONS = range(5)
 
 
-def _to_location_region(update: Update, context: CallbackContext, new_message=False):
+def _to_catalog_action(update: Update, context: CallbackContext, new_message=False):
     message = update.message
     language = context.user_data['user'].get('language')
-    select_location_message = strings.get_string('location.regions', language)
-    select_location_keyboard = keyboards.get_keyboard('location.regions', language)
-    image = images.get_catalog_image(language)
+    parent_categories = categories.get_parent_categories()
+    parent_categories = sorted(parent_categories, key=lambda i: i['position'])
+    catalog_message = strings.get_string('catalog.start', language)
+    catalog_keyboard = keyboards.get_catalog_keyboard(parent_categories, language)
     if new_message:
+        image = images.get_catalog_image(language)
+        if 'catalog_image_id' in context.bot_data:
+            image = context.bot_data['catalog_image_id']
         photo_message = message.reply_photo(photo=image)
-        text_message = message.reply_text(text=select_location_message, reply_markup=select_location_keyboard)
+        if 'catalog_image_id' not in context.bot_data:
+            context.bot_data['catalog_image_id'] = photo_message.photo[-1].file_id
+        text_message = message.reply_text(text=catalog_message, reply_markup=catalog_keyboard)
         if 'catalog_photo_id' in context.user_data:
             try:
                 context.bot.delete_message(chat_id=update.message.chat_id,
@@ -36,20 +42,38 @@ def _to_location_region(update: Update, context: CallbackContext, new_message=Fa
         context.user_data['catalog_photo_id'] = photo_message.message_id
         context.user_data['catalog_message_id'] = text_message.message_id
     else:
-        update.callback_query.edit_message_text(text=select_location_message, reply_markup=select_location_keyboard)
+        update.callback_query.edit_message_text(text=catalog_message, reply_markup=catalog_keyboard)
+    return CATALOG_ACTION
+
+
+def _to_location_region(update: Update, context: CallbackContext):
+    message = update.message
+    language = context.user_data['user'].get('language')
+    select_location_message = strings.get_string('location.regions', language)
+    select_location_keyboard = keyboards.get_keyboard('location.regions', language)
+    image = images.get_catalog_image(language)
+    update.callback_query.edit_message_text(text=select_location_message, reply_markup=select_location_keyboard)
     return LOCATION_REGION
 
 
-def _to_parent_categories(query: CallbackQuery, context: CallbackContext):
-    parent_categories = categories.get_parent_categories()
-    parent_categories = sorted(parent_categories, key=lambda i: i['position'])
+def _to_vacations(update: Update, context: CallbackContext):
+    query = update.callback_query
     language = context.user_data['user'].get('language')
-    message = strings.get_string('catalog.categories', language)
-    keyboard = keyboards.get_categories_keyboard(parent_categories, language, [])
-    query.answer()
-    message = query.edit_message_text(message, reply_markup=keyboard)
-    context.user_data['categories_message_id'] = message.message_id
-    return CATEGORY
+    vacations = context.user_data['catalog']['vacations']
+    location_code = context.user_data['catalog']['location']['code']
+    category = context.user_data['current_category']
+    if location_code != 'all':
+        vacations = [vacation for vacation in vacations if vacation.get('location') == location_code or vacation.get('location') == 'all']
+    if not vacations:
+        empty_message = strings.get_string('catalog.empty', language)
+        query.answer(text=empty_message, show_alert=True)
+        return LOCATION_CITY
+    vacations_message = strings.from_vacations_list_message(vacations, category, 
+                                                            context.user_data['catalog']['location']['full_name'], 
+                                                            len(vacations), language)
+    catalog_keyboard = keyboards.get_keyboard('catalog.vacations', language)
+    query.edit_message_text(vacations_message, reply_markup=catalog_keyboard, parse_mode=ParseMode.HTML)
+    return VACATIONS
 
 
 def catalog(update: Update, context: CallbackContext):
@@ -60,7 +84,31 @@ def catalog(update: Update, context: CallbackContext):
         message.reply_text(text=blocked_message)
         return ConversationHandler.END
     context.user_data['catalog'] = {}
-    return _to_location_region(update, context, new_message=True)
+    return _to_catalog_action(update, context, new_message=True)
+
+
+def catalog_action(update: Update, context: CallbackContext):
+    query = update.callback_query
+    if 'categories' in query.data:
+        return catalog_categories(update, context)
+    elif 'submit_ad' in query.data:
+        context.user_data['mode'] = 'catalog'
+        account.change_role(update, context)
+        return ConversationHandler.END
+    elif 'close' in query.data:
+        if 'catalog_photo_id' in context.user_data:
+            try:
+                context.bot.delete_message(chat_id=query.message.chat_id,
+                                           message_id=context.user_data['catalog_photo_id'])
+            except BadRequest:
+                pass
+        if 'catalog_message_id' in context.user_data:
+            try:
+                context.bot.delete_message(chat_id=query.message.chat_id,
+                                           message_id=context.user_data['catalog_message_id'])
+            except BadRequest:
+                pass
+        return ConversationHandler.END
 
 
 def catalog_location_region(update: Update, context: CallbackContext):
@@ -69,19 +117,19 @@ def catalog_location_region(update: Update, context: CallbackContext):
     region = query.data.split(':')[1]
     context.user_data['catalog']['location'] = {}
     if region == 'back':
-        context.bot.delete_message(chat_id=query.from_user.id, message_id=query.message.message_id)
-        if 'catalog_photo_id' in context.user_data:
-            try:
-                context.bot.delete_message(chat_id=query.message.chat_id,
-                                           message_id=context.user_data['catalog_photo_id'])
-            except BadRequest:
-                pass
-        del context.user_data['catalog']
-        return ConversationHandler.END
+        current_category = context.user_data['current_category']
+        siblings_category = categories.get_siblings(current_category.get('id'))
+        siblings_category = sorted(siblings_category, key=lambda i: i['position'])
+        message = strings.get_category_description(current_category, language)
+        keyboard = keyboards.get_categories_keyboard(siblings_category, language, [])
+        query.answer()
+        query.edit_message_text(text=message, reply_markup=keyboard)
+        context.user_data['current_category'] = categories.get_category(current_category.get('parent_id'))
+        return CATEGORY
     if region == 'all':
         context.user_data['catalog']['location']['code'] = region
         context.user_data['catalog']['location']['full_name'] = strings.get_string("location.regions.all", language)
-        return _to_parent_categories(query, context)
+        return _to_vacations(update, context)
     context.user_data['catalog']['location']['region'] = region
     region_name = strings.get_string('location.regions.' + region, language)
     keyboard = keyboards.get_cities_from_region(region, language)
@@ -103,7 +151,7 @@ def catalog_location_city(update: Update, context: CallbackContext):
     context.user_data['catalog']['location']['code'] = region + '.' + city
     context.user_data['catalog']['location']['full_name'] = full_name
     query.answer(text=full_name)
-    return _to_parent_categories(query, context)
+    return _to_vacations(update, context)
 
 
 def catalog_categories(update: Update, context: CallbackContext):
@@ -127,7 +175,7 @@ def catalog_categories(update: Update, context: CallbackContext):
             return CATEGORIES
         else:
             del context.user_data['current_category']
-            return _to_parent_categories(query, context)
+            return _to_catalog_action(update, context)
     category = categories.get_category(category_id)
     children_categories = category.get('categories')
     if children_categories:
@@ -143,15 +191,8 @@ def catalog_categories(update: Update, context: CallbackContext):
         query.answer(text=empty_message, show_alert=True)
         return CATEGORY
     context.user_data['current_category'] = category
-    location_code = context.user_data['catalog']['location']['code']
-    if location_code != 'all':
-        vacations = [vacation for vacation in vacations if vacation.get('location') == location_code or vacation.get('location') == 'all']
-    vacations_message = strings.from_vacations_list_message(vacations, category, 
-                                                            context.user_data['catalog']['location']['full_name'], 
-                                                            len(vacations), language)
-    catalog_keyboard = keyboards.get_keyboard('catalog', language)
-    query.edit_message_text(vacations_message, reply_markup=catalog_keyboard, parse_mode=ParseMode.HTML)
-    return VACATIONS
+    context.user_data['catalog']['vacations'] = vacations
+    return _to_location_region(update, context)
 
 
 def catalog_vacations(update: Update, context: CallbackContext):
@@ -160,15 +201,7 @@ def catalog_vacations(update: Update, context: CallbackContext):
     user = context.user_data['user']
     language = user.get('language')
     if data == 'back':
-        current_category = context.user_data['current_category']
-        siblings_category = categories.get_siblings(current_category.get('id'))
-        siblings_category = sorted(siblings_category, key=lambda i: i['position'])
-        message = strings.get_category_description(current_category, language)
-        keyboard = keyboards.get_categories_keyboard(siblings_category, language, [])
-        query.answer()
-        query.edit_message_text(text=message, reply_markup=keyboard)
-        context.user_data['current_category'] = categories.get_category(current_category.get('parent_id'))
-        return CATEGORY
+        return _to_location_region(update, context)
 
 
 def main_menu_handler(update, context):
@@ -206,6 +239,7 @@ def main_menu_handler(update, context):
 catalog_conversation = ConversationHandler(
     entry_points=[MessageHandler(CustomFilters.CatalogFilter(), catalog)],
     states={
+        CATALOG_ACTION: [CallbackQueryHandler(catalog_action), MessageHandler(Filters.text, main_menu_handler)],
         LOCATION_REGION: [CallbackQueryHandler(catalog_location_region), MessageHandler(Filters.text, main_menu_handler)],
         LOCATION_CITY: [CallbackQueryHandler(catalog_location_city), MessageHandler(Filters.text, main_menu_handler)],
         CATEGORY: [CallbackQueryHandler(catalog_categories), MessageHandler(Filters.text, main_menu_handler)],

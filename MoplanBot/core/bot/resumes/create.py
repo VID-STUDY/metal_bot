@@ -60,6 +60,12 @@ def create(update, context):
     message = strings.get_string('resumes.create.title', language)
     keyboard = keyboards.get_keyboard('go_back.one_time', language)
     context.bot.delete_message(chat_id=query.from_user.id, message_id=query.message.message_id)
+    if 'catalog_photo_id' in context.user_data:
+            try:
+                context.bot.delete_message(chat_id=update.effective_chat.id,
+                                           message_id=context.user_data['catalog_photo_id'])
+            except BadRequest:
+                pass
     context.bot.send_message(chat_id=query.from_user.id, text=message, reply_markup=keyboard, parse_mode=ParseMode.HTML)
     return TITLE
 

@@ -24,6 +24,8 @@
     "catalog.header": "⚪️ {category}/{location}/Всего: {count} объявлений",
     "catalog.item": "⚪️⚪️⚪️⚪️⚪️⚪️⚪️⚪️⚪️⚪️⚪️⚪️⚪️⚪️⚪️\n\n{number}) <b>Что:</b> {title}, <b>Цена:</b> {price}, <b>Продавец</b> - {name}, <b>Телефон</b> - <a href=\"callto:{phone}\">{phone}</a>\n\n<a href=\"tg://user?id={id}\">✉️ Или напишите ему в Telegram</a>",
     "catalog.empty": "⚠️ Каталог пуст",
+    "catalog.submit_ad": "Подать объявление",
+    "catalog.start": "Добро пожаловать в Каталог! Выберите, что вас интересует",
 
     "referral.channel": "\uD83D\uDE42 Чтобы учавствовать в реферальной системе, подпишитесь на наш канал <b>{channelName}</b>!",
     "referral.channel.subscribe": "Подписаться",

@@ -158,7 +158,7 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
             [InlineKeyboardButton(get_string('close', language), callback_data='faq:close')]
         ]
         return InlineKeyboardMarkup(keyboard)
-    elif key == 'catalog':
+    elif key == 'catalog.vacations':
         keyboard = [
             [InlineKeyboardButton(get_string('go_back', language), callback_data='catalog:back')]
         ]
@@ -320,4 +320,15 @@ def get_payment_invoice_keyboard(price, language) -> InlineKeyboardMarkup:
     keyboard = [
         [InlineKeyboardButton(get_string('payments.invoice', language).format('{:,}'.format(price).replace(',', ' ')), pay=True)]
     ]
+    return InlineKeyboardMarkup(keyboard)
+
+
+def get_catalog_keyboard(parent_categories: list, language: str) -> InlineKeyboardMarkup:
+    parent_categories_buttons = []
+    for category in parent_categories:
+        parent_categories_buttons.append(InlineKeyboardButton(category.get(language + '_title'), callback_data='categories:'+str(category.get('id'))))
+    keyboard = []
+    keyboard.append(parent_categories_buttons)
+    keyboard.append([InlineKeyboardButton(get_string('catalog.submit_ad', language), callback_data='catalog:submit_ad')])
+    keyboard.append([InlineKeyboardButton(get_string('close', language), callback_data='catalog:close')])
     return InlineKeyboardMarkup(keyboard)
