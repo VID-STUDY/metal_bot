@@ -26,7 +26,7 @@
                             <i class="si si-briefcase fa-4x text-info-light"></i>
                         </div>
                         <div class="font-size-h3 font-w600 text-white">{{ $vacationsCount }}</div>
-                        <div class="font-size-sm font-w600 text-uppercase text-info-light">Всего вакансий</div>
+                        <div class="font-size-sm font-w600 text-uppercase text-info-light">Всего объявлений на продажу</div>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                             <i class="si si-docs fa-4x text-info-light"></i>
                         </div>
                         <div class="font-size-h3 font-w600 text-white">{{ $resumesCount }}</div>
-                        <div class="font-size-sm font-w600 text-uppercase text-info-light">Всего резюме</div>
+                        <div class="font-size-sm font-w600 text-uppercase text-info-light">Всего объявлений на закупку</div>
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
     <h2 class="content-heading">Статистика</h2>
     <div class="block">
         <div class="block-header">
-            <h3 class="block-title">Статистика должностей</h3>
+            <h3 class="block-title">Статистика категорий</h3>
         </div>
         <div class="block-content">
             <div class="table-responsive">
@@ -67,8 +67,8 @@
                     <thead>
                         <tr>
                             <th class="text-center">Должность</th>
-                            <th class="text-center">Количество вакансий</th>
-                            <th class="text-center">Количество резюме</th>
+                            <th class="text-center">Количество объявлений</th>
+                            <th class="text-center">Количество закупок</th>
                         </tr>
                     </thead>
                     <tbody>
