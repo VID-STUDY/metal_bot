@@ -60,8 +60,7 @@ def create(update, context):
     message = strings.get_string('vacations.create.title', language)
     keyboard = keyboards.get_keyboard('go_back.inline', language)
     context.bot.delete_message(chat_id=query.from_user.id, message_id=query.message.message_id)
-    message = context.bot.send_message(chat_id=query.from_user.id, text=message, reply_markup=keyboard, parse_mode=ParseMode.HTML)
-    context.user_data['vacation_title_message'] = message.message_id
+    context.bot.send_message(chat_id=query.from_user.id, text=message, reply_markup=keyboard, parse_mode=ParseMode.HTML)
     return TITLE
 
 
@@ -70,9 +69,6 @@ def vacation_title(update, context):
     if update.callback_query and update.callback_query.data == 'back':
         del context.user_data['vacation']
         context.bot.delete_message(update.effective_chat.id, update.effective_message.message_id)
-        if 'vacation_title_message' in context.user_data:
-            context.bot.delete_message(update.effective_chat.id, context.user_data['vacation_title_message'])
-            del context.user_data['vacation_title_message']
         Navigation.to_account(update, context)
         del context.user_data['has_action']
         return ConversationHandler.END
