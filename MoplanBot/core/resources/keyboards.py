@@ -16,6 +16,8 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
         return ReplyKeyboardRemove()
     elif key == 'go_back':
         return _create_keyboard([[get_string('go_back', language)]])
+    elif key == 'go_back.inline':
+        return InlineKeyboardMarkup([[InlineKeyboardButton(get_string('go_back', language), callback_data='back')]])
     elif key == 'go_back.one_time':
         return _create_keyboard([[get_string('go_back', language)]], one_time=True)
     elif key == 'start.languages':
