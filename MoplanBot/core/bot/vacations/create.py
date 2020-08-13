@@ -83,7 +83,7 @@ def vacation_price(update, context):
     if update.callback_query and update.callback_query.data == 'back':
         message = strings.get_string('vacations.create.title', language)
         keyboard = keyboards.get_keyboard('go_back.inline', language)
-        update.сallback_query.edit_message_text(text=message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
+        update.callback_query.edit_message_text(text=message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
         return TITLE
     context.user_data['vacation']['price'] = update.message.text
     message = strings.get_string('vacations.create.name', language)
@@ -97,7 +97,7 @@ def vacation_name(update, context):
     if update.callback_query and update.callback_query.data == 'back':
         message = strings.get_string('vacations.create.price', language)
         keyboard = keyboards.get_keyboard('go_back.inline', language)
-        update.сallback_query.edit_message_text(text=message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
+        update.callback_query.edit_message_text(text=message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
         return PRICE
     context.user_data['vacation']['name'] = update.message.text
     message = strings.get_string('vacations.create.contacts', language)
@@ -111,7 +111,7 @@ def vacation_contacts(update, context):
     if update.callback_query and update.callback_query.data == 'back':
         message = strings.get_string('vacations.create.name', language)
         keyboard = keyboards.get_keyboard('go_back.inline', language)
-        update.сallback_query.edit_message_text(text=message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
+        update.callback_query.edit_message_text(text=message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
         return NAME
     phone_number = update.message.text
     if not phone_number.startswith('+'):
