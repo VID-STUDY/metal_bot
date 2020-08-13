@@ -121,10 +121,16 @@ def catalog_location_region(update: Update, context: CallbackContext):
     context.user_data['catalog']['location'] = {}
     if region == 'back':
         current_category = context.user_data['current_category']
-        siblings_category = categories.get_siblings(current_category.get('id'))
-        siblings_category = sorted(siblings_category, key=lambda i: i['position'])
-        message = strings.get_category_description(current_category, language)
-        keyboard = keyboards.get_categories_keyboard(siblings_category, language, [])
+        if current_category.get('parent_id'):
+            siblings_category = categories.get_siblings(current_category.get('id'))
+            siblings_category = sorted(siblings_category, key=lambda i: i['position'])
+            message = strings.get_category_description(current_category, language)
+            keyboard = keyboards.get_categories_keyboard(siblings_category, language, [])
+        else:
+            parent_categories = categories.get_parent_categories()
+            parent_categories = sorted(parent_categories, key=lambda i: i['position'])
+            message = strings.get_string('catalog.start', language)
+            keyboard = keyboards.get_catalog_keyboard(parent_categories, language)
         query.answer()
         query.edit_message_text(text=message, reply_markup=keyboard)
         context.user_data['current_category'] = categories.get_category(current_category.get('parent_id'))
