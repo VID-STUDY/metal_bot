@@ -94,7 +94,7 @@ def main():
     # Start the Bot
     if Config.ENVIRONMENT == 'production':
         updater.start_webhook(listen='0.0.0.0',
-                              port=8443,
+                              port=1278,
                               url_path=Config.API_TOKEN)
         updater.bot.set_webhook(webhook_url=Config.APP_URL + '/' + Config.API_TOKEN)
     else:
