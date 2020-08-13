@@ -174,7 +174,7 @@ def catalog_categories(update: Update, context: CallbackContext):
         if 'current_category' not in context.user_data:
             return _to_location_region(update, context)
         current_category = context.user_data['current_category']
-        if current_category.get('parent_id'):
+        if current_category and current_category.get('parent_id'):
             current_category = context.user_data['current_category']
             siblings_category = categories.get_siblings(current_category.get('id'))
             siblings_category = sorted(siblings_category, key=lambda i: i['position'])
