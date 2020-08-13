@@ -133,6 +133,7 @@ def catalog_location_region(update: Update, context: CallbackContext):
             parent_categories = sorted(parent_categories, key=lambda i: i['position'])
             message = strings.get_string('catalog.start', language)
             keyboard = keyboards.get_catalog_keyboard(parent_categories, language)
+            del context.user_data['current_category']
             next_step = CATALOG_ACTION
         query.answer()
         query.edit_message_text(text=message, reply_markup=keyboard)
@@ -172,7 +173,7 @@ def catalog_categories(update: Update, context: CallbackContext):
     category_id = query.data.split(':')[1]
     if category_id == 'back':
         if 'current_category' not in context.user_data:
-            return _to_location_region(update, context)
+            return _to_catalog_action(update, context)
         current_category = context.user_data['current_category']
         if current_category and current_category.get('parent_id'):
             current_category = context.user_data['current_category']
@@ -187,6 +188,7 @@ def catalog_categories(update: Update, context: CallbackContext):
         else:
             del context.user_data['current_category']
             return _to_catalog_action(update, context)
+        query.answer()
     category = categories.get_category(category_id)
     children_categories = category.get('categories')
     if children_categories:
@@ -195,6 +197,7 @@ def catalog_categories(update: Update, context: CallbackContext):
         keyboard = keyboards.get_categories_keyboard(children_categories, language, [])
         message = strings.get_category_description(category, language)
         query.edit_message_text(message, reply_markup=keyboard)
+        query.answer()
         return CATEGORY
     vacations = category.get('vacations')
     if not vacations:
