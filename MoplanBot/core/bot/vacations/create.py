@@ -68,7 +68,6 @@ def vacation_title(update, context):
     language = context.user_data['user'].get('language')
     if update.callback_query and update.callback_query.data == 'back':
         del context.user_data['vacation']
-        context.bot.delete_message(update.effective_chat.id, update.effective_message.message_id)
         Navigation.to_account(update, context)
         del context.user_data['has_action']
         return ConversationHandler.END
