@@ -162,22 +162,22 @@ def get_keyboard(key, language='ru') -> Union[ReplyKeyboardRemove, ReplyKeyboard
     elif key == 'partners':
         keyboard = [
             [InlineKeyboardButton(get_string('partners.tariffs', language), callback_data='partners:tariffs')],
-            [InlineKeyboardButton(get_string('close', language), callback_data='partners:close')]
+            [InlineKeyboardButton(get_string('go_back', language), callback_data='partners:close')]
         ]
         return InlineKeyboardMarkup(keyboard)
     elif key == 'about':
         keyboard = [
-            [InlineKeyboardButton(get_string('close', language), callback_data='about:close')]
+            [InlineKeyboardButton(get_string('go_back', language), callback_data='about:close')]
         ]
         return InlineKeyboardMarkup(keyboard)
     elif key == 'news':
         keyboard = [
-            [InlineKeyboardButton(get_string('close', language), callback_data='news:close')]
+            [InlineKeyboardButton(get_string('go_back', language), callback_data='news:close')]
         ]
         return InlineKeyboardMarkup(keyboard)
     elif key == 'faq':
         keyboard = [
-            [InlineKeyboardButton(get_string('close', language), callback_data='faq:close')]
+            [InlineKeyboardButton(get_string('go_back', language), callback_data='faq:close')]
         ]
         return InlineKeyboardMarkup(keyboard)
     elif key == 'catalog.vacations':
@@ -325,5 +325,5 @@ def get_catalog_keyboard(parent_categories: list, language: str) -> InlineKeyboa
         parent_categories_buttons.append(InlineKeyboardButton(category.get(language + '_title'), callback_data='categories:'+str(category.get('id'))))
     keyboard = []
     keyboard.append(parent_categories_buttons)
-    keyboard.append([InlineKeyboardButton(get_string('close', language), callback_data='catalog:close')])
+    keyboard.append([InlineKeyboardButton(get_string('go_back', language), callback_data='catalog:close')])
     return InlineKeyboardMarkup(keyboard)
