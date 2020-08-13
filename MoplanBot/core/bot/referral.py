@@ -3,10 +3,10 @@ from core.resources import strings, keyboards, images
 from core.services import users, referral
 
 from telegram.error import BadRequest
-from telegram import ParseMode, CallbackQuery
+from telegram import ParseMode, CallbackQuery, Update
 from telegram.ext import MessageHandler, ConversationHandler, CallbackQueryHandler
 from telegram.utils import helpers
-from .utils import Filters
+from .utils import Filters, Navigation
 
 
 RULES, PRIZE_PLACES, RATING = range(3)
@@ -25,14 +25,13 @@ def to_referral_tender(update, context):
     return ConversationHandler.END
 
 
-def start(update, context):
-    message = update.message
-    user_id = message.from_user.id
+def start(update: Update, context):
+    user_id = update.effective_user.id
     if 'user' not in context.user_data:
         context.user_data['user'] = users.user_exists(user_id)
     if context.user_data['user'].get('is_blocked'):
         blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
-        update.message.reply_text(blocked_message)
+        update.callback_query.answer(text=blocked_message, show_alert=True)
         return
     check_channel(update, context)
 
@@ -49,10 +48,7 @@ def check_channel(update, context):
             error_message = strings.get_string('referral.channel.empty', language)
             update.callback_query.answer(text=error_message, show_alert=True)
 
-    if update.message:
-        user_id = update.message.from_user.id
-    else:
-        user_id = update.callback_query.from_user.id
+    user_id = update.effective_user.id
     language = context.user_data['user'].get('language')
     try:
         user = context.bot.get_chat_member(chat_id=Config.TELEGRAM_CHANNEL_USERNAME, user_id=user_id)
@@ -86,9 +82,9 @@ def check_channel(update, context):
         referral_message = strings.from_referral_tender(referral_tender, language, len(invited_users), link)
         referral_keyboard = keyboards.get_keyboard('referral', language)
         image = images.get_referral_image(language)
+        if update.callback_query:
+            context.bot.delete_message(chat_id=user_id, message_id=update.callback_query.message.message_id)
         if image:
-            if update.callback_query:
-                context.bot.delete_message(chat_id=user_id, message_id=update.callback_query.message.message_id)
             message = context.bot.send_photo(chat_id=user_id, photo=image, caption=referral_message,
                                              reply_markup=referral_keyboard, parse_mode=ParseMode.HTML)
         else:
@@ -137,9 +133,10 @@ def close(update, context):
         context.bot.delete_message(chat_id=query.message.chat_id, message_id=query.message.message_id)
     except BadRequest:
         pass
+    Navigation.to_account()
 
 
-referral_handler = MessageHandler(Filters.ReferralFilter(), start)
+referral_handler = CallbackQueryHandler(start, pattern='account:referral')
 check_channel_handler = CallbackQueryHandler(check_channel, pattern='referral:check_channel')
 rules_handler = CallbackQueryHandler(referral_rules, pattern='referral:rules')
 prize_handler = CallbackQueryHandler(prize_places, pattern='referral:prize')

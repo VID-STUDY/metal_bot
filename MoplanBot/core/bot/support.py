@@ -14,24 +14,25 @@ SUPPORT = range(1)
 
 
 def start(update, context):
-    user_id = update.message.from_user.id
+    user_id = update.effective_message.from_user.id
     if 'user' not in context.user_data:
         context.user_data['user'] = users.user_exists(user_id)
     if context.user_data['user'].get('is_blocked'):
         blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))
-        update.message.reply_text(blocked_message)
+        update.callback_query.answer(text=blocked_message, show_alert=True)
         return ConversationHandler.END
     context.user_data['has_action'] = True
     language = context.user_data['user'].get('language')
     support_message = strings.get_string('support.welcome', language).format(name=context.user_data['user'].get('name'))
     support_keyboard = keyboards.get_keyboard('support.cancel', language)
     image = images.get_support_image(language)
+    context.bot.delete_message(chat_id=update.effective_chat.id, message_id=update.callback_query.message.message_id)
     if image:
-        chat_id = update.message.chat_id
+        chat_id = update.effective_message.chat_id
         message = context.bot.send_photo(chat_id=chat_id, photo=image, caption=support_message,
                                          reply_markup=support_keyboard, parse_mode=ParseMode.HTML)
     else:
-        message = update.message.reply_text(text=support_message, reply_markup=support_keyboard, parse_mode=ParseMode.HTML)
+        message = update.effective_message.reply_text(text=support_message, reply_markup=support_keyboard, parse_mode=ParseMode.HTML)
     context.user_data['support_message'] = message
     return SUPPORT
 
@@ -41,7 +42,7 @@ def support(update, context):
     if strings.get_string('cancel', language) in update.message.text:
         canceled_message = strings.get_string('support.canceled', language)
         update.message.reply_text(canceled_message)
-        Navigation.to_main_menu(update, language, user_name=context.user_data['user'].get('name'))
+        Navigation.to_account(update, context, new_message=True)
         del context.user_data['has_action']
         return ConversationHandler.END
     elif update.message:
@@ -64,7 +65,7 @@ def support(update, context):
         context.bot.delete_message(chat_id=message.chat_id, message_id=message.message_id)
         success_message = strings.get_string('support.success', language)
         update.message.reply_text(text=success_message)
-        Navigation.to_main_menu(update, language, context=context)
+        Navigation.to_account(update, context, new_message=True)
         del context.user_data['has_action']
         return ConversationHandler.END
     else:
@@ -72,7 +73,7 @@ def support(update, context):
 
 
 support_conversation = ConversationHandler(
-    entry_points=[MessageHandler(Filters.SupportFilter(), start)],
+    entry_points=[CallbackQueryHandler(start, pattern='account:support')],
     states={
         SUPPORT: [MessageHandler(TelegramFilters.text, support)]
     },

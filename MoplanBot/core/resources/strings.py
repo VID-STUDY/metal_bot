@@ -32,12 +32,6 @@ def get_user_info(user: dict) -> str:
     else:
         balance = str(0)
     user_info += get_string('account.balance', user.get('language')) + balance
-    user_info += '\n'
-    if user.get('user_role') == 'employer':
-        user_role = get_string('account.select_role.employer', user.get('language'))
-    else:
-        user_role = get_string('account.select_role.contractor', user.get('language'))
-    user_info += get_string('account.status', user.get('language')) + user_role
 
     return user_info
 

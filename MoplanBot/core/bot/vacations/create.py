@@ -66,7 +66,8 @@ def create(update, context):
             except BadRequest:
                 pass
     context.bot.delete_message(chat_id=query.from_user.id, message_id=query.message.message_id)
-    context.bot.send_message(chat_id=query.from_user.id, text=message, reply_markup=keyboard, parse_mode=ParseMode.HTML)
+    message = context.bot.send_message(chat_id=query.from_user.id, text=message, reply_markup=keyboard, parse_mode=ParseMode.HTML)
+    context.user_data['vacation_title_message'] = message.message_id
     return TITLE
 
 
@@ -74,7 +75,10 @@ def vacation_title(update, context):
     language = context.user_data['user'].get('language')
     if strings.get_string('go_back', language) in update.message.text:
         del context.user_data['vacation']
-        Navigation.to_main_menu(update, language, user_name=context.user_data['user'].get('name'))
+        context.bot.delete_message(update.effective_chat.id, update.effective_message.message_id)
+        if 'vacation_title_message' in context.user_data:
+            context.bot.delete_message(update.effective_chat.id, context.user_data['vacation_title_message'])
+            del context.user_data['vacation_title_message']
         Navigation.to_account(update, context)
         del context.user_data['has_action']
         return ConversationHandler.END

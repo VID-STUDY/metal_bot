@@ -23,7 +23,8 @@ def create_user(telegram_id: int, name: str, username: str, language: str, refer
         'name': name,
         'username': username,
         'language': language,
-        'referral_from_id': referral_from_id
+        'referral_from_id': referral_from_id,
+        'user_role': 'employer'
     }
     response = make_post_request(ENTITY, '', payload).json()
     return response

@@ -47,7 +47,6 @@ def tariffs(update, context):
                 from .vacations.create import to_parent_categories
                 return to_parent_categories(query, context)
         else:
-            Navigation.to_main_menu(update, language, context=context)
             Navigation.to_account(update, context)
             del context.user_data['has_action']
             return ConversationHandler.END
@@ -174,7 +173,7 @@ def successful_payment_callback(update, context):
     language = context.user_data['user'].get('language')
     context.user_data['user'] = users.set_user_tariff(context.user_data['user'], context.user_data['payments.price'],
                                                       context.user_data['payments.tariff'])
-    menu_keyboard = keyboards.get_keyboard('menu', language)
+    menu_keyboard = keyboards.get_keyboard('remove', language)
     update.message.reply_text(strings.get_string('vacations.create.success', language), reply_markup=menu_keyboard)
     if context.user_data['user'].get('is_blocked'):
         blocked_message = strings.get_string('blocked', context.user_data['user'].get('language'))

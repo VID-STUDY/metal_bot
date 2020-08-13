@@ -15,7 +15,7 @@ class Navigation:
                 menu_message = strings.get_string('start.welcome', language).format(username=user_name)
             else:
                 menu_message = strings.get_string('menu.welcome', language)
-        menu_keyboard = keyboards.get_keyboard('menu', language)
+        menu_keyboard = keyboards.get_keyboard('remove', language)
         if update.message:
             chat_id = update.message.chat_id
         else:
