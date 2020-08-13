@@ -25,7 +25,7 @@ def from_location_to_contacts(update, context):
     context.bot.delete_message(chat_id=update.callback_query.message.chat_id,
                                message_id=context.user_data['location_message_id'])
     message = strings.get_string('vacations.create.contacts', language)
-    keyboard = keyboards.get_keyboard('go_back.one_time', language)
+    keyboard = keyboards.get_keyboard('go_back.inline', language)
     context.bot.send_message(chat_id=update.callback_query.message.chat_id,
                              text=message,
                              reply_markup=keyboard,
@@ -58,7 +58,7 @@ def create(update, context):
     language = context.user_data['user'].get('language')
     query.answer(text=strings.get_string('vacations.menu_has_gone', language), show_alert=True)
     message = strings.get_string('vacations.create.title', language)
-    keyboard = keyboards.get_keyboard('go_back', language)
+    keyboard = keyboards.get_keyboard('go_back.inline', language)
     context.bot.delete_message(chat_id=query.from_user.id, message_id=query.message.message_id)
     message = context.bot.send_message(chat_id=query.from_user.id, text=message, reply_markup=keyboard, parse_mode=ParseMode.HTML)
     context.user_data['vacation_title_message'] = message.message_id
@@ -67,7 +67,7 @@ def create(update, context):
 
 def vacation_title(update, context):
     language = context.user_data['user'].get('language')
-    if strings.get_string('go_back', language) in update.message.text:
+    if update.callback_query and update.callback_query.data == 'back':
         del context.user_data['vacation']
         context.bot.delete_message(update.effective_chat.id, update.effective_message.message_id)
         if 'vacation_title_message' in context.user_data:
@@ -78,39 +78,45 @@ def vacation_title(update, context):
         return ConversationHandler.END
     context.user_data['vacation']['title'] = update.message.text
     message = strings.get_string('vacations.create.price', language)
-    update.message.reply_text(message, parse_mode=ParseMode.HTML)
+    keyboard = keyboards.get_keyboard('go_back.inline', language)
+    update.message.reply_text(message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
     return PRICE
 
 
 def vacation_price(update, context):
     language = context.user_data['user'].get('language')
-    if strings.get_string('go_back', language) in update.message.text:
+    if update.callback_query and update.callback_query.data == 'back':
         message = strings.get_string('vacations.create.title', language)
-        update.message.reply_text(text=message, parse_mode=ParseMode.HTML)
+        keyboard = keyboards.get_keyboard('go_back.inline', language)
+        update.сallback_query.edit_message_text(text=message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
         return TITLE
     context.user_data['vacation']['price'] = update.message.text
     message = strings.get_string('vacations.create.name', language)
-    update.message.reply_text(message, parse_mode=ParseMode.HTML)
+    keyboard = keyboards.get_keyboard('go_back.inline', language)
+    update.message.reply_text(message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
     return NAME
 
 
 def vacation_name(update, context):
     language = context.user_data['user'].get('language')
-    if strings.get_string('go_back', language) in update.message.text:
+    if update.callback_query and update.callback_query.data == 'back':
         message = strings.get_string('vacations.create.price', language)
-        update.message.reply_text(text=message, parse_mode=ParseMode.HTML)
+        keyboard = keyboards.get_keyboard('go_back.inline', language)
+        update.сallback_query.edit_message_text(text=message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
         return PRICE
     context.user_data['vacation']['name'] = update.message.text
     message = strings.get_string('vacations.create.contacts', language)
-    update.message.reply_text(message, parse_mode=ParseMode.HTML)
+    keyboard = keyboards.get_keyboard('go_back.inline', language)
+    update.message.reply_text(message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
     return CONTACTS
 
 
 def vacation_contacts(update, context):
     language = context.user_data['user'].get('language')
-    if strings.get_string('go_back', language) in update.message.text:
+    if update.callback_query and update.callback_query.data == 'back':
         message = strings.get_string('vacations.create.name', language)
-        update.message.reply_text(message, parse_mode=ParseMode.HTML)
+        keyboard = keyboards.get_keyboard('go_back.inline', language)
+        update.сallback_query.edit_message_text(text=message, parse_mode=ParseMode.HTML, reply_markup=keyboard)
         return NAME
     phone_number = update.message.text
     if not phone_number.startswith('+'):

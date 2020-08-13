@@ -43,10 +43,10 @@ def main_menu_handler(update, context):
 create_vacation_conversation = ConversationHandler(
     entry_points=[CallbackQueryHandler(create.create, pattern='my_vacations:create'), CallbackQueryHandler(create.create, pattern='account:sell')],
     states={
-        create.TITLE: [MessageHandler(Filters.text, create.vacation_title)],
-        create.PRICE: [MessageHandler(Filters.text, create.vacation_price)],
-        create.NAME: [MessageHandler(Filters.text, create.vacation_name)],
-        create.CONTACTS: [MessageHandler(Filters.text, create.vacation_contacts)],
+        create.TITLE: [MessageHandler(Filters.text, create.vacation_title), CallbackQueryHandler(create.vacation_title)],
+        create.PRICE: [MessageHandler(Filters.text, create.vacation_price), CallbackQueryHandler(create.vacation_price)],
+        create.NAME: [MessageHandler(Filters.text, create.vacation_name), CallbackQueryHandler(create.vacation_name)],
+        create.CONTACTS: [MessageHandler(Filters.text, create.vacation_contacts), CallbackQueryHandler(create.vacation_contacts)],
         create.REGION: [CallbackQueryHandler(create.from_location_to_contacts, pattern='region:back'),
                         CallbackQueryHandler(create.vacation_region), MessageHandler(Filters.text, main_menu_handler)],
         create.CITY: [CallbackQueryHandler(create.vacation_city),
