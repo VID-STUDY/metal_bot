@@ -7,16 +7,17 @@ from .utils import Navigation
 LANGUAGES = 1
 
 
-def referral_start(update, context):
+def referral_start(update: Update, context):
     user = users.user_exists(update.message.from_user.id)
     if user:
         if user.get('is_blocked'):
             blocked_message = strings.get_string('blocked', user.get('language'))
             update.message.reply_text(blocked_message)
             return ConversationHandler.END
-        Navigation.to_main_menu(update, user.get('language'), user_name=user.get('name'), welcome=True, context=context)
-        help_message = strings.get_string('start.help', user.get('language'))
-        update.message.reply_text(help_message)
+        welcome_message = strings.get_string('start.welcome', user.get('language')).format(username=_get_user_name(update.effective_user))
+        remove_keyboard = keyboards.get_keyboard('remove')
+        update.message.reply_text(welcome_message, reply_markup=remove_keyboard)
+        Navigation.to_account(update, context, new_message=True)
         return ConversationHandler.END
     if context.args:
         context.user_data['referral_from_id'] = context.args[0]
@@ -47,9 +48,9 @@ def languages(update: Update, context):
     user_name = _get_user_name(user)
     users.create_user(user.id, user_name, user.username, language,
                       referral_from_id=context.user_data.get('referral_from_id', None))
-    Navigation.to_main_menu(update, language, user_name=user_name, welcome=True, context=context)
     help_message = strings.get_string('start.help', language)
     update.message.reply_text(help_message)
+    Navigation.to_account(update, context, new_message=True)
     return ConversationHandler.END
 
 

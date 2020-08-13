@@ -87,8 +87,9 @@ def edit_action(update, context):
     keyboard = keyboards.get_keyboard('go_back', language)
     context.user_data['editing_vacation_step'] = data
     context.bot.delete_message(chat_id=query.message.chat.id, message_id=query.message.message_id)
-    context.bot.send_message(chat_id=query.message.chat.id, text=message, reply_markup=keyboard,
-                             parse_mode=ParseMode.HTML)
+    sent_message = context.bot.send_message(chat_id=query.message.chat.id, text=message, reply_markup=keyboard,
+                                            parse_mode=ParseMode.HTML)
+    context.user_data['vacation_edit_message'] = sent_message.message_id
     return UPDATE_VACATION
 
 
@@ -98,8 +99,11 @@ def update_vacation(update, context):
     def go_back():
         vacation_message = strings.get_string('vacations.edit', language).format(
             context.user_data['editing_vacation'].get('title'))
-        Navigation.to_main_menu(update, language, user_name=context.user_data['user'].get('name'))
         edit_keyboard = keyboards.get_keyboard('vacation.edit', language)
+        if 'vacation_edit_message' in context.user_data:
+            context.bot.delete_message(chat_id=message.chat_id, message_id=context.user_data['vacation_edit_message'])
+            del context.user_data['vacation_edit_message']
+        context.bot.delete_message(chat_id=message.chat_id, message_id=message.message_id)
         message.reply_text(text=vacation_message, reply_markup=edit_keyboard, parse_mode=ParseMode.HTML)
         return EDIT_ACTION
 

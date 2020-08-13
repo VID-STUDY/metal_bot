@@ -1,5 +1,5 @@
 from telegram import Update, ParseMode
-from telegram.ext import MessageHandler, CallbackQueryHandler
+from telegram.ext import MessageHandler, CallbackQueryHandler, CallbackContext
 from core.resources import strings, keyboards
 from core.services import users
 from .utils import Navigation, Filters
@@ -79,7 +79,6 @@ def select_language(update, context):
     context.user_data['user'] = user
     success_message = strings.get_string('account.select_language.success', language)
     query.answer(text=success_message)
-    Navigation.to_main_menu(update, language, user_name=context.user_data['user'].get('name'), context=context)
     Navigation.to_account(update, context)
 
 
@@ -116,7 +115,24 @@ def user_vacations(update, context):
     context.bot.send_message(chat_id=user_id, text=message, reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
 
+def account_settings(update: Update, context: CallbackContext):
+    context.user_data['user'] = users.user_exists(update.callback_query.from_user.id)
+    language = context.user_data['user'].get('language')
+    query = update.callback_query
+    settings_keyboard = keyboards.get_keyboard('account.settings', language)
+    query.edit_message_reply_markup(settings_keyboard)
+
+
+def account_settings_back(update: Update, context: CallbackContext):
+    context.user_data['user'] = users.user_exists(update.callback_query.from_user.id)
+    query = update.callback_query
+    account_keyboard = keyboards.get_account_keyboard(context.user_data['user'])
+    query.edit_message_reply_markup(account_keyboard)
+
+
 account_handler = MessageHandler(Filters.AccountFilter(), start)
+account_settings_handler = CallbackQueryHandler(account_settings, pattern='account:settings')
+account_settings_back_handler = CallbackQueryHandler(account_settings_back, pattern='settings:back')
 select_role_choice_handler = CallbackQueryHandler(select_role_choice, pattern='^role:.*')
 change_role_handler = CallbackQueryHandler(change_role, pattern='account:role')
 user_resumes_handler = CallbackQueryHandler(user_resumes, pattern='account:resumes')

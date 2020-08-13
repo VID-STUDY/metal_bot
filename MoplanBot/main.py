@@ -58,6 +58,8 @@ def main():
     dp.add_handler(notifications.close_handler)
 
     dp.add_handler(account.account_handler)
+    dp.add_handler(account.account_settings_handler)
+    dp.add_handler(account.account_settings_back_handler)
     dp.add_handler(account.select_role_choice_handler)
     dp.add_handler(account.change_role_handler)
     dp.add_handler(account.user_resumes_handler)
