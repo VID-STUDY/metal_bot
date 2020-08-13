@@ -59,12 +59,6 @@ def create(update, context):
     query.answer(text=strings.get_string('vacations.menu_has_gone', language), show_alert=True)
     message = strings.get_string('vacations.create.title', language)
     keyboard = keyboards.get_keyboard('go_back', language)
-    if 'catalog_photo_id' in context.user_data:
-            try:
-                context.bot.delete_message(chat_id=update.effective_chat.id,
-                                           message_id=context.user_data['catalog_photo_id'])
-            except BadRequest:
-                pass
     context.bot.delete_message(chat_id=query.from_user.id, message_id=query.message.message_id)
     message = context.bot.send_message(chat_id=query.from_user.id, text=message, reply_markup=keyboard, parse_mode=ParseMode.HTML)
     context.user_data['vacation_title_message'] = message.message_id
