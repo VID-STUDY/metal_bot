@@ -8,6 +8,8 @@ from core.bot.utils import Navigation, Filters as CustomFilters
 
 from core.bot import about, account, faq, news, support, referral, start
 
+import re
+
 
 CATALOG_ACTION, LOCATION_REGION, LOCATION_CITY, CATEGORY, VACATIONS = range(5)
 
@@ -70,6 +72,7 @@ def _to_vacations(update: Update, context: CallbackContext):
         empty_message = strings.get_string('catalog.empty', language)
         query.answer(text=empty_message, show_alert=True)
         return LOCATION_CITY
+    vacations = sorted(vacations, key=lambda v: int(re.search(r'\d+', v['price']).group()))
     vacations_message = strings.from_vacations_list_message(vacations, category, 
                                                             context.user_data['catalog']['location']['full_name'], 
                                                             len(vacations), language)
