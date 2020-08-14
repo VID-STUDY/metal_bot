@@ -61,6 +61,13 @@ def _to_location_region(update: Update, context: CallbackContext):
 
 
 def _to_vacations(update: Update, context: CallbackContext):
+
+    def sort_vacations_by_price(vacation: dict):
+        result = re.search(r'\d+', vacation.get('price'))
+        if result:
+            return int(result.group())
+        return vacation['price']
+    
     query = update.callback_query
     language = context.user_data['user'].get('language')
     vacations = context.user_data['catalog']['vacations']
@@ -72,7 +79,7 @@ def _to_vacations(update: Update, context: CallbackContext):
         empty_message = strings.get_string('catalog.empty', language)
         query.answer(text=empty_message, show_alert=True)
         return LOCATION_CITY
-    vacations = sorted(vacations, key=lambda v: int(re.search(r'\d+', v['price']).group()))
+    vacations = sorted(vacations, key=sort_vacations_by_price)
     vacations_message = strings.from_vacations_list_message(vacations, category, 
                                                             context.user_data['catalog']['location']['full_name'], 
                                                             len(vacations), language)
