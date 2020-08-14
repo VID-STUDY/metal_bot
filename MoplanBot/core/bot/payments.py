@@ -183,8 +183,6 @@ def successful_payment_callback(update, context):
         result = resumes.create_resume(context.user_data['resume'])
         resume = result.get('resume')
         context.user_data['user'] = resume.get('user')
-        help_message = strings.get_string('resumes.create.success.help', language)
-        update.message.reply_text(help_message, parse_mode=ParseMode.HTML)
         notifiable_users = result.get('notifyUsers')
         Notifications.notify_users_new_item(context.bot, notifiable_users, 'resumes.notify.new')
         del context.user_data['resume']
@@ -194,8 +192,6 @@ def successful_payment_callback(update, context):
         result = vacations.create_vacation(context.user_data['vacation'])
         vacation = result.get('vacation')
         context.user_data['user'] = vacation.get('user')
-        help_message = strings.get_string('vacations.create.success.help', language)
-        update.message.reply_text(help_message, parse_mode=ParseMode.HTML)
         Notifications.notify_users_new_item(context.bot, result.get('notifyUsers'), 'vacations.notify.new')
         del context.user_data['vacation']
         from .vacations import create_vacation_conversation
