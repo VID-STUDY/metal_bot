@@ -79,7 +79,7 @@ def _to_vacations(update: Update, context: CallbackContext):
         empty_message = strings.get_string('catalog.empty', language)
         query.answer(text=empty_message, show_alert=True)
         return LOCATION_CITY
-    vacations = sorted(vacations, key=lambda v: v['price'])
+    vacations = sorted(vacations, key=sort_vacations_by_price)
     vacations_message = strings.from_vacations_list_message(vacations, category, 
                                                             context.user_data['catalog']['location']['full_name'], 
                                                             len(vacations), language)
