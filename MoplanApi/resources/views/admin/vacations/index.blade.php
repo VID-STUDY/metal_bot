@@ -26,7 +26,9 @@
                         <tr>
                             <td class="text-center">{{ $vacation->title }}</td>
                             <td class="text-center">
+                                @if ($vacation->user)
                                 <a href="{{ route('admin.users.edit', $vacation->user_id) }}" class="link-effect">{{ $vacation->user->name }}</a>
+                                @endif
                             </td>
                             <td class="d-flex justify-content-center align-items-center">
                                 <a href="{{ route('admin.vacations.show', $vacation->id) }}" class="btn btn-sm btn-alt-info mr-10" data-toggle="tooltip" title="Посмотреть"><i class="fa fa-eye"></i></a>
