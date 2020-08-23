@@ -49,7 +49,8 @@ def languages(update: Update, context):
     users.create_user(user.id, user_name, user.username, language,
                       referral_from_id=context.user_data.get('referral_from_id', None))
     help_message = strings.get_string('start.help', language)
-    update.message.reply_text(help_message)
+    remove_keyboard = keyboards.get_keyboard('remove')
+    update.message.reply_text(help_message, reply_markup=remove_keyboard)
     Navigation.to_account(update, context, new_message=True)
     return ConversationHandler.END
 
