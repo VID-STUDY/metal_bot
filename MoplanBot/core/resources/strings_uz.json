@@ -108,7 +108,6 @@
     "resumes.template": "ℹ Yaratilgan kun:\n{date}\n\nℹ Nomi:\n{title}\nℹ Ta'riflash:\n{description}\nℹ Aloqa uchun kontaktlaringiz:\n{contacts}\nℹ Tanlagan shahar:\n{location}\nℹ Ulangan toifalar:\n{categories}",
     "resumes.template.for_vacation": "ℹ Yaratilgan kun:\n{date}\n\nℹ Nomi:\n{title}\nℹ Ta'riflash:\n{description}\nℹ Aloqa uchun kontaktlaringiz:\n{contacts}\nℹ Tanlagan shahar:\n{location}\n",
     "resumes.edit": "<b>Rezume {}</b>\n\nℹ <b>O'zingiz tahrirlamoqchi bo'lgan narsani tanlang</b>\n\n❗ <i>Diqqat! Shahar va imkonsiz kategoriyani tahrirlash, ularni o'zgartirish uchun siz yangi xulosa yaratishingiz kerak bo'ladi</i>",
- "resumes.notify.new": "Sizning sotish e'loningizga sotib olish uchun yangi javob keldi! Shaxsiy kabinetta ko'rishingiz mumkin, tugmasini bosib \"Javoblar\"",
 
     "categories.limit": "❗ Haddidan oshdi!\n\nℹ 10 tashqariga 10 kategoriya qo'shilgan",
 
@@ -120,13 +119,6 @@
     "vacations.create.salary": "✅ <b>2/5 Oylik maosh</b>\n<i>Masalan: 1000000 so'mdan - 3000000 so'mgacha, yoki kelishilgan holda </i>",
     "vacations.create.category": "✅ <b>3/5 Toifa</b>\n<i>Masalan: masofada ishlash yoki ofisda</i>",
     "vacations.create.description": "✅ <b>4/5 Ta'riflash </b>\n<i>Masalan: firmangiz nima bilan shug'ullanadi?</i>",
-    "vacations.create.contacts": "✅ <b>5/5 Kontakt uchun ma'lumotlar</b>\n<i>Emаil-manzil, telefon raqamingiz-ismingiz</i>",
-    "vacations.create.categories": "✅ Yaxshi!\n Endi sizni qiziqtirgan 10tagacha lavozimlarni tanlang.Ular siz tanlagan vakansiyangizga bog'lanadi.\nLavozimlarni o'ylab tanlashingiz kerak, chunki siz qaysi vakansiyadan lavozimlarni tanlagan bo'lsangiz, faqatgina o'sha rezumedan javob qaytarishingiz mumkin",
-    "vacations.create.success": "✅ Hammasi tayyor!",
-    "vacations.create.success.help": "ℹ <b>Tez orada siz yangi taglavhalar haqida xabar olishni boshlaysiz.</b>\n<i>Agar pastki panel yo'qolgan bo'lsa, pastgagi to'rtburchakni bosing - \uD83D\uDFEA</i>",
-    "vacations.template": "ℹ Yaratilgan kun:\n{date}\n\nℹ Nomi:\n{title}\nℹ Oylik maosh:\n{salary}\nℹ Toifa:\n{category}\nℹ Bo'sh ish o'rinni ta'riflash:\n{description}\nℹ Aloqa uchun kontaktlaringiz:\n{contacts}\nℹ tanlagan shahar:\n{location}\nℹ Ulangan toifalar:\n{categories}",
-    "vacations.template.for_resume": "ℹ Yaratilgan kun:\n{date}\n\nℹ Nomi:\n{title}\nℹ Oylik maosh:\n{salary}\nℹ Toifa:\n{category}\nℹ Bo'sh ish o'rinni ta'riflash:\n{description}\nℹ Aloqa uchun kontaktlaringiz:\n{contacts}\nℹ tanlagan shahar:\n{location}",
-    "vacations.edit.title": "✅ <b>Sarlavha</b>\n<i>Masalan: dasturchi izlayapman</i>",
     "vacations.edit.salary": "✅ <b>Oylik maosh</b>\n<i>Masalan: 1000000 so'mdan - 3000000 so'mgacha, yoki kelishilgan holda</i>",
     "vacations.edit.category": "✅ <b>Toifa</b>\n<i>Masalan: masofada ishlash yoki ofisda</i>",
     "vacations.edit.description": "✅ <b>Ta'riflash</b>\n<i>Masalan: firmangiz nima bilan shug'ullanadi?</i>",
@@ -348,8 +340,8 @@
     "cancel": "❎ Bekor qilish",
     "close": "❎ Yopish",
     "blocked": "\uD83D\uDD12 Biz bot foydalanish qoidalari buzilishi tufayli, siz bloklanganокланган",
-    "remove_keyboard": "Tugmani olib tashlash..."
+    "remove_keyboard": "Tugmani olib tashlash...",
 	"price": "\uD83D\uDCDD Narxi",
     "name": "\uD83D\uDCDD Ismi",
-	 "message.welcome": "Assalomu Alaykum! Bot ishga tushishi uchun /start komandasini kiriting \n\nSalomlashamiz! Bot ishga tushishi uchun /start komandasini kiriting!",
-
+	"message.welcome": "Assalomu Alaykum! Bot ishga tushishi uchun /start komandasini kiriting \n\nSalomlashamiz! Bot ishga tushishi uchun /start komandasini kiriting!"
+}
